@@ -1,5 +1,5 @@
-import { LayoutChildren } from "../../lib/types/LayoutChildrenType";
+import { ReactChildrenType } from "../../lib/types/ReactChildrenType";
 
-const Layout = ({ children }: LayoutChildren) => <>{children}</>;
+const Layout = ({ children }: ReactChildrenType) => <>{children}</>;
 
 export default Layout;
