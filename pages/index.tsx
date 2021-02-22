@@ -1,9 +1,5 @@
-import styles from "../styles/Home.module.css";
+import LandingPage from "../components/landingPage/LandingPage";
 
 export default function Home() {
-	return (
-		<div className={styles.container}>
-			<h1>Hello, Welcome to GoodBuy</h1>
-		</div>
-	);
+	return <LandingPage></LandingPage>;
 }
