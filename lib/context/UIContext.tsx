@@ -1,27 +1,71 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { ReactChildrenType } from "../types/ReactChildrenType";
 
 interface UIType {
-	isDarkMode?: boolean;
-	toggleDarkMode?: () => void;
+	colorMode?: "dark" | "light";
+	toggleColorMode?: () => void;
 }
 
 export const UIContext = createContext<UIType>({});
 
 const UIContextProvider = ({ children }: ReactChildrenType) => {
-	const [isDarkMode, setDarkMode] = useState<boolean>(false);
-	const toggleDarkMode = (): void => {
-		const root = document.documentElement;
-		if (isDarkMode) {
-			root.style.setProperty("--bg", "#ffffff");
-			root.style.setProperty("--primary-text", "#000000");
-		} else {
-			root.style.setProperty("--bg", "#000000");
-			root.style.setProperty("--primary-text", "#ffffff");
+	/**
+	 * Context provider for UI elements.
+	 *
+	 * Available properties:
+	 *
+	 * colorMode: "loght"|"dark";
+	 * toggleColorMode: (): void;
+	 */
+	const getInitialColorMode = (): "dark" | "light" => {
+		/**
+		 * Retrieves the color mode preferred by the user, returns either "dark" or "light"
+		 */
+		// check if the user has a local preference
+		const colorPreference: string | null = window.localStorage.getItem("color-mode");
+		if (colorPreference != null && (colorPreference === "light" || colorPreference === "dark")) {
+			return colorPreference;
 		}
-		setDarkMode(!isDarkMode);
+		//if not try to access the system preference
+		const isdarkPreferred: boolean | undefined = window.matchMedia("(prefers-color-scheme: dark)")
+			.matches;
+		if (isdarkPreferred) {
+			return isdarkPreferred ? "dark" : "light";
+		}
+		//if unavailable return "light"
+		return "light";
 	};
-	return <UIContext.Provider value={{ isDarkMode, toggleDarkMode }}>{children}</UIContext.Provider>;
+
+	const [colorMode, setColorMode] = useState<"dark" | "light">("light");
+
+	useEffect((): void => {
+		setColorMode(getInitialColorMode);
+	}, []);
+
+	useEffect((): void => {
+		/**
+		 * Watches for changes of "colorMode" and updates the css
+		 */
+		const cssVars = document.documentElement.style;
+		if (colorMode === "dark") {
+			cssVars.setProperty("--bg", "#000000");
+			cssVars.setProperty("--color-1", "#ffffff");
+			cssVars.setProperty("--color-2", "#ef3054");
+		} else {
+			cssVars.setProperty("--bg", "#ffffff");
+			cssVars.setProperty("--color-1", "#000000");
+			cssVars.setProperty("--color-2", "#0197f6");
+		}
+		window.localStorage.setItem("color-mode", colorMode);
+	}, [colorMode]);
+
+	const toggleColorMode = (): void => {
+		/**
+		 * Switch between dark and light mode
+		 */
+		colorMode === "light" ? setColorMode("dark") : setColorMode("light");
+	};
+	return <UIContext.Provider value={{ colorMode, toggleColorMode }}>{children}</UIContext.Provider>;
 };
 
 export default UIContextProvider;
