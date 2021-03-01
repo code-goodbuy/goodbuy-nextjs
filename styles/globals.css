@@ -1,8 +1,7 @@
-:root {
-	--bg: #ffffff;
-	--color-1: #000000;
-	--color-2: #0197f6;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
 	padding: 0;
@@ -18,14 +17,4 @@ a {
 
 * {
 	box-sizing: border-box;
-}
-
-.bg {
-	background-color: var(--bg);
-}
-.primary-text {
-	color: var(--color-1);
-}
-.secondary-text {
-	color: var(--color-2);
 }
