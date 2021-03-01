@@ -46,15 +46,10 @@ const UIContextProvider = ({ children }: ReactChildrenType) => {
 		/**
 		 * Watches for changes of "colorMode" and updates the css
 		 */
-		const cssVars = document.documentElement.style;
 		if (colorMode === "dark") {
-			cssVars.setProperty("--bg", "#000000");
-			cssVars.setProperty("--color-1", "#ffffff");
-			cssVars.setProperty("--color-2", "#ef3054");
+			document.documentElement.classList.add("dark");
 		} else {
-			cssVars.setProperty("--bg", "#ffffff");
-			cssVars.setProperty("--color-1", "#000000");
-			cssVars.setProperty("--color-2", "#0197f6");
+			document.documentElement.classList.remove("dark");
 		}
 		window.localStorage.setItem("color-mode", colorMode);
 	}, [colorMode]);
