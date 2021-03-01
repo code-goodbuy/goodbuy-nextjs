@@ -4,7 +4,7 @@ Brand New Frontend for GoodBuy, written in reactjs and typescript.
 
 The structure of this project is heavily inspired on [this repo](https://github.com/reck1ess/next-realworld-example-app).
 
-## Adding another both repos
+## Pushing to both repos
 
 1. Be sure that you have the permissions to push code in both repos
 
