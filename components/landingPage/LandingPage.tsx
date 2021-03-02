@@ -5,7 +5,7 @@ import { UIContext } from "../../lib/context/UIContext";
 export default function LandingPage() {
 	const { colorMode, toggleColorMode } = useContext(UIContext);
 	return (
-		<div className={[styles.container, "bg-white dark:bg-black"].join(" ")}>
+		<div className={`${styles.container} bg-white dark:bg-black`}>
 			<h1 className="text-3xl font-bold text-tufts-blue dark:text-red-crayola">
 				Hello, Welcome to GoodBuy
 			</h1>
