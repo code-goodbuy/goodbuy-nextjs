@@ -18,3 +18,16 @@ a {
 * {
 	box-sizing: border-box;
 }
+
+.colorful-text {
+	@apply text-primary dark:text-secondary;
+}
+.normal-text {
+	@apply text-black dark:text-white;
+}
+.colorful-background {
+	@apply bg-primary dark:bg-secondary;
+}
+.colorful-background:hover {
+	@apply bg-white text-primary dark:bg-black dark:text-secondary;
+}
