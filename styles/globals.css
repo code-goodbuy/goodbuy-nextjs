@@ -14,11 +14,9 @@ a {
 	color: inherit;
 	text-decoration: none;
 }
-
-* {
-	box-sizing: border-box;
+button {
+	@apply focus:outline-none;
 }
-
 .colorful-text {
 	@apply text-primary dark:text-secondary;
 }
@@ -28,6 +26,12 @@ a {
 .colorful-background {
 	@apply bg-primary dark:bg-secondary;
 }
-.colorful-background:hover {
+.normal-background {
+	@apply bg-white dark:bg-black;
+}
+.colorful-button {
+	@apply bg-primary dark:bg-secondary ring-2 ring-primary dark:ring-secondary rounded-lg;
+}
+.colorful-button:hover {
 	@apply bg-white text-primary dark:bg-black dark:text-secondary;
 }
