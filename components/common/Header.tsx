@@ -7,7 +7,7 @@ export default function Header() {
 	return (
 		<header className="fixed inset-x-0 normal-bg border-b-2 colorful-border">
 			<div className="normal-text flex-horizontal justify-between items-center px-4 py-1">
-				<h2 className="text-3xl colorful-text font-bold">GoodBuy</h2>
+				<h2 className="text-3xl lg:text-4xl colorful-text font-bold">GoodBuy</h2>
 				<button onClick={toggleShowMenu} className="sm:hidden colorful-button text-white px-5">
 					Menu
 				</button>
@@ -19,13 +19,13 @@ export default function Header() {
 						Toggle Dark Mode
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="">Item</Link>
+						<Link href="/">Item</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="">Item</Link>
+						<Link href="/">Item</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="">Item</Link>
+						<Link href="/">Item</Link>
 					</p>
 				</div>
 			</div>
