@@ -4,6 +4,8 @@ import { ReactChildrenType } from "../types/ReactChildrenType";
 interface UIType {
 	colorMode?: "dark" | "light";
 	toggleColorMode?: () => void;
+	showMenu?: boolean;
+	toggleShowMenu?: () => void;
 }
 
 export const UIContext = createContext<UIType>({});
@@ -16,6 +18,8 @@ const UIContextProvider = ({ children }: ReactChildrenType) => {
 	 *
 	 * colorMode: "loght"|"dark";
 	 * toggleColorMode: (): void;
+	 * showMenu: boolean;
+	 * toggleShowMenu: (): void;
 	 */
 	const getInitialColorMode = (): "dark" | "light" => {
 		/**
@@ -37,8 +41,12 @@ const UIContextProvider = ({ children }: ReactChildrenType) => {
 	};
 
 	const [colorMode, setColorMode] = useState<"dark" | "light">("light");
+	const [showMenu, setShowMenu] = useState<boolean>(false);
 
 	useEffect((): void => {
+		/**
+		 * on load, get the preferred color mode
+		 */
 		setColorMode(getInitialColorMode);
 	}, []);
 
@@ -60,7 +68,18 @@ const UIContextProvider = ({ children }: ReactChildrenType) => {
 		 */
 		colorMode === "light" ? setColorMode("dark") : setColorMode("light");
 	};
-	return <UIContext.Provider value={{ colorMode, toggleColorMode }}>{children}</UIContext.Provider>;
+
+	const toggleShowMenu = (): void => {
+		/**
+		 * Switch between hiding and showing the header links on mobile
+		 */
+		setShowMenu((current) => !current);
+	};
+	return (
+		<UIContext.Provider value={{ colorMode, toggleColorMode, showMenu, toggleShowMenu }}>
+			{children}
+		</UIContext.Provider>
+	);
 };
 
 export default UIContextProvider;
