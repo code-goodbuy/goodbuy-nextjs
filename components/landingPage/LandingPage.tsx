@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function LandingPage() {
 	const products = [
-		"chocolate bar",
 		"avocado",
+		"chocolate bar",
 		"egg",
 		"steak",
 		"water bottle",
@@ -26,17 +26,19 @@ export default function LandingPage() {
 	return (
 		<div className="flex flex-col bg-white dark:bg-black min-h-screen justify-start md:justify-evenly lg:justify-between p-4 lg:px-10 items-center space-y-3 lg:flex-row">
 			<div className="flex flex-col justify-start max-w-xl items-center lg:items-start lg:mr-5">
-				<div className="image-bg md:bg-blue-100 md:dark:bg-red-200 min-h-1/2 md:min-h-0 pt-48 md:pt-10 rounded-b-2xl md:rounded-b-none w-screen text-4xl md:text-5xl p-8 lg:p-4 font-bold colorful-text lg:mt-0">
-					Stop climate change,
-					<br />
-					one{" "}
-					<TextTransition
-						className="dynamic"
-						text={products[index % products.length]}
-						springConfig={presets.wobbly}
-						inline={true}
-					/>{" "}
-					at a time.
+				<div className="image-bg md:bg-blue-100 md:dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black min-h-1/2 md:min-h-0 rounded-b-2xl md:rounded-b-none w-screen lg:w-75 lg:h-48">
+					<div className="font-bold colorful-text pt-48 md:pt-10 text-4xl md:text-5xl p-8 md:max-w-screen lg:max-w-xl lg:p-4 lg:mt-0 text-center lg:text-left">
+						Stop climate change,
+						<br />
+						one{" "}
+						<TextTransition
+							className="dynamic"
+							text={products[index % products.length]}
+							springConfig={presets.wobbly}
+							inline={true}
+						/>{" "}
+						at a time.
+					</div>
 				</div>
 				<p className="normal-text text-xl mx-4 mt-5 lg:mt-14 max-w-xl">
 					Don't buy products that harm the environment, animals, or the people that produce them.
@@ -46,7 +48,7 @@ export default function LandingPage() {
 				</p>
 			</div>
 			<div>
-				<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-2 text-center mx-10 md:mx-0 max-w-sm md:max-w-lg lg:max-w-full lg:w-7xl">
+				<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 max-w-sm md:max-w-lg lg:max-w-full lg:w-7xl">
 					<Image
 						className="rounded-3xl"
 						src="/pics/bear.jpg"
