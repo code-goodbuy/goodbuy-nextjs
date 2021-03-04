@@ -5,7 +5,7 @@ export default function LandingPage() {
 	const { colorMode, toggleColorMode } = useContext(UIContext);
 	return (
 		<div
-			className={`flex flex-col bg-white dark:bg-black min-h-screen justify-center items-center space-y-3`}
+			className={`flex-vertical bg-white dark:bg-black min-h-screen justify-center items-center space-y-3`}
 		>
 			<h1 className="text-3xl font-bold colorful-text">Hello, Welcome to GoodBuy</h1>
 			<p className="normal-text">It looks empty now but it won't in the future 😀</p>
