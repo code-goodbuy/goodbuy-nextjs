@@ -23,10 +23,10 @@ button {
 .normal-text {
 	@apply text-black dark:text-white;
 }
-.colorful-background {
+.colorful-bg {
 	@apply bg-primary dark:bg-secondary;
 }
-.normal-background {
+.normal-bg {
 	@apply bg-white dark:bg-black;
 }
 .colorful-button {
@@ -34,4 +34,13 @@ button {
 }
 .colorful-button:hover {
 	@apply bg-white text-primary dark:bg-black dark:text-secondary;
+}
+.colorful-border {
+	@apply border-primary dark:border-secondary;
+}
+.flex-vertical {
+	@apply flex flex-col;
+}
+.flex-horizontal {
+	@apply flex flex-row;
 }
