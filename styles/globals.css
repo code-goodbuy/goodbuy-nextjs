@@ -26,6 +26,12 @@ button {
 .colorful-bg {
 	@apply bg-primary dark:bg-secondary;
 }
+.colorful-bg-2 {
+	@apply bg-blue-100 dark:bg-red-200;
+}
+.colorful-bg-background {
+	@apply bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60 md:bg-opacity-0 md:dark:bg-opacity-0;
+}
 .normal-bg {
 	@apply bg-white dark:bg-black;
 }

@@ -27,7 +27,7 @@ export default function LandingPage() {
 		<div className="flex flex-col bg-white dark:bg-black min-h-screen justify-start md:justify-evenly lg:justify-between p-4 lg:px-10 items-center space-y-3 lg:flex-row">
 			<div className="flex flex-col justify-start max-w-xl items-center lg:items-start lg:mr-5">
 				<div className="image-bg md:bg-blue-100 md:dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black min-h-1/2 md:min-h-0 rounded-b-2xl md:rounded-b-none w-screen lg:w-75 lg:h-48">
-					<div className="font-bold colorful-text pt-48 md:pt-10 text-4xl md:text-5xl p-8 md:max-w-screen lg:max-w-xl lg:p-4 lg:mt-0 text-center lg:text-left">
+					<div className="bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60 md:bg-opacity-0 md:dark:bg-opacity-0 font-bold colorful-text mt-48 md:mt-0 md:pt-10 text-4xl md:text-5xl p-4 md:max-w-screen lg:max-w-xl lg:p-4 lg:mt-0 text-center lg:text-left h-36 md:h-auto">
 						Stop climate change,
 						<br />
 						one{" "}
@@ -39,6 +39,22 @@ export default function LandingPage() {
 						/>{" "}
 						at a time.
 					</div>
+					<p className="colorful-text md:hidden mt-10 text-center bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60">
+						Photo by{" "}
+						<a
+							className="underline"
+							href="https://unsplash.com/@hansjurgen007?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
+						>
+							Hans-Jurgen Mager
+						</a>{" "}
+						on{" "}
+						<a
+							className="underline"
+							href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
+						>
+							Unsplash
+						</a>
+					</p>
 				</div>
 				<p className="normal-text text-xl mx-4 mt-5 lg:mt-14 max-w-xl">
 					Don't buy products that harm the environment, animals, or the people that produce them.
@@ -48,7 +64,7 @@ export default function LandingPage() {
 				</p>
 			</div>
 			<div>
-				<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 max-w-sm md:max-w-lg lg:max-w-full lg:w-7xl">
+				<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-lg lg:max-w-full lg:w-7xl">
 					<Image
 						className="rounded-3xl"
 						src="/pics/bear.jpg"
