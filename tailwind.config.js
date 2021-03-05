@@ -26,6 +26,9 @@ module.exports = {
 				"3/4": "75vw",
 				"full": "100vw"
 			},
+			maxHeight: {
+				"90": "90vh"
+			},
 			width: {
 				"25": "25vw",
 				"50": "50vw",
