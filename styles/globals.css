@@ -53,14 +53,14 @@ button {
 .dynamic > div > div {
 	z-index: 1 !important;
 }
-.image-bg {
+.bear-image-bg {
 	background-image: url("/pics/bear.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
 }
 @media (min-width: 769px) {
-	.image-bg {
+	.bear-image-bg {
 		background-image: none;
 	}
 }
