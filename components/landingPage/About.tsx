@@ -69,7 +69,7 @@ export default function About() {
 							</span>
 						</figcaption>
 					</figure>
-					<p className="normal-text text-xl lg:mx-10 mt-5 lg:mt-12 max-w-xl">
+					<p className="normal-text text-xl mx-10 md:mx-0 lg:mx-10 mt-5 lg:mt-12 max-w-xl">
 						We are a group of 7 Software Engineering Students at CODE University of Applied Sciences
 						who...
 					</p>
