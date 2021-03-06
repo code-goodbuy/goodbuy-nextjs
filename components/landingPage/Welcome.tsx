@@ -63,9 +63,7 @@ export default function Welcome() {
 					<p className="normal-text text-xl mx-4 mt-5 max-w-xl">
 						Start using GoodBuy and measure the inpact of the products you use.
 					</p>
-					<button className="colorful-button text-white dark:text-black px-5 self-center mt-10">
-						Start Now
-					</button>
+					<button className="colorful-button self-center mt-10">Start Now</button>
 				</div>
 				<div>
 					<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-lg lg:max-w-full lg:w-7xl">
@@ -98,18 +96,20 @@ export default function Welcome() {
 					</figure>
 				</div>
 			</div>
-			<svg
-				height="24"
-				width="24"
-				className="h-10 self-center font-extrabold fill-current text-primary dark:text-secondary mt-0 md:mt-10 animate-bounce"
-			>
-				<path d="M0 0h24v24H0V0z" fill="none" />
-				<path
-					d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
-					width="100%"
-					height="100%"
-				/>
-			</svg>
+			<a href="#mission" className="self-center ">
+				<svg
+					height="24"
+					width="24"
+					className="h-10 fill-current text-primary dark:text-secondary mt-0 md:mt-10 animate-bounce"
+				>
+					<path d="M0 0h24v24H0V0z" fill="none" />
+					<path
+						d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+						width="100%"
+						height="100%"
+					/>
+				</svg>
+			</a>
 		</div>
 	);
 }
