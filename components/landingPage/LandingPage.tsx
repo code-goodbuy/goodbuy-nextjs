@@ -1,5 +1,10 @@
+import Mission from "./Mission";
 import Welcome from "./Welcome";
 
 export default function LandingPage() {
-	return <Welcome></Welcome>;
+	return (
+		<>
+			<Welcome /> <Mission />
+		</>
+	);
 }
