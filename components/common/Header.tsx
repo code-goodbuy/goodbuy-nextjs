@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useContext } from "react";
 import { UIContext } from "../../lib/context/UIContext";
+import NavLinks from "./NavLinks";
 
 export default function Header() {
 	const { showMenu, toggleShowMenu, toggleColorMode, colorMode } = useContext(UIContext);
@@ -15,43 +16,12 @@ export default function Header() {
 				>
 					Menu
 				</button>
-				<div className="space-x-4 hidden sm:flex flex-row">
-					<p
-						onClick={toggleColorMode}
-						data-testid="colorSwitcher"
-						className="hover:text-primary dark:hover:text-secondary cursor-pointer"
-					>
-						{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
-					</p>
-					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="#mission">Our Mission</Link>
-					</p>
-					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="#about">About</Link>
-					</p>
-					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="/">Item</Link>
-					</p>
-				</div>
+
+				<NavLinks className="space-x-4 hidden sm:flex flex-row" />
 			</div>
 			{showMenu && (
-				<div className="sm:hidden flex-vertical items-center space-y-4 mb-4 normal-text z-50">
-					<p
-						onClick={toggleColorMode}
-						data-testid="colorSwitcher"
-						className="hover:text-primary dark:hover:text-secondary"
-					>
-						{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
-					</p>
-					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="#mission">Our Mission</Link>
-					</p>
-					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="#about">About</Link>
-					</p>
-					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="/">Item</Link>
-					</p>
+				<div>
+					<NavLinks className="sm:hidden flex-vertical items-center space-y-4 mb-4 normal-text z-50" />
 				</div>
 			)}
 		</header>
