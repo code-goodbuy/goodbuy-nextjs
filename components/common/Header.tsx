@@ -27,7 +27,7 @@ export default function Header() {
 						<Link href="#mission">Our Mission</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="/">Item</Link>
+						<Link href="#about">About</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
 						<Link href="/">Item</Link>
@@ -47,7 +47,7 @@ export default function Header() {
 						<Link href="#mission">Our Mission</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="/">Item</Link>
+						<Link href="#about">About</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
 						<Link href="/">Item</Link>
