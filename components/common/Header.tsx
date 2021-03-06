@@ -8,7 +8,7 @@ export default function Header() {
 		<header className="fixed inset-x-0 normal-bg border-b-2 colorful-border z-50">
 			<div className="normal-text flex-horizontal justify-between items-center px-4 py-1">
 				<h2 className="text-3xl lg:text-4xl colorful-text font-bold">GoodBuy</h2>
-				<button onClick={toggleShowMenu} className="sm:hidden colorful-button text-white px-5">
+				<button onClick={toggleShowMenu} className="sm:hidden colorful-button px-5">
 					Menu
 				</button>
 				<div className="space-x-4 hidden sm:flex flex-row">
@@ -19,7 +19,7 @@ export default function Header() {
 						Toggle Dark Mode
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="/">Item</Link>
+						<Link href="#mission">Our Mission</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
 						<Link href="/">Item</Link>
@@ -35,13 +35,13 @@ export default function Header() {
 						Toggle Dark Mode
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="">Item</Link>
+						<Link href="#mission">Our Mission</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="">Item</Link>
+						<Link href="/">Item</Link>
 					</p>
 					<p className="hover:text-primary dark:hover:text-secondary">
-						<Link href="">Item</Link>
+						<Link href="/">Item</Link>
 					</p>
 				</div>
 			)}
