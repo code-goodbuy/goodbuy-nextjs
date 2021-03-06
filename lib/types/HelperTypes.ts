@@ -4,3 +4,9 @@ export interface InfoCardType {
 	text: string;
 	url: string;
 }
+export interface PersonType {
+	fullName?: string;
+	role?: string;
+	url?: string;
+	path?: string;
+}
