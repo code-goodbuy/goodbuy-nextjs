@@ -3,14 +3,11 @@ import InfoCard from "./InfoCard";
 
 export default function Mission() {
 	return (
-		<div className="normal-bg flex flex-col h-full" id="mission">
-			<h2
-				data-testid="mission-title"
-				className="colorful-text mt-12 text-4xl text-center lg:text-left lg:text-5xl font-bold lg:ml-10 lg:pl-5 pb-5 bg-blue-100 dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black"
-			>
+		<div className="normal-bg flex flex-col min-h-screen h-full" id="mission">
+			<h2 data-testid="mission-title" className="section-header">
 				Our Mission
 			</h2>
-			<div className="flex flex-col justify-around lg:flex-row items-center pb-10">
+			<div className="flex flex-col justify-around lg:flex-row-reverse items-center pb-10">
 				<div className="flex flex-col justify-around items-center lg:ml-10">
 					<InfoCard
 						number={10000000}
@@ -37,8 +34,8 @@ export default function Mission() {
 						}
 					/>
 				</div>
-				<div className="flex flex-col items-center lg:mt-10">
-					<figure className="bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-md lg:max-w-auto lg:w-7xl mt-10 lg:mt-0">
+				<div className="flex flex-col items-center lg:mt-10 lg:max-w-1/2">
+					<figure className="bg-primary dark:bg-secondary transform xl:-rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-md lg:max-w-auto lg:w-7xl mt-10 lg:mt-0">
 						<Image
 							className="rounded-3xl"
 							src="/pics/waste.jpg"
