@@ -36,7 +36,7 @@ button {
 	@apply bg-white dark:bg-black;
 }
 .colorful-button {
-	@apply bg-primary dark:bg-secondary ring-2 ring-primary dark:ring-secondary rounded-lg;
+	@apply bg-primary dark:bg-secondary border-2 border-primary dark:border-secondary rounded-lg ring-4 ring-blue-100 dark:ring-red-200 text-white px-5 focus:ring-0;
 }
 .colorful-button:hover {
 	@apply bg-white text-primary dark:bg-black dark:text-secondary;
