@@ -5,8 +5,8 @@ export interface InfoCardType {
 	url: string;
 }
 export interface PersonType {
-	fullName?: string;
-	role?: string;
-	url?: string;
-	path?: string;
+	fullName: string;
+	role: string;
+	url: string;
+	path: string;
 }

@@ -7,13 +7,48 @@ export default function About() {
 			<h2 className="section-header">About Goodbuy</h2>
 			<div className="flex flex-col justify-around lg:flex-row items-center pb-10">
 				<div className="flex flex-wrap justify-center mx-4 mt-10 md:max-w-3/4 lg:max-w-1/2">
-					<Person />
-					<Person />
-					<Person />
-					<Person />
-					<Person />
-					<Person />
-					<Person />
+					<Person
+						fullName={"Name Surname"}
+						role={"role(s)"}
+						url={"https://www.linkedin.com"}
+						path="/pics/face.png"
+					/>
+					<Person
+						fullName={"Name Surname"}
+						role={"role(s)"}
+						url={"https://www.linkedin.com"}
+						path="/pics/face.png"
+					/>
+					<Person
+						fullName={"Name Surname"}
+						role={"role(s)"}
+						url={"https://www.linkedin.com"}
+						path="/pics/face.png"
+					/>
+					<Person
+						fullName={"Name Surname"}
+						role={"role(s)"}
+						url={"https://www.linkedin.com"}
+						path="/pics/face.png"
+					/>
+					<Person
+						fullName={"Name Surname"}
+						role={"role(s)"}
+						url={"https://www.linkedin.com"}
+						path="/pics/face.png"
+					/>
+					<Person
+						fullName={"Name Surname"}
+						role={"role(s)"}
+						url={"https://www.linkedin.com"}
+						path="/pics/face.png"
+					/>
+					<Person
+						fullName={"Name Surname"}
+						role={"role(s)"}
+						url={"https://www.linkedin.com"}
+						path="/pics/face.png"
+					/>
 				</div>
 				<div className="flex flex-col items-center lg:mt-10 lg:max-w-1/2">
 					<figure className="bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-md lg:max-w-auto lg:w-7xl mt-10 lg:mt-0">
