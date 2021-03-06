@@ -4,7 +4,10 @@ import InfoCard from "./InfoCard";
 export default function Mission() {
 	return (
 		<div className="normal-bg flex flex-col h-full" id="mission">
-			<h2 className="colorful-text mt-12 text-4xl text-center lg:text-left lg:text-5xl font-bold lg:ml-10 lg:pl-5 pb-5 bg-blue-100 dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black">
+			<h2
+				data-testid="mission-title"
+				className="colorful-text mt-12 text-4xl text-center lg:text-left lg:text-5xl font-bold lg:ml-10 lg:pl-5 pb-5 bg-blue-100 dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black"
+			>
 				Our Mission
 			</h2>
 			<div className="flex flex-col justify-around lg:flex-row items-center pb-10">
