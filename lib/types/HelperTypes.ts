@@ -1,3 +1,6 @@
+/**
+ * TS types for helper functions
+ */
 export interface InfoCardType {
 	number: number;
 	unit: string;
