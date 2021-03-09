@@ -30,7 +30,7 @@ export default function Welcome() {
 					<div className="bear-image-bg md:bg-blue-100 md:dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black min-h-1/2 md:min-h-0 rounded-b-2xl md:rounded-b-none w-screen lg:w-75 lg:h-48">
 						<div
 							data-testid="main-title"
-							className="bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60 md:bg-opacity-0 md:dark:bg-opacity-0 font-bold colorful-text mt-48 md:mt-2 md:pt-10 text-4xl md:text-5xl p-4 md:max-w-screen lg:max-w-xl lg:p-4 lg:mt-0 text-center lg:text-left h-36 md:h-auto"
+							className="bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60 md:bg-opacity-0 md:dark:bg-opacity-0 font-bold colorful-text mt-48 md:mt-4 md:pt-10 text-4xl md:text-5xl p-4 md:max-w-screen lg:max-w-xl lg:p-4 lg:mt-0 text-center lg:text-left h-36 md:h-auto"
 						>
 							Stop climate change,
 							<br />
@@ -60,10 +60,10 @@ export default function Welcome() {
 							</a>
 						</p>
 					</div>
-					<p className="normal-text text-xl mx-4 mt-5 lg:mt-14 max-w-xl">
+					<p className="normal-text text-xl mx-10 mt-5 lg:mt-14 max-w-xl">
 						Don't buy products that harm the environment, animals, or the people that produce them.
 					</p>
-					<p className="normal-text text-xl mx-4 mt-5 max-w-xl">
+					<p className="normal-text text-xl mx-10 mt-5 max-w-xl">
 						Start using GoodBuy and measure the inpact of the products you use.
 					</p>
 					<button className="colorful-button self-center mt-10">Start Now</button>

@@ -47,7 +47,7 @@ export default function InfoCard({ number, unit, text, url }: InfoCardType) {
 				{getPartialNumber(number)} {unit}
 			</h2>
 			<p className="normal-text mb-8">{text}</p>
-			<a className="colorful-button cursor-pointer" href={url} target="_blank">
+			<a className="colorful-button cursor-pointer py-1" href={url} target="_blank">
 				Learn More
 			</a>
 		</div>
