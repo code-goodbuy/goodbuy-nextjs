@@ -3,7 +3,10 @@ import { AppProps } from "next/app";
 import Layout from "../components/common/Layout";
 import UIContextProvider from "../lib/context/UIContext";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function GoodBuy({ Component, pageProps }: AppProps) {
+	/**
+	 * Renders The WebApp
+	 */
 	return (
 		<UIContextProvider>
 			<Layout>
@@ -13,4 +16,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 	);
 }
 
-export default MyApp;
+export default GoodBuy;
