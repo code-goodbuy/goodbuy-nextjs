@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { UIContext } from "../../lib/context/UIContext";
 
 export default function NavLinks({ className }: { className: string }) {
-	const { showMenu, toggleShowMenu, toggleColorMode, colorMode } = useContext(UIContext);
+	const { toggleColorMode, colorMode } = useContext(UIContext);
 	return (
 		<div className={className}>
 			<p

@@ -4,7 +4,7 @@ import { UIContext } from "../../lib/context/UIContext";
 import NavLinks from "./NavLinks";
 
 export default function Header() {
-	const { showMenu, toggleShowMenu, toggleColorMode, colorMode } = useContext(UIContext);
+	const { showMenu, toggleShowMenu } = useContext(UIContext);
 	return (
 		<header className="fixed inset-x-0 normal-bg border-b-2 colorful-border z-50">
 			<div className="normal-text flex-horizontal justify-between items-center px-4 py-1">
