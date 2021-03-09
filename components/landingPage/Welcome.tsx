@@ -3,6 +3,9 @@ import TextTransition, { presets } from "react-text-transition";
 import Image from "next/image";
 
 export default function Welcome() {
+	/**
+	 * Responsive "Welcome" Section Of The Landing Page
+	 */
 	const products = [
 		"avocado",
 		"chocolate bar",

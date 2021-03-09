@@ -2,6 +2,9 @@ import Image from "next/image";
 import Person from "./Person";
 
 export default function About() {
+	/**
+	 * The "About" Section In The Landing Page
+	 */
 	return (
 		<div className="flex flex-col normal-bg min-h-screen h-full" id="about">
 			<h2 className="section-header">About Goodbuy</h2>

@@ -2,6 +2,15 @@ import Image from "next/image";
 import { PersonType } from "../../lib/types/HelperTypes";
 
 export default function Person({ fullName, role, url, path }: PersonType) {
+	/**
+	 * Person Component With Phote, Name, And Roles
+	 *
+	 * Props:
+	 * fullName: string;
+	 * role: string;
+	 * url: string, valid URL to linkedin profile;
+	 * path: string, to image in the public folder
+	 */
 	return (
 		<div className="mx-10 lg:mx-4 xl:mx-10 flex flex-col items-center space-y-2 my-4">
 			<Image

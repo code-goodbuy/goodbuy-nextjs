@@ -4,6 +4,9 @@ import { UIContext } from "../../lib/context/UIContext";
 import NavLinks from "./NavLinks";
 
 export default function Header() {
+	/**
+	 * Responsive Header Component
+	 */
 	const { showMenu, toggleShowMenu } = useContext(UIContext);
 	return (
 		<header className="fixed inset-x-0 normal-bg border-b-2 colorful-border z-50">

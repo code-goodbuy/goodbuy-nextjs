@@ -2,6 +2,9 @@ import Image from "next/image";
 import InfoCard from "./InfoCard";
 
 export default function Mission() {
+	/**
+	 * The "Our Mission" Section Of The Landing Page
+	 */
 	return (
 		<div className="normal-bg flex flex-col min-h-screen h-full" id="mission">
 			<h2 data-testid="mission-title" className="section-header">

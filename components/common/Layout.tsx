@@ -3,6 +3,9 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 const Layout = ({ children }: ReactChildrenType) => {
+	/**
+	 * Layout Component Tht Renders Elements Common To All Pages
+	 */
 	return (
 		<>
 			<Header />

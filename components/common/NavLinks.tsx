@@ -3,6 +3,9 @@ import { useContext } from "react";
 import { UIContext } from "../../lib/context/UIContext";
 
 export default function NavLinks({ className }: { className: string }) {
+	/**
+	 * Landing Page Nav Links
+	 */
 	const { toggleColorMode, colorMode } = useContext(UIContext);
 	return (
 		<div className={className}>
