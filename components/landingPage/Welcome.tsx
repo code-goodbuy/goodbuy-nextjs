@@ -72,7 +72,7 @@ export default function Welcome() {
 					<button className="colorful-button self-center mt-10">Start Now</button>
 				</div>
 				<div>
-					<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-lg lg:max-w-full lg:w-7xl">
+					<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-lg lg:max-w-full lg:w-7xl lg:mt-4">
 						<Image
 							className="rounded-3xl"
 							src="/pics/bear.jpg"
