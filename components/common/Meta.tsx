@@ -21,7 +21,11 @@ const Meta = ({ title, keywords, description }: MetaType) => {
 			<meta name="description" content={description} />
 			<meta name="theme-color" content={colorMode === "dark" ? "#000000" : "#ffffff"} />
 			<meta charSet="utf-8" />
-			<link rel="icon" href="/favicon.ico" />
+			<link rel="icon" href="/icons/favicon.ico" />
+			<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+			<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+			<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+			<link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#0197f6" />
 			<title>{title}</title>
 		</Head>
 	);
