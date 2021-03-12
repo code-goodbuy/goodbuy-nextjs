@@ -1,10 +1,14 @@
-import styles from "../../styles/LandingPage.module.css";
+import About from "./About";
+import Mission from "./Mission";
+import Welcome from "./Welcome";
 
 export default function LandingPage() {
+	/**
+	 * Groups The Landing Page Components
+	 */
 	return (
-		<div className={styles.container}>
-			<h1>Hello, Welcome to GoodBuy</h1>
-			<p>It looks empty now but it won't in the future 😀</p>
-		</div>
+		<>
+			<Welcome /> <Mission /> <About />
+		</>
 	);
 }

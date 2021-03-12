@@ -1,13 +1,19 @@
 import "../styles/globals.css";
 import { AppProps } from "next/app";
 import Layout from "../components/common/Layout";
+import UIContextProvider from "../lib/context/UIContext";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function GoodBuy({ Component, pageProps }: AppProps) {
+	/**
+	 * Renders The WebApp
+	 */
 	return (
-		<Layout>
-			<Component {...pageProps} />
-		</Layout>
+		<UIContextProvider>
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
+		</UIContextProvider>
 	);
 }
 
-export default MyApp;
+export default GoodBuy;
