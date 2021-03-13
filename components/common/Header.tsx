@@ -24,17 +24,17 @@ export default function Header() {
 				</div>
 				<button
 					onClick={toggleShowMenu}
-					className="sm:hidden colorful-button px-5"
+					className="md:hidden colorful-button px-5"
 					data-testid="menu"
 				>
 					Menu
 				</button>
 
-				<NavLinks className="space-x-4 hidden sm:flex flex-row" />
+				<NavLinks className="space-x-4 hidden md:flex flex-row" />
 			</div>
 			{showMenu && (
 				<div>
-					<NavLinks className="sm:hidden flex-vertical items-center space-y-4 mb-4 normal-text z-50" />
+					<NavLinks className="md:hidden flex-vertical items-center space-y-4 mb-4 normal-text z-50" />
 				</div>
 			)}
 		</header>
