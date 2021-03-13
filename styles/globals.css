@@ -59,6 +59,9 @@ button {
 .dynamic > div > div {
 	z-index: 1 !important;
 }
+.field {
+	@apply outline-none border-0 p-2 normal-text text-lg bg-gray-200 dark:bg-gray-700 w-4/5 rounded-md;
+}
 .bear-image-bg {
 	background-image: url("/pics/bear.jpg");
 	background-repeat: no-repeat;
