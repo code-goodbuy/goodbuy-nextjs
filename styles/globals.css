@@ -17,6 +17,9 @@ a {
 button {
 	@apply focus:outline-none;
 }
+.action-selector {
+	@apply colorful-text font-bold w-50% text-center text-xl p-5 cursor-pointer;
+}
 .colorful-text {
 	@apply text-primary dark:text-secondary;
 }
