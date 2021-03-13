@@ -16,7 +16,7 @@ const UIContextProvider = ({ children }: ReactChildrenType) => {
 	 *
 	 * Available properties:
 	 *
-	 * colorMode: "loght"|"dark";
+	 * colorMode: "light"|"dark";
 	 * toggleColorMode: (): void;
 	 * showMenu: boolean;
 	 * toggleShowMenu: (): void;
