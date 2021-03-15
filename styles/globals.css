@@ -60,7 +60,10 @@ button {
 	z-index: 1 !important;
 }
 .field {
-	@apply outline-none border-0 p-2 normal-text text-lg bg-gray-200 dark:bg-gray-700 w-4/5 rounded-md;
+	@apply outline-none border-0 p-2 normal-text text-lg bg-gray-200 dark:bg-gray-700 w-4/5 rounded-md mb-8;
+}
+.error-label {
+	@apply self-start ml-10 md:ml-20 text-red-600;
 }
 .bear-image-bg {
 	background-image: url("/pics/bear.jpg");
