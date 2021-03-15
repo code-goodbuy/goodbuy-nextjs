@@ -17,6 +17,7 @@ export default function SignUpForm() {
 	const [isStrongPassord, setIsStrongPassword] = useState<boolean>(true);
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
 	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(true);
+	const [isCheckboxChecked, setIsCheckBoxChecked] = useState<boolean>(false);
 
 	useEffect(() => {
 		/**
@@ -95,6 +96,10 @@ export default function SignUpForm() {
 			<label className="inline-flex items-start self-start ml-10 md:ml-20 mb-8">
 				<input
 					type="checkbox"
+					defaultChecked={isCheckboxChecked || false}
+					onChange={() => {
+						setIsCheckBoxChecked(!isCheckboxChecked);
+					}}
 					className="outline-none border-0 text-primary dark:text-secondary bg-gray-200 dark:bg-gray-700 cursor-pointer w-6 h-6 rounded-sm"
 				/>
 				<span className="normal-text justify-self-start ml-4">
