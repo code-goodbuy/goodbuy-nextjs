@@ -93,7 +93,7 @@ export default function SignUpForm() {
 				value={repeatedPassword || ""}
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
-			<label className="inline-flex items-start self-start ml-10 md:ml-20 mb-8">
+			<label className="w-4/5 mb-8">
 				<input
 					type="checkbox"
 					defaultChecked={isCheckboxChecked || false}
