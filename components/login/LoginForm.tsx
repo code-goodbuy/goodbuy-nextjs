@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { updateWithoutSpaces, checkEmail, checkLoginForm } from "./helperFunctions";
+import { updateWithoutSpaces, checkEmail } from "./helperFunctions";
 export default function LoginForm() {
 	const [email, setEmail] = useState<string>("");
 	const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
