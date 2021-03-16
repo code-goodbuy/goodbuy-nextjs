@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { updateWithoutSpaces, checkEmail } from "./helperFunctions";
+import { updateWithoutSpaces, checkEmail, checkLoginForm } from "./helperFunctions";
 export default function LoginForm() {
 	const [email, setEmail] = useState<string>("");
 	const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
 	const [password, setPassword] = useState<string>("");
+	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
 	useEffect(() => {
 		/**
@@ -11,6 +12,17 @@ export default function LoginForm() {
 		 */
 		checkEmail(setIsValidEmail, email);
 	}, [email]);
+
+	useEffect(() => {
+		/**
+		 * Checks if the form can be submitted
+		 */
+		if (email !== "" && isValidEmail && password !== "") {
+			setIsValidForm(true);
+		} else {
+			setIsValidForm(false);
+		}
+	}, [email, password, isValidEmail]);
 
 	return (
 		<form
@@ -33,7 +45,12 @@ export default function LoginForm() {
 				value={password || ""}
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
-			<button type="submit" form="login-form" className="colorful-button mb-10">
+			<button
+				type="submit"
+				form="login-form"
+				className="colorful-button mb-6"
+				disabled={!isValidForm}
+			>
 				Log In
 			</button>
 		</form>

@@ -41,6 +41,11 @@ button {
 .colorful-button {
 	@apply bg-primary dark:bg-secondary border-2 border-primary dark:border-secondary rounded-lg ring-4 ring-blue-100 dark:ring-red-200 text-white px-5 focus:ring-0;
 }
+.colorful-button:disabled,
+.colorful-button[disabled] {
+	cursor: not-allowed;
+	@apply normal-bg colorful-text ring-0;
+}
 .colorful-button:hover {
 	@apply bg-white text-primary dark:bg-black dark:text-secondary;
 }
@@ -63,7 +68,7 @@ button {
 	@apply outline-none border-0 p-2 normal-text text-lg bg-gray-200 dark:bg-gray-700 w-4/5 rounded-md mb-8;
 }
 .error-label {
-	@apply self-start ml-10 md:ml-20 text-red-600;
+	@apply w-3/4 text-red-600;
 }
 .bear-image-bg {
 	background-image: url("/pics/bear.jpg");

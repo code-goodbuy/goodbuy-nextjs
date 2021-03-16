@@ -18,6 +18,7 @@ export default function SignUpForm() {
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
 	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(true);
 	const [isCheckboxChecked, setIsCheckBoxChecked] = useState<boolean>(false);
+	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
 	useEffect(() => {
 		/**
@@ -50,6 +51,37 @@ export default function SignUpForm() {
 		 */
 		checkPasswordMatch(setIsRepeatedPasswordCorrect, repeatedPassword, password);
 	}, [repeatedPassword]);
+
+	useEffect(() => {
+		/**
+		 * Checks if the form can be submitted
+		 */
+		if (
+			email !== "" &&
+			isValidEmail &&
+			username !== "" &&
+			isValidUsername &&
+			password !== "" &&
+			isStrongPassord &&
+			repeatedPassword !== "" &&
+			isRepeatedPasswordCorrect &&
+			isCheckboxChecked
+		) {
+			setIsValidForm(true);
+		} else {
+			setIsValidForm(false);
+		}
+	}, [
+		email,
+		isValidEmail,
+		username,
+		isValidUsername,
+		password,
+		isStrongPassord,
+		repeatedPassword,
+		isRepeatedPasswordCorrect,
+		isCheckboxChecked
+	]);
 
 	return (
 		<form
@@ -114,7 +146,12 @@ export default function SignUpForm() {
 					.
 				</span>
 			</label>
-			<button type="submit" form="login-form" className="colorful-button mb-10">
+			<button
+				type="submit"
+				form="login-form"
+				className="colorful-button mb-6"
+				disabled={!isValidForm}
+			>
 				Sign Up
 			</button>
 		</form>
