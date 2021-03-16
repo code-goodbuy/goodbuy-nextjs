@@ -20,6 +20,7 @@ export default function SignUpForm() {
 	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
 	const [hasRequiredAge, setHasRequiredAge] = useState<boolean>(false);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
+	const BASE_URL = "http://ec2-52-59-207-201.eu-central-1.compute.amazonaws.com";
 
 	useEffect(() => {
 		/**
@@ -85,6 +86,29 @@ export default function SignUpForm() {
 		hasAcceptedTerms,
 		hasRequiredAge
 	]);
+
+	const handleSignUp = async () => {
+		//test the sign up function
+		setIsValidForm(false);
+		const userData = {
+			email,
+			username,
+			password,
+			acceptedTerms: hasAcceptedTerms,
+			hasRequiredAge
+		};
+
+		const response = await fetch(BASE_URL + "/register", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(userData)
+		});
+		const responseData = await response.json();
+		setIsValidForm(true);
+		console.log(responseData);
+	};
 
 	return (
 		<form
@@ -160,7 +184,13 @@ export default function SignUpForm() {
 				/>
 				<span className="normal-text justify-self-start ml-4">I am 16 or older.</span>
 			</label>
-			<button type="submit" form="login-form" className="colorful-button" disabled={!isValidForm}>
+			<button
+				type="submit"
+				form="login-form"
+				className="colorful-button"
+				disabled={!isValidForm}
+				onClick={handleSignUp}
+			>
 				Sign Up
 			</button>
 		</form>
