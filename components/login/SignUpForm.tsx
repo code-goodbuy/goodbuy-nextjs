@@ -17,7 +17,8 @@ export default function SignUpForm() {
 	const [isStrongPassord, setIsStrongPassword] = useState<boolean>(true);
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
 	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(true);
-	const [isCheckboxChecked, setIsCheckBoxChecked] = useState<boolean>(false);
+	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
+	const [hasRequiredAge, setHasRequiredAge] = useState<boolean>(false);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -65,7 +66,8 @@ export default function SignUpForm() {
 			isStrongPassord &&
 			repeatedPassword !== "" &&
 			isRepeatedPasswordCorrect &&
-			isCheckboxChecked
+			hasAcceptedTerms &&
+			hasRequiredAge
 		) {
 			setIsValidForm(true);
 		} else {
@@ -80,7 +82,8 @@ export default function SignUpForm() {
 		isStrongPassord,
 		repeatedPassword,
 		isRepeatedPasswordCorrect,
-		isCheckboxChecked
+		hasAcceptedTerms,
+		hasRequiredAge
 	]);
 
 	return (
@@ -128,9 +131,9 @@ export default function SignUpForm() {
 			<label className="w-4/5 mb-8">
 				<input
 					type="checkbox"
-					defaultChecked={isCheckboxChecked || false}
+					defaultChecked={hasAcceptedTerms || false}
 					onChange={() => {
-						setIsCheckBoxChecked(!isCheckboxChecked);
+						setHasAcceptedTerms(!hasAcceptedTerms);
 					}}
 					className="outline-none border-0 text-primary dark:text-secondary bg-gray-200 dark:bg-gray-700 cursor-pointer w-6 h-6 rounded-sm"
 				/>
@@ -146,12 +149,18 @@ export default function SignUpForm() {
 					.
 				</span>
 			</label>
-			<button
-				type="submit"
-				form="login-form"
-				className="colorful-button mb-6"
-				disabled={!isValidForm}
-			>
+			<label className="w-4/5 mb-8">
+				<input
+					type="checkbox"
+					defaultChecked={hasRequiredAge || false}
+					onChange={() => {
+						setHasRequiredAge(!hasRequiredAge);
+					}}
+					className="outline-none border-0 text-primary dark:text-secondary bg-gray-200 dark:bg-gray-700 cursor-pointer w-6 h-6 rounded-sm"
+				/>
+				<span className="normal-text justify-self-start ml-4">I am 16 or older.</span>
+			</label>
+			<button type="submit" form="login-form" className="colorful-button" disabled={!isValidForm}>
 				Sign Up
 			</button>
 		</form>
