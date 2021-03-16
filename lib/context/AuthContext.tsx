@@ -6,6 +6,8 @@ interface AuthType {
 	changeIsAuthenticating?: (newValue: boolean) => void;
 	isLoggedIn?: boolean;
 	toggleIsLoggedIn?: () => void;
+	JWT?: string;
+	updateJWT?: (newJWT: string) => void;
 }
 
 export const AuthContext = createContext<AuthType>({});
@@ -23,6 +25,7 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 	 */
 	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+	const [JWT, setJWT] = useState<string>("");
 
 	const changeIsAuthenticating = (newValue: boolean): void => {
 		/**
@@ -36,9 +39,19 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 		 */
 		setIsLoggedIn((current) => !current);
 	};
+	const updateJWT = (newJWT: string): void => {
+		setJWT(newJWT);
+	};
 	return (
 		<AuthContext.Provider
-			value={{ isAuthenticating, changeIsAuthenticating, isLoggedIn, toggleIsLoggedIn }}
+			value={{
+				isAuthenticating,
+				changeIsAuthenticating,
+				isLoggedIn,
+				toggleIsLoggedIn,
+				JWT,
+				updateJWT
+			}}
 		>
 			{children}
 		</AuthContext.Provider>
