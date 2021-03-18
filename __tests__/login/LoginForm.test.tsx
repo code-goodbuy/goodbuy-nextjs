@@ -3,12 +3,14 @@ import "@testing-library/jest-dom";
 import LoginForm from "../../components/login/LoginForm";
 
 describe("Test login form", () => {
-	let expectedValidEmail: string, expectedInvalidEmail: string, expectedPassword: string;
+	let expected: { validEmail: string; invalidEmail: string; password: string };
 
 	beforeEach(() => {
-		expectedInvalidEmail = "name(at)domain.something";
-		expectedValidEmail = "name@doamin.something";
-		expectedPassword = "somePassword0";
+		expected = {
+			invalidEmail: "name(at)domain.something",
+			validEmail: "name@doamin.something",
+			password: "somePassword0"
+		};
 	});
 
 	it("shouldn't have a clickable button", async () => {
@@ -19,8 +21,8 @@ describe("Test login form", () => {
 		const submit = getByText("Log In");
 
 		await act(async () => {
-			fireEvent.change(emailField, { target: { value: expectedInvalidEmail } });
-			fireEvent.change(passwordField, { target: { value: expectedPassword } });
+			fireEvent.change(emailField, { target: { value: expected.invalidEmail } });
+			fireEvent.change(passwordField, { target: { value: expected.password } });
 		});
 
 		expect(submit).toBeDisabled();
@@ -34,8 +36,8 @@ describe("Test login form", () => {
 		const submit = getByText("Log In");
 
 		await act(async () => {
-			fireEvent.change(emailField, { target: { value: expectedValidEmail } });
-			fireEvent.change(passwordField, { target: { value: expectedPassword } });
+			fireEvent.change(emailField, { target: { value: expected.validEmail } });
+			fireEvent.change(passwordField, { target: { value: expected.password } });
 		});
 
 		expect(submit).not.toBeDisabled();
