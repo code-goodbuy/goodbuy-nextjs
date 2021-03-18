@@ -87,7 +87,7 @@ export default function SignUpForm() {
 		hasRequiredAge
 	]);
 
-	const handleSignUp = async () => {
+	const handleSignUp = () => {
 		//test the sign up function
 		setIsValidForm(false);
 		const userData = {
@@ -98,16 +98,19 @@ export default function SignUpForm() {
 			hasRequiredAge
 		};
 
-		const response = await fetch(BASE_URL + "/register", {
+		fetch(BASE_URL + "/register", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(userData)
-		});
-		const responseData = await response.json();
-		setIsValidForm(true);
-		console.log(responseData);
+		})
+			.then((res) => res.json())
+			.then((data) => console.log(data))
+			.catch((err) => console.log(err))
+			.finally(() => {
+				setIsValidForm(true);
+			});
 	};
 
 	return (
@@ -116,7 +119,11 @@ export default function SignUpForm() {
 			id="login-form"
 			className="flex flex-col justify-center items-center my-14"
 		>
-			{!isValidEmail && <label className="error-label">This email is not valid</label>}
+			{!isValidEmail && (
+				<label data-testid="emailError" className="error-label">
+					This email is not valid
+				</label>
+			)}
 			<input
 				type="text"
 				placeholder="email"
@@ -124,7 +131,11 @@ export default function SignUpForm() {
 				value={email || ""}
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
-			{!isValidUsername && <label className="error-label">This username is not valid</label>}
+			{!isValidUsername && (
+				<label data-testid="usernameError" className="error-label">
+					This username is not valid
+				</label>
+			)}
 			<input
 				type="text"
 				placeholder="username"
@@ -133,7 +144,9 @@ export default function SignUpForm() {
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
 			{!isStrongPassord && (
-				<label className="error-label">This password is not strong enough</label>
+				<label data-testid="passwordError" className="error-label">
+					This password is not strong enough
+				</label>
 			)}
 			<input
 				type="password"
@@ -143,7 +156,9 @@ export default function SignUpForm() {
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
 			{!isRepeatedPasswordCorrect && (
-				<label className="error-label">The passwords do not match</label>
+				<label data-testid="repeatedPasswordError" className="error-label">
+					The passwords do not match
+				</label>
 			)}
 			<input
 				type="password"
@@ -154,6 +169,7 @@ export default function SignUpForm() {
 			/>
 			<label className="w-4/5 mb-8">
 				<input
+					data-testid="termsCheckbox"
 					type="checkbox"
 					defaultChecked={hasAcceptedTerms || false}
 					onChange={() => {
@@ -175,6 +191,7 @@ export default function SignUpForm() {
 			</label>
 			<label className="w-4/5 mb-8">
 				<input
+					data-testid="ageCheckbox"
 					type="checkbox"
 					defaultChecked={hasRequiredAge || false}
 					onChange={() => {
