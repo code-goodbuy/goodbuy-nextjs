@@ -4,10 +4,8 @@ export const updateWithoutSpaces = (updater: Dispatch<SetStateAction<string>>, v
 	/**
 	 * Takes in input the updater state function and the new value, updates the value in the state only if the new character is not a space
 	 */
-	const lastChar = value.substr(value.length - 1, 1);
-	if (lastChar !== " ") {
-		updater(value);
-	}
+
+	updater(value.replace(/\s/g, ""));
 };
 
 export const checkEmail = (updater: Dispatch<SetStateAction<boolean>>, email: string): void => {
