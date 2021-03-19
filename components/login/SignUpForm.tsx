@@ -20,7 +20,7 @@ export default function SignUpForm() {
 	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
 	const [hasRequiredAge, setHasRequiredAge] = useState<boolean>(false);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
-	const BASE_URL = "http://ec2-52-59-207-201.eu-central-1.compute.amazonaws.com";
+	const BASE_URL = "https://18.197.135.126/register";
 
 	useEffect(() => {
 		/**
