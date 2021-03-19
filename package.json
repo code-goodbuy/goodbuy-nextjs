@@ -33,5 +33,5 @@
 			"\\.(css|less)$": "<rootDir>/__mocks__/styleMock.ts"
 		}
 	},
-	"proxy": "http://ec2-52-59-207-201.eu-central-1.compute.amazonaws.com"
+	"proxy": "https://18.197.135.126"
 }
