@@ -1,4 +1,4 @@
-import { render, act, fireEvent } from "@testing-library/react";
+import { render, act, fireEvent, waitForElementToBeRemoved, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SignUpForm from "../../components/login/SignUpForm";
 
@@ -21,6 +21,10 @@ describe("test sign up form", () => {
 			validPassword: "somePassword1",
 			invalidPassword: "1111221"
 		};
+	});
+
+	afterEach(() => {
+		cleanup();
 	});
 
 	it("should display errors and shouldn't have a clickable submit button", async () => {
