@@ -27,10 +27,15 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
   
         if (result) {
           alert(JSON.stringify(result));
+          // FIXME parsing result object gone wrong
+          // @ts-ignore
+          const scanResult= JSON.parse(result);
+          alert("Barcode Number: " + scanResult);
         }
       }
     );
-    setTimeout(() => controls.stop(), 10000);
+    // FIXME force camera stop after 30s 
+    setTimeout(() => controls.stop(), 30000);
   
     return controls;
   };
