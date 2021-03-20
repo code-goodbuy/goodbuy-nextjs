@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
     BrowserMultiFormatOneDReader,
-    BrowserMultiFormatReader,
+    // BrowserMultiFormatReader,
     IScannerControls
 } from "@zxing/browser";
 
@@ -34,20 +34,6 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
     return controls;
   };
   
-  const getQRCodeReaderControls2 = async (imgUrl: any) => {
-    const codeReader = new BrowserMultiFormatOneDReader();
-    try {
-      const result = await codeReader.decodeFromImageUrl(imgUrl);
-      console.log(result);
-  
-      if (result) {
-        alert(JSON.stringify(result));
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  
   type Device = {
     deviceId: string;
     label: string;
@@ -57,11 +43,7 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
     const controlsRef = useRef<IScannerControls | null>(null);
     const [selectedDeviceId, setSelectedDeviceId] = useState("");
     const [devices, setDevices] = useState<Array<Device>>([]);
-    const [file, setFile] = useState<string | undefined>();
-  
-    const handleChange = (event: any) => {
-      setFile(URL.createObjectURL(event.target.files[0]));
-    };
+
   
     useEffect(() => {
       const getDevices = async () => {
