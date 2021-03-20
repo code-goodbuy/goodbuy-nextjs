@@ -1,4 +1,4 @@
-import { render, act, fireEvent, waitForElementToBeRemoved, cleanup } from "@testing-library/react";
+import { render, act, fireEvent, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SignUpForm from "../../components/login/SignUpForm";
 
