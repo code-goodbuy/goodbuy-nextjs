@@ -12,7 +12,7 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
     const videoElem = previewElem as HTMLVideoElement;
   
     // you can use the controls to stop() the scan or switchTorch() if available
-  
+    
     // decodeOnceFromVideoDevice
     const controls = await codeReader.decodeFromVideoDevice(
       selectedDeviceId,
@@ -30,6 +30,7 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
         }
       }
     );
+    setTimeout(() => controls.stop(), 10000);
   
     return controls;
   };
