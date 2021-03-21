@@ -21,15 +21,18 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 			// use the result and error values to choose your actions
 			// you can also use controls API in this scope like the controls
 			// returned from the method.
-			console.log("---- result: ", result);
-			console.log("---- error: ", error);
-			console.log("---- controls: ", controls);
+			// console.log("---- result: ", result);
+			// console.log("---- error: ", error);
+			// console.log("---- controls: ", controls);
 
 			if (result) {
 				// FIXME parsing result object gone wrong
 				// @ts-ignore
 				const scanResult = JSON.parse(result);
 				alert(scanResult);
+				console.log(controls);
+				console.log(result.getBarcodeFormat);
+
 
 				// TODO connect to api server later
 
