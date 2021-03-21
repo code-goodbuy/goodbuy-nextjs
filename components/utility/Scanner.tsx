@@ -66,7 +66,7 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 			}
 		}
 	);
-	
+
 	// FIXME force camera stop after 30s 
 	setTimeout(() => controls.stop(), 30000);
 
@@ -104,6 +104,7 @@ const ScanBarcode: React.FC = () => {
 	return (
 		<div>
 			<div id="sourceSelectPanel">
+				<br />
 				<label htmlFor="sourceSelect">Select the camera:</label>
 				<select
 					id="sourceSelect"
@@ -120,22 +121,24 @@ const ScanBarcode: React.FC = () => {
           (if you change the selected camera, please click again the Start button)
         </div>
 			<br />
-			<button
-				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-				onClick={async () => {
-					controlsRef.current = await getQRCodeReaderControls(selectedDeviceId);
-				}}
-			>
-				Start
+			<div className="space-x-3">
+				<button
+					className="colorful-button"
+					onClick={async () => {
+						controlsRef.current = await getQRCodeReaderControls(selectedDeviceId);
+					}}
+				>
+					Start
         </button>{" "}
-			<button
-				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-				onClick={() => {
-					controlsRef.current?.stop();
-				}}
-			>
-				Stop
+				<button
+					className="colorful-button"
+					onClick={() => {
+						controlsRef.current?.stop();
+					}}
+				>
+					Stop
         </button>
+			</div>
 		</div>
 	);
 };
@@ -169,9 +172,6 @@ const ScannerPage: React.FC = () => {
 										className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
 										onClick={() => setShowModal(false)}
 									>
-										<span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-											×
-                      </span>
 									</button>
 								</div>
 								{/*body*/}
@@ -187,17 +187,17 @@ const ScannerPage: React.FC = () => {
 									</div>
 								</div>
 								{/*footer*/}
-								<div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+								<div className="flex items-center space-x-3 justify-end p-6 border-t border-solid border-gray-300 rounded-b">
 									<button
-										className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+										className="colorful-button"
 										type="button"
-										style={{ transition: "all .15s ease" }}
+										style={{ transition: "all .15s ease", backgroundColor: "#EF4444", borderColor: "#EF4444" }}
 										onClick={() => setShowModal(false)}
 									>
 										Close
                     </button>
 									<button
-										className="bg-blue-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+										className="colorful-button"
 										type="button"
 										style={{ transition: "all .15s ease" }}
 										onClick={() => setShowModal(false)}
