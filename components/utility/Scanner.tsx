@@ -30,24 +30,8 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 				// @ts-ignore
 				const scanResult = JSON.parse(result);
 				alert(scanResult);
-
-				// async function postBarcode(url = '', data: String) {
-				// 	const response = await fetch(url, {
-				// 		method: 'POST',
-				// 		mode: 'cors',
-				// 		cache: 'no-cache',
-				// 		credentials: 'same-origin',
-				// 		headers: {
-				// 			'Content-Type': 'application/json'
-				// 		},
-				// 		referrerPolicy: 'no-referrer',
-				// 		body: JSON.stringify(data)
-				// 	});
-				// 	return response.json();
-				// }
-				// postBarcode(BASE_URL + "/post-barcode", scanResult)
-				// 	.then(data => { console.log(data) })
-				// 	.catch(error => { console.log(error) })
+				// FIXME below delete later
+				alert(`${BASE_URL + '/product/:' + scanResult}`);
 
 				fetch(BASE_URL + "/product" + scanResult, {
 					method: "POST",
