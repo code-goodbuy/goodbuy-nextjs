@@ -10,7 +10,7 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 	const previewElem = document.querySelector("video");
 	const videoElem = previewElem as HTMLVideoElement;
 
-	const BASE_URL = "https://18.197.135.126";
+	const BASE_URL = "https://gb-be.de/";
 
 	// Use decodeFromConstrains() if switchTorch() necessary
 
@@ -30,11 +30,6 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 				// @ts-ignore
 				const scanResult = JSON.parse(result);
 				alert(scanResult);
-				console.log(controls);
-				console.log(result.getBarcodeFormat);
-
-
-				// TODO connect to api server later
 
 				// async function postBarcode(url = '', data: String) {
 				// 	const response = await fetch(url, {
@@ -54,7 +49,7 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 				// 	.then(data => { console.log(data) })
 				// 	.catch(error => { console.log(error) })
 
-				fetch(BASE_URL + "/barcode-number", {
+				fetch(BASE_URL + "/product" + scanResult, {
 					method: "POST",
 					mode: 'cors',
 					cache: 'no-cache',
@@ -170,9 +165,9 @@ const ScannerPage: React.FC = () => {
 							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
 								{/*header*/}
 								<div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-									<h3 
-									className="text-3xl font-semibold"
-									data-testid="scanner-title"
+									<h3
+										className="text-3xl font-semibold"
+										data-testid="scanner-title"
 									>
 										Barcode
                     </h3>
