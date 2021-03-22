@@ -3,6 +3,8 @@ import "@testing-library/jest-dom";
 import Header from "../components/common/Header";
 import ScannerPage from "../components/utility/Scanner";
 
+// NOTE UnhandledPromiseRejectionWarning: can't make a camera list on desktop
+
 describe("Test ScannerPage link", () => {
   it("should have a scanner page link", () => {
     const { getByTestId } = render(<Header />);
@@ -12,19 +14,27 @@ describe("Test ScannerPage link", () => {
 });
 
 describe("Test ScannerPage modal", () => {
-  it("opens modal and check elements", () => {
+  it("opens modal and check inside", () => {
     render(<Header />);
-    // open scanner modal
-    fireEvent.click(screen.getByText('Scanner'));
-    // FIXME checks the title of the modal
-    expect(screen.getByText("Barcode")).toBeInTheDocument();
-    // checks the decoder 
-    expect(screen.getByTestId("video-elm")).toBeInTheDocument();
-    //  checks the dropdown select of the camera list
-    expect(screen.getByTestId("camera-select")).toBeInTheDocument();
-    
-    // screen.debug();
+    // modal opened
+    fireEvent.click(screen.getByText('Scanner'))
+    // checks title
+    expect(screen.getByText('Barcode')).toBeVisible();
+    // checks button trigger decoder
+    const startButton = screen.getByText('Start');
+    fireEvent.click(startButton);
+    expect(screen.queryByText('video')).toBeInTheDocument;
   })
 })
 
+describe("Test scanner modal decoder video preview", () => {
+  it("checks it's triggered after start button clicked", () => {
+    render(<Header />);
+    fireEvent.click(screen.getByText('Scanner'));
+    const startButton = screen.getByText('Start');
+    fireEvent.click(startButton);
+    expect(screen.queryByText('video')).toBeInTheDocument;
+    // screen.debug();
+  })
+})
 
