@@ -113,6 +113,7 @@ const ScanBarcode: React.FC = () => {
 					id="sourceSelect"
 					value={selectedDeviceId}
 					onChange={(event) => setSelectedDeviceId(event.target.value)}
+					data-testid="camera-select"
 				>
 					{devices.map(({ deviceId, label }) => (
 						<option key={deviceId} value={deviceId}>
@@ -154,6 +155,7 @@ const ScannerPage: React.FC = () => {
 				type="button"
 				style={{ transition: "all .15s ease", cursor: "pointer" }}
 				onClick={() => setShowModal(true)}
+				data-testid="scanner-title"
 			>
 				Scanner
             </a>
@@ -168,8 +170,11 @@ const ScannerPage: React.FC = () => {
 							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
 								{/*header*/}
 								<div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-									<h3 className="text-3xl font-semibold">
-										Scanner
+									<h3 
+									className="text-3xl font-semibold"
+									data-testid="scanner-title"
+									>
+										Barcode
                     </h3>
 									<button
 										className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -185,6 +190,7 @@ const ScannerPage: React.FC = () => {
 											width="600"
 											height="400"
 											style={{ border: "1px solid gray" }}
+											data-testid="video-elm"
 										></video>
 										<ScanBarcode />
 									</div>
