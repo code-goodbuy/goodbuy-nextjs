@@ -17,12 +17,12 @@ export default function NavLinks({ className }: { className: string }) {
 			>
 				{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
 			</p>
-			<p
+			<div
 				className="hover:text-primary dark:hover:text-secondary"
 				data-testid="scannerPage"
 			>
 				<ScannerPage />
-			</p>
+			</div>
 			<p className="hover:text-primary dark:hover:text-secondary">
 				<Link href="#mission">Our Mission</Link>
 			</p>
