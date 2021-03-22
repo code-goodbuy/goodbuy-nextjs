@@ -33,5 +33,5 @@
 			"\\.(css|less)$": "<rootDir>/__mocks__/styleMock.ts"
 		}
 	},
-	"proxy": "https://18.197.135.126"
+	"proxy": "https://gb-be.de"
 }
