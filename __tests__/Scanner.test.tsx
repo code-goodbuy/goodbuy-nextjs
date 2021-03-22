@@ -4,13 +4,12 @@ import Header from "../components/common/Header";
 import ScannerPage from "../components/utility/Scanner";
 
 describe("Test ScannerPage", () => {
-  it("should have a scanner page link", async () => {
+  it("should have a scanner page link", () => {
     const { getByTestId } = render(<Header />);
     const scannerButton = getByTestId("scannerPage");
-    await act(async () => {
-      fireEvent.click(scannerButton);
-    });
     expect(scannerButton).toHaveTextContent("Scanner");
   });
 });
+
+
 
