@@ -20,7 +20,7 @@ export default function SignUpForm() {
 	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
 	const [hasRequiredAge, setHasRequiredAge] = useState<boolean>(false);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
-	const BASE_URL = "https://18.197.135.126";
+	const BASE_URL = "https://gb-be.de";
 
 	useEffect(() => {
 		/**
