@@ -18,5 +18,5 @@ The structure of this project is heavily inspired on [this repo](https://github.
 
 
 ## WIP: Barcode Scanner
-You can test the scanner at https://goodbuy-scanner-test.netlify.app/
+You can test the scanner at https://goodbuy-barcode-scanner.netlify.app/
 
