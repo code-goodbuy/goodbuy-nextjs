@@ -34,7 +34,7 @@ const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 				alert(`${BASE_URL + 'product/' + scanResult}`);
 
 				fetch(BASE_URL + 'product/' + scanResult, {
-					method: "POST",
+					method: "GET",
 					mode: 'cors',
 					cache: 'no-cache',
 					credentials: 'same-origin',
