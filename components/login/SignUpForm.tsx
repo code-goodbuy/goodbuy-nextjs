@@ -193,7 +193,6 @@ export default function SignUpForm({ setAction }: Props) {
 				<input
 					data-testid="termsCheckbox"
 					type="checkbox"
-					defaultChecked={hasAcceptedTerms || false}
 					checked={hasAcceptedTerms || false}
 					onChange={() => {
 						setHasAcceptedTerms(!hasAcceptedTerms);
@@ -216,7 +215,6 @@ export default function SignUpForm({ setAction }: Props) {
 				<input
 					data-testid="ageCheckbox"
 					type="checkbox"
-					defaultChecked={hasRequiredAge || false}
 					checked={hasRequiredAge || false}
 					onChange={() => {
 						setHasRequiredAge(!hasRequiredAge);
