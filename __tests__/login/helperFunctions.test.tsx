@@ -58,7 +58,7 @@ describe("test login helper functions", () => {
 	});
 
 	it("should check the password and return true", () => {
-		checkPasswordStrength(mockedUpdater, "StrongPassw0rd");
+		checkPasswordStrength(mockedUpdater, "Strong~Passw0rd");
 
 		assertFn(true);
 	});

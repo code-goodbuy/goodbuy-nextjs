@@ -47,7 +47,8 @@ export const checkPasswordStrength = (
 			password.length < 51 &&
 			password.match(/[a-z]+/) &&
 			password.match(/[A-Z]+/) &&
-			password.match(/[0-9]+/)
+			password.match(/[0-9]+/) &&
+			password.match(/[-_+=()!?@#\$%\^&\*{[}\].,<>'":;/|\\`~]+/)
 		) {
 			updater(true);
 		} else {

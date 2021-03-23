@@ -13,7 +13,7 @@ describe("test sign up logic", () => {
 		expected = {
 			validEmail: "someone@email.com",
 			validUsername: "usertest",
-			validPassword: "somePassword1"
+			validPassword: "somePassword1!"
 		};
 	});
 
