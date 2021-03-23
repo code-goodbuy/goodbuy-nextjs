@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import InfoCard, { getPartialNumber } from "../components/landingPage/InfoCard";
-import { InfoCardType } from "../lib/types/HelperTypes";
+import InfoCard, { getPartialNumber } from "../../components/landingPage/InfoCard";
+import { InfoCardType } from "../../lib/types/HelperTypes";
 
 describe("Test InfoCard", () => {
 	/**

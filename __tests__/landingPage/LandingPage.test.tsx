@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import LandingPage from "../components/landingPage/LandingPage";
+import LandingPage from "../../components/landingPage/LandingPage";
 
 describe("Test landing page", () => {
 	it("shouhld render the titles", async () => {

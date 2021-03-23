@@ -33,7 +33,9 @@ module.exports = {
 				"25": "25vw",
 				"30": "30vw",
 				"50": "50vw",
+				"50%": "50%",
 				"75": "75vw",
+				"90": "90vw",
 				"100": "100vh"
 			},
 			height: {
@@ -47,5 +49,5 @@ module.exports = {
 	variants: {
 		extend: {}
 	},
-	plugins: []
+	plugins: [require("@tailwindcss/forms")]
 };
