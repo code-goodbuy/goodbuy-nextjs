@@ -1,6 +1,16 @@
-import { render, act, fireEvent } from "@testing-library/react";
+import { render, act, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SignUpForm from "../../components/login/SignUpForm";
+
+async function mockFetch() {
+	return new Promise((resolve, reject) => {
+		resolve({
+			ok: true,
+			status: 200,
+			json: async () => ({ "message": "User creation mocked successfully" })
+		});
+	});
+}
 
 describe("test sign up logic", () => {
 	let expected: {
@@ -10,6 +20,7 @@ describe("test sign up logic", () => {
 	};
 
 	beforeEach(() => {
+		global.fetch = jest.fn().mockImplementation(mockFetch);
 		expected = {
 			validEmail: "someone@email.com",
 			validUsername: "usertest",
@@ -17,8 +28,10 @@ describe("test sign up logic", () => {
 		};
 	});
 
-	it("should have a clickable submit button", async () => {
-		const { getByPlaceholderText, getByText, getByTestId } = render(<SignUpForm />);
+	it("should call the fetch API", async () => {
+		const { getByPlaceholderText, getByText, getByTestId } = render(
+			<SignUpForm setAction={() => {}} />
+		);
 
 		const emailField = getByPlaceholderText("email");
 		const usernameField = getByPlaceholderText("username");
@@ -26,7 +39,6 @@ describe("test sign up logic", () => {
 		const repeatPasswordField = getByPlaceholderText("repeat password");
 		const termsCheckbox = getByTestId("termsCheckbox");
 		const ageCheckbox = getByTestId("ageCheckbox");
-		const submit = getByText("Sign Up");
 
 		await act(async () => {
 			fireEvent.change(emailField, { target: { value: expected.validEmail } });
@@ -37,6 +49,22 @@ describe("test sign up logic", () => {
 			fireEvent.click(ageCheckbox);
 		});
 
-		expect(submit).not.toBeDisabled();
+		fireEvent.click(getByText("Sign Up"));
+
+		await waitFor(async () =>
+			expect(global.fetch).toHaveBeenCalledWith("https://gb-be.de/register", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					email: expected.validEmail,
+					username: expected.validUsername,
+					password: expected.validPassword,
+					acceptedTerms: true,
+					hasRequiredAge: true
+				})
+			})
+		);
 	});
 });
