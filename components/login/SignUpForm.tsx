@@ -7,19 +7,22 @@ import {
 	checkPasswordStrength,
 	checkPasswordMatch
 } from "./helperFunctions";
+import { SignUpFormTypes as Props } from "../../lib/types/LoginTypes";
 
-export default function SignUpForm() {
+export default function SignUpForm({ setAction }: Props) {
 	const [email, setEmail] = useState<string>("");
-	const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
+	const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>("");
-	const [isValidUsername, setIsValidUsername] = useState<boolean>(true);
+	const [isValidUsername, setIsValidUsername] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
-	const [isStrongPassord, setIsStrongPassword] = useState<boolean>(true);
+	const [isStrongPassord, setIsStrongPassword] = useState<boolean>(false);
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
-	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(true);
+	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(false);
 	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
 	const [hasRequiredAge, setHasRequiredAge] = useState<boolean>(false);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
+	const [isSendingData, setIsSendingData] = useState<boolean>(false);
+	const [serverResponse, setServerResponse] = useState<string>("");
 	const BASE_URL = "https://gb-be.de";
 
 	useEffect(() => {
@@ -60,12 +63,10 @@ export default function SignUpForm() {
 		 */
 		if (
 			email !== "" &&
-			isValidEmail &&
 			username !== "" &&
+			isValidEmail &&
 			isValidUsername &&
-			password !== "" &&
 			isStrongPassord &&
-			repeatedPassword !== "" &&
 			isRepeatedPasswordCorrect &&
 			hasAcceptedTerms &&
 			hasRequiredAge
@@ -76,20 +77,27 @@ export default function SignUpForm() {
 		}
 	}, [
 		email,
-		isValidEmail,
 		username,
+		isValidEmail,
 		isValidUsername,
-		password,
 		isStrongPassord,
-		repeatedPassword,
 		isRepeatedPasswordCorrect,
 		hasAcceptedTerms,
 		hasRequiredAge
 	]);
 
+	const clearForm = () => {
+		setEmail("");
+		setUsername("");
+		setPassword("");
+		setRepeatedPassword("");
+		setHasAcceptedTerms(false);
+		setHasRequiredAge(false);
+	};
+
 	const handleSignUp = () => {
 		//test the sign up function
-		setIsValidForm(false);
+		setIsSendingData(true);
 		const userData = {
 			email,
 			username,
@@ -105,11 +113,22 @@ export default function SignUpForm() {
 			},
 			body: JSON.stringify(userData)
 		})
-			.then((res) => res.json())
-			.then((data) => console.log(data))
-			.catch((err) => console.log(err))
-			.finally(() => {
-				setIsValidForm(true);
+			.then((res) => {
+				if (res.status === 200) {
+					setServerResponse("Success! Redirecting...");
+					setTimeout(() => {
+						setAction("login");
+					}, 2000);
+				} else {
+					setServerResponse("An Error Occured");
+				}
+				clearForm();
+				setIsSendingData(false);
+			})
+			.catch((err) => {
+				console.error(err);
+				setServerResponse("An Error Occured");
+				setIsSendingData(false);
 			});
 	};
 
@@ -119,7 +138,10 @@ export default function SignUpForm() {
 			id="login-form"
 			className="flex flex-col justify-center items-center my-14"
 		>
-			{!isValidEmail && (
+			{serverResponse !== "" && (
+				<div className="pb-10 text-2xl colorful-text">{serverResponse}</div>
+			)}
+			{!isValidEmail && email !== "" && (
 				<label data-testid="emailError" className="error-label">
 					This email is not valid
 				</label>
@@ -131,7 +153,7 @@ export default function SignUpForm() {
 				value={email || ""}
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
-			{!isValidUsername && (
+			{!isValidUsername && username !== "" && (
 				<label data-testid="usernameError" className="error-label">
 					This username is not valid
 				</label>
@@ -143,7 +165,7 @@ export default function SignUpForm() {
 				value={username || ""}
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
-			{!isStrongPassord && (
+			{!isStrongPassord && password !== "" && (
 				<label data-testid="passwordError" className="error-label">
 					This password is not strong enough
 				</label>
@@ -155,7 +177,7 @@ export default function SignUpForm() {
 				value={password || ""}
 				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
 			/>
-			{!isRepeatedPasswordCorrect && (
+			{!isRepeatedPasswordCorrect && repeatedPassword !== "" && (
 				<label data-testid="repeatedPasswordError" className="error-label">
 					The passwords do not match
 				</label>
@@ -172,6 +194,7 @@ export default function SignUpForm() {
 					data-testid="termsCheckbox"
 					type="checkbox"
 					defaultChecked={hasAcceptedTerms || false}
+					checked={hasAcceptedTerms || false}
 					onChange={() => {
 						setHasAcceptedTerms(!hasAcceptedTerms);
 					}}
@@ -194,6 +217,7 @@ export default function SignUpForm() {
 					data-testid="ageCheckbox"
 					type="checkbox"
 					defaultChecked={hasRequiredAge || false}
+					checked={hasRequiredAge || false}
 					onChange={() => {
 						setHasRequiredAge(!hasRequiredAge);
 					}}
@@ -205,7 +229,7 @@ export default function SignUpForm() {
 				type="submit"
 				form="login-form"
 				className="colorful-button"
-				disabled={!isValidForm}
+				disabled={!isValidForm || isSendingData}
 				onClick={handleSignUp}
 			>
 				Sign Up
