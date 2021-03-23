@@ -39,7 +39,7 @@ export default function Login() {
 						Sign Up
 					</div>
 				</div>
-				<div>{action === "login" ? <LoginForm /> : <SignUpForm />}</div>
+				<div>{action === "login" ? <LoginForm /> : <SignUpForm setAction={setAction} />}</div>
 			</div>
 		</div>
 	);
