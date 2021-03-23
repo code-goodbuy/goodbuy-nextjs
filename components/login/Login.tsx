@@ -19,7 +19,7 @@ export default function Login() {
 	}, [isAuthenticating]);
 
 	return (
-		<div className="min-h-full normal-bg flex flex-col justify-center items-center pt-14 md:pt-10 mb-5">
+		<div className="min-h-full normal-bg flex flex-col justify-center items-center pt-14 md:pt-10 pb-5">
 			<div className="rounded-md ml-8 mr-8 normal-bg ring-2 ring-primary dark:ring-secondary w-90 lg:w-50% flex flex-col mt-4 md:mt-12">
 				<div className="flex flex-row">
 					<div
