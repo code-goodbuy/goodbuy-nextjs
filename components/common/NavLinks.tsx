@@ -32,7 +32,7 @@ export default function NavLinks({ className }: { className: string }) {
 						Log Out
 					</button>
 				) : (
-					<Link href="login">
+					<Link href="/auth">
 						<button
 							className="colorful-button"
 							onClick={() => {

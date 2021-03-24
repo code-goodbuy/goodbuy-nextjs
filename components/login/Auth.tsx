@@ -3,7 +3,7 @@ import { AuthContext } from "../../lib/context/AuthContext";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 
-export default function Login() {
+export default function Auth() {
 	/**
 	 * Main Login / Register component
 	 */

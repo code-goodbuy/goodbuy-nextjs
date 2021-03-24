@@ -1,5 +1,5 @@
 import Meta from "../components/common/Meta";
-import Login from "../components/login/Login";
+import Auth from "../components/login/Auth";
 
 export default function Home() {
 	/**
@@ -8,7 +8,7 @@ export default function Home() {
 	return (
 		<>
 			<Meta title={"GoodBuy | Login or Sign Up"} />
-			<Login />
+			<Auth />
 		</>
 	);
 }
