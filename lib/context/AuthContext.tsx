@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { ReactChildrenType } from "../types/ReactChildrenType";
+import jwt_decode, { JwtPayload } from "jwt-decode";
 
 interface AuthType {
 	isAuthenticating?: boolean;
@@ -39,8 +40,30 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 		 */
 		setIsLoggedIn((current) => !current);
 	};
-	const updateJWT = (newJWT: string): void => {
-		setJWT(newJWT);
+
+	const isValidJWT = (token: string): boolean => {
+		try {
+			jwt_decode<JwtPayload>(token);
+			return true;
+		} catch {
+			return false;
+		}
+	};
+
+	const isExpiredJWT = (exp: number): boolean => {
+		if (Date.now() >= exp * 1000) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	const updateJWT = (newJWT: string): void | Error => {
+		if (isValidJWT(newJWT) && !isExpiredJWT(jwt_decode(newJWT))) {
+			setJWT(newJWT);
+		} else {
+			throw new Error("Invalid / Expired JWT");
+		}
 	};
 	return (
 		<AuthContext.Provider

@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { updateWithoutSpaces, checkEmail } from "./helperFunctions";
+import { AuthContext } from "../../lib/context/AuthContext";
+
 export default function LoginForm() {
 	const [email, setEmail] = useState<string>("");
 	const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
@@ -8,6 +10,8 @@ export default function LoginForm() {
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 	const BASE_URL = "https://gb-be.de";
+
+	const { updateJWT } = useContext(AuthContext);
 
 	useEffect(() => {
 		/**
@@ -32,33 +36,32 @@ export default function LoginForm() {
 		setPassword("");
 	};
 
-	const handleLogin = () => {
+	const handleLogin = async () => {
 		setIsSendingData(true);
 		const userData = {
 			email,
 			password
 		};
-		fetch(BASE_URL + "/login", {
+		let res = await fetch(BASE_URL + "/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(userData)
-		})
-			.then((res) => {
-				if (res.status === 200) {
-					res.json();
-				} else {
-					setServerResponse("An Error Occured");
-				}
-				clearForm();
-				setIsSendingData(false);
-			})
-			.catch((err) => {
-				console.error(err);
-				setServerResponse("An Error Occured");
-				setIsSendingData(false);
-			});
+		});
+		if (res && res.status === 200) {
+			let data = await res.json();
+			console.log(data);
+			// try{
+			// 	updateJWT(token)
+			// } catch {console.error("error")}
+		} else {
+			setServerResponse("An Error Occured");
+		}
+		clearForm();
+		setIsSendingData(false);
+		// let token =
+		// 	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcjNkZGRpb0B0ZXN0LmRlIiwiaWF0IjoxNjE2NTE0NDg3LCJleHAiOjE2MTcxMTkyODd9.fkXnik2f90C9_wGuM5XC5Qowqus-n2SEKERB9VgqqLQ";
 	};
 
 	return (
