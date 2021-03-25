@@ -37,12 +37,11 @@ const ScanBarcode: React.FC = () => {
 					fetch(BASE_URL + "product/" + scanResult)
 						.then((response) => response.json())
 						.then((data) => {
-							// name, brand, barcode, corporation, state
+							// product props: name, brand, barcode, corporation, state
 							const productName = data.product[0].name;
 							setName(productName);
 							const productBrand = data.product[0].brand;
 							setBrand(productBrand);
-							alert("Name: " + `${productName}` + "\nBrand: " + `${productBrand}`);
 						})
 						.catch((error) => {
 							alert("failed to fetch the info")
