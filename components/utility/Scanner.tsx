@@ -1,59 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-	BrowserMultiFormatOneDReader,
-	IScannerControls
-} from "@zxing/browser";
-
-// 1d barcode scanner init
-const getQRCodeReaderControls = async (selectedDeviceId: string) => {
-	const codeReader = new BrowserMultiFormatOneDReader();
-	const previewElem = document.querySelector("video");
-	const videoElem = previewElem as HTMLVideoElement;
-
-	const BASE_URL = "https://gb-be.de/";
-
-	// Use decodeFromConstrains() if switchTorch() necessary
-
-	const controls = await codeReader.decodeFromVideoDevice(
-		selectedDeviceId,
-		videoElem,
-		(result, error, controls) => {
-			// use the result and error values to choose your actions
-			// you can also use controls API in this scope like the controls
-			// returned from the method.
-			// console.log("---- result: ", result);
-			// console.log("---- error: ", error);
-			// console.log("---- controls: ", controls);
-
-			if (result) {
-				// FIXME parsing result object gone wrong
-				// @ts-ignore
-				const scanResult = JSON.parse(result);
-				alert(scanResult);
-				// FIXME below delete later
-				alert(`${BASE_URL + 'product/' + scanResult}`);
-
-				fetch(BASE_URL + 'product/' + scanResult, {
-					method: "GET",
-					mode: 'cors',
-					cache: 'no-cache',
-					credentials: 'same-origin',
-					headers: { "Content-Type": "application/json" },
-					referrerPolicy: 'no-referrer',
-					body: JSON.stringify(scanResult)
-				})
-					.then((res) => res.json())
-					.then((res) => { console.log(res) })
-					.catch(error => { console.log(error) });
-			}
-		}
-	);
-
-	// FIXME force camera stop after 30s 
-	setTimeout(() => controls.stop(), 30000);
-
-	return controls;
-};
+import { BrowserMultiFormatOneDReader, IScannerControls } from "@zxing/browser";
 
 type Device = {
 	deviceId: string;
@@ -64,14 +10,54 @@ const ScanBarcode: React.FC = () => {
 	const controlsRef = useRef<IScannerControls | null>(null);
 	const [selectedDeviceId, setSelectedDeviceId] = useState("");
 	const [devices, setDevices] = useState<Array<Device>>([]);
+	
 
+	// 1d barcode scanner init
+	const getQRCodeReaderControls = async (selectedDeviceId: string) => {
+		const codeReader = new BrowserMultiFormatOneDReader();
+		const previewElem = document.querySelector("video");
+		const videoElem = previewElem as HTMLVideoElement;
+
+		const BASE_URL =
+			"http://ec2-52-59-207-201.eu-central-1.compute.amazonaws.com/";
+
+		const controls = await codeReader.decodeFromVideoDevice(
+			selectedDeviceId,
+			videoElem,
+			(result, error, controls) => {
+				console.log("---- result: ", result);
+				console.log("---- error: ", error);
+				console.log("---- controls: ", controls);
+
+				if (result) {
+					// @ts-ignore
+					const scanResult = JSON.parse(result);
+					alert("Barcode number: " + scanResult);
+
+					fetch(BASE_URL + "product/" + scanResult)
+						.then((response) => response.json())
+						.then((data) => {
+							// name, brand, barcode, corporation, state
+							const productName = data.product[0].name;
+							const productBrand = data.product[0].brand;
+							alert("Name: " + `${productName}` + "\nBrand: " + `${productBrand}`);
+						})
+						.catch((error) => {
+							alert("failed to fetch the info");
+						});
+				}
+			}
+		);
+
+		// FIXME force camera stop after 30s
+		setTimeout(() => controls.stop(), 30000);
+
+		return controls;
+	};
 
 	useEffect(() => {
 		const getDevices = async () => {
-			// mobile device can't be enumerated, method not support
 			const videoInputDevices = await BrowserMultiFormatOneDReader.listVideoInputDevices();
-
-			// choose your media device (webcam, frontal camera, back camera, etc.)
 			const selectedDeviceId = videoInputDevices[0].deviceId;
 
 			console.log(`Started decode from camera with id ${selectedDeviceId}`);
@@ -101,14 +87,16 @@ const ScanBarcode: React.FC = () => {
 					))}
 				</select>
 				<br></br>
-          (if you change the selected camera, please click again the Start button)
-        </div>
+        (if you change the selected camera, please click again the Start button)
+      </div>
 			<br />
 			<div className="space-x-3">
 				<button
 					className="colorful-button"
 					onClick={async () => {
-						controlsRef.current = await getQRCodeReaderControls(selectedDeviceId);
+						controlsRef.current = await getQRCodeReaderControls(
+							selectedDeviceId
+						);
 					}}
 				>
 					Start
@@ -137,7 +125,7 @@ const ScannerPage: React.FC = () => {
 				data-testid="scanner-title"
 			>
 				Scanner
-            </a>
+      </a>
 			{showModal ? (
 				<>
 					<div
@@ -154,12 +142,11 @@ const ScannerPage: React.FC = () => {
 										data-testid="scanner-title"
 									>
 										Barcode
-                    </h3>
+                  </h3>
 									<button
 										className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
 										onClick={() => setShowModal(false)}
-									>
-									</button>
+									></button>
 								</div>
 								{/*body*/}
 								<div className="relative p-6 flex-auto">
@@ -179,11 +166,15 @@ const ScannerPage: React.FC = () => {
 									<button
 										className="colorful-button"
 										type="button"
-										style={{ transition: "all .15s ease", backgroundColor: "#EF4444", borderColor: "#EF4444" }}
+										style={{
+											transition: "all .15s ease",
+											backgroundColor: "#EF4444",
+											borderColor: "#EF4444",
+										}}
 										onClick={() => setShowModal(false)}
 									>
 										Close
-                    </button>
+                  </button>
 									<button
 										className="colorful-button"
 										type="button"
@@ -191,7 +182,7 @@ const ScannerPage: React.FC = () => {
 										onClick={() => setShowModal(false)}
 									>
 										Send Barcode Number
-                    </button>
+                  </button>
 								</div>
 							</div>
 						</div>
