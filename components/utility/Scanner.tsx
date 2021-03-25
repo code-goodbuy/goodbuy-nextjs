@@ -10,9 +10,9 @@ const ScanBarcode: React.FC = () => {
 	const controlsRef = useRef<IScannerControls | null>(null);
 	const [selectedDeviceId, setSelectedDeviceId] = useState("");
 	const [devices, setDevices] = useState<Array<Device>>([]);
-	
+	const [name, setName] = useState("");
+	const [brand, setBrand] = useState("");
 
-	// 1d barcode scanner init
 	const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 		const codeReader = new BrowserMultiFormatOneDReader();
 		const previewElem = document.querySelector("video");
@@ -25,9 +25,9 @@ const ScanBarcode: React.FC = () => {
 			selectedDeviceId,
 			videoElem,
 			(result, error, controls) => {
-				console.log("---- result: ", result);
-				console.log("---- error: ", error);
-				console.log("---- controls: ", controls);
+				// console.log("---- result: ", result);
+				// console.log("---- error: ", error);
+				// console.log("---- controls: ", controls);
 
 				if (result) {
 					// @ts-ignore
@@ -39,19 +39,19 @@ const ScanBarcode: React.FC = () => {
 						.then((data) => {
 							// name, brand, barcode, corporation, state
 							const productName = data.product[0].name;
+							setName(productName);
 							const productBrand = data.product[0].brand;
+							setBrand(productBrand);
 							alert("Name: " + `${productName}` + "\nBrand: " + `${productBrand}`);
 						})
 						.catch((error) => {
-							alert("failed to fetch the info");
+							alert("failed to fetch the info")
+							console.log(error);
 						});
 				}
 			}
 		);
-
-		// FIXME force camera stop after 30s
 		setTimeout(() => controls.stop(), 30000);
-
 		return controls;
 	};
 
@@ -109,6 +109,11 @@ const ScanBarcode: React.FC = () => {
 				>
 					Stop
         </button>
+			</div>
+			<br />
+			<div className="space-x-3">
+				Name: {name}<br />
+				Brand: {brand}
 			</div>
 		</div>
 	);
@@ -181,7 +186,7 @@ const ScannerPage: React.FC = () => {
 										style={{ transition: "all .15s ease" }}
 										onClick={() => setShowModal(false)}
 									>
-										Send Barcode Number
+										Send
                   </button>
 								</div>
 							</div>
