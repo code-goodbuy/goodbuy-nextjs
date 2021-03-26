@@ -20,9 +20,10 @@ const TempComponent = ({ token }: { token: string }) => {
 describe("test auth", () => {
 	it("should test the auth", () => {
 		//the test token below was generated online, so no security threats here
+		//jti is your-256-bit-secret
 		const { getByTestId } = render(
 			<AuthContextProvider>
-				<TempComponent token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiaWF0IjoxNjE2NzUwOTA3LCJleHAiOjE2MTY3NTQ1NDAsImp0aSI6IjZlMDA3MTJmLTIxOTYtNGJjYS1iMzhmLTQ4MTFkOGI5MTAxOSJ9.MSmLZCmQ1iqyULrED1dJaU3SvgtbljsoigeNufccUgg" />
+				<TempComponent token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiaWF0IjoxNjE2NzUwOTA3LCJleHAiOjQwMDAwMDAwMDAsImp0aSI6IjZlMDA3MTJmLTIxOTYtNGJjYS1iMzhmLTQ4MTFkOGI5MTAxOSJ9.hHvO7GQk4cqU1fL8-Ec6u7IFfpmBxMfNGsLKUqLeS64" />
 			</AuthContextProvider>
 		);
 
