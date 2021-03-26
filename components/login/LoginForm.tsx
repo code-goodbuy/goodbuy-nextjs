@@ -42,26 +42,28 @@ export default function LoginForm() {
 			email,
 			password
 		};
-		let res = await fetch(BASE_URL + "/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(userData)
-		});
-		if (res && res.status === 200) {
-			let data = await res.json();
-			console.log(data);
-			// try{
-			// 	updateJWT(token)
-			// } catch {console.error("error")}
-		} else {
-			setServerResponse("An Error Occured");
+		try {
+			let res = await fetch(BASE_URL + "/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(userData)
+			});
+			if (res && res.status === 200) {
+				let data = await res.json();
+				console.log(data);
+				// try{
+				// 	updateJWT(token)
+				// } catch {console.error("error")}
+			} else {
+				setServerResponse("An Error Occured");
+			}
+		} catch (e) {
+			console.error(e);
 		}
 		clearForm();
 		setIsSendingData(false);
-		// let token =
-		// 	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcjNkZGRpb0B0ZXN0LmRlIiwiaWF0IjoxNjE2NTE0NDg3LCJleHAiOjE2MTcxMTkyODd9.fkXnik2f90C9_wGuM5XC5Qowqus-n2SEKERB9VgqqLQ";
 	};
 
 	return (
