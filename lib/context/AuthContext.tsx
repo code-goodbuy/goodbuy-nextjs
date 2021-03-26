@@ -78,7 +78,6 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 		if (decoded.exp && decoded.email && !isExpiredJWT(decoded.exp)) {
 			setJWT(newJWT);
 			updateUserInfo(decoded);
-			console.log(decoded);
 		} else {
 			throw new Error("Invalid / Expired JWT");
 		}

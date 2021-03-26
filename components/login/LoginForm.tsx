@@ -55,8 +55,7 @@ export default function LoginForm() {
 			});
 			if (res && res.status === 200) {
 				let data = await res.json();
-				console.log(data);
-				updateJWT && updateJWT(data);
+				updateJWT && updateJWT(data.jwtAccessToken);
 				toggleIsLoggedIn && toggleIsLoggedIn();
 				router.push("/");
 			} else {
