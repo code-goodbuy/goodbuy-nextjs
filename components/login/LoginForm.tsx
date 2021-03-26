@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { updateWithoutSpaces, checkEmail } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState<string>("");
@@ -11,7 +12,9 @@ export default function LoginForm() {
 	const [serverResponse, setServerResponse] = useState<string>("");
 	const BASE_URL = "https://gb-be.de";
 
-	const { updateJWT } = useContext(AuthContext);
+	const { updateJWT, toggleIsLoggedIn } = useContext(AuthContext);
+
+	const router = useRouter();
 
 	useEffect(() => {
 		/**
@@ -53,7 +56,9 @@ export default function LoginForm() {
 			if (res && res.status === 200) {
 				let data = await res.json();
 				console.log(data);
-				updateJWT(data);
+				updateJWT && updateJWT(data);
+				toggleIsLoggedIn && toggleIsLoggedIn();
+				router.push("/");
 			} else {
 				setServerResponse("An Error Occured");
 			}
