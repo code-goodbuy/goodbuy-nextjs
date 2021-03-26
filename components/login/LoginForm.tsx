@@ -53,15 +53,14 @@ export default function LoginForm() {
 			if (res && res.status === 200) {
 				let data = await res.json();
 				console.log(data);
-				// try{
-				// 	updateJWT(token)
-				// } catch {console.error("error")}
+				updateJWT(data);
 			} else {
 				setServerResponse("An Error Occured");
 			}
 		} catch (e) {
 			console.error(e);
 		}
+
 		clearForm();
 		setIsSendingData(false);
 	};
