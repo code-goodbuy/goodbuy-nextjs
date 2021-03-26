@@ -12,7 +12,9 @@ export default function Home() {
 		return (
 			<>
 				<Meta title={"GoodBuy | You are logged in"} />
-				<div>{userInfo?.email}</div>
+				<div className="min-h-screen normal-bg">
+					<p className="pt-20 pl-10 normal-text">email: {userInfo?.email}</p>
+				</div>
 			</>
 		);
 	}
