@@ -12,7 +12,7 @@ export default function NavLinks({ className }: { className: string }) {
 		AuthContext
 	);
 	if (!isAuthenticating) {
-		return (
+		if (isLoggedIn) {
 			<div className={className}>
 				<p
 					onClick={toggleColorMode}
@@ -21,17 +21,27 @@ export default function NavLinks({ className }: { className: string }) {
 				>
 					{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
 				</p>
-				<p className="hover:text-primary dark:hover:text-secondary">
-					<Link href="#mission">Our Mission</Link>
-				</p>
-				<p className="hover:text-primary dark:hover:text-secondary">
-					<Link href="#about">About</Link>
-				</p>
-				{isLoggedIn ? (
-					<button className="colorful-button" onClick={toggleIsLoggedIn}>
-						Log Out
-					</button>
-				) : (
+				<button className="colorful-button" onClick={toggleIsLoggedIn}>
+					Log Out
+				</button>
+			</div>;
+		} else {
+			return (
+				<div className={className}>
+					<p
+						onClick={toggleColorMode}
+						data-testid="colorSwitcher"
+						className="hover:text-primary dark:hover:text-secondary cursor-pointer"
+					>
+						{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
+					</p>
+					<p className="hover:text-primary dark:hover:text-secondary">
+						<Link href="#mission">Our Mission</Link>
+					</p>
+					<p className="hover:text-primary dark:hover:text-secondary">
+						<Link href="#about">About</Link>
+					</p>
+
 					<Link href="/auth">
 						<button
 							className="colorful-button"
@@ -42,9 +52,9 @@ export default function NavLinks({ className }: { className: string }) {
 							Log In
 						</button>
 					</Link>
-				)}
-			</div>
-		);
+				</div>
+			);
+		}
 	} else {
 		return (
 			<div className={className}>
