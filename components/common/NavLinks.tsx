@@ -13,18 +13,20 @@ export default function NavLinks({ className }: { className: string }) {
 	);
 	if (!isAuthenticating) {
 		if (isLoggedIn) {
-			<div className={className}>
-				<p
-					onClick={toggleColorMode}
-					data-testid="colorSwitcher"
-					className="hover:text-primary dark:hover:text-secondary cursor-pointer"
-				>
-					{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
-				</p>
-				<button className="colorful-button" onClick={toggleIsLoggedIn}>
-					Log Out
-				</button>
-			</div>;
+			return (
+				<div className={className}>
+					<p
+						onClick={toggleColorMode}
+						data-testid="colorSwitcher"
+						className="hover:text-primary dark:hover:text-secondary cursor-pointer"
+					>
+						{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
+					</p>
+					<button className="colorful-button" onClick={toggleIsLoggedIn}>
+						Log Out
+					</button>
+				</div>
+			);
 		} else {
 			return (
 				<div className={className}>
