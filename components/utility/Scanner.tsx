@@ -21,7 +21,7 @@ const ScanBarcode: React.FC = () => {
 			const videoElem = previewElem as HTMLVideoElement;
 
 			const BASE_URL =
-				"http://ec2-52-59-207-201.eu-central-1.compute.amazonaws.com/";
+				"https://gb-be.de/";
 
 			const controls =
 				await codeReader.decodeFromVideoDevice(
@@ -39,6 +39,7 @@ const ScanBarcode: React.FC = () => {
 								.then((response) => response.json())
 								.then((data) => {
 									// product props: name, brand, barcode, corporation, state
+									alert(BASE_URL + "product/" + scanResult)
 									const productName = data.product[0].name;
 									setName(productName);
 									const productBrand = data.product[0].brand;
