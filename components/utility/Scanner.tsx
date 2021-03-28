@@ -50,7 +50,7 @@ const ScanBarcode: React.FC = () => {
 				}
 			}
 		);
-		setTimeout(() => controls.stop(), 30000);
+		// setTimeout(() => controls.stop(), 30000);
 		return controls;
 	};
 
