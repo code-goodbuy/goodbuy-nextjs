@@ -101,6 +101,7 @@ const ScanBarcode: React.FC = () => {
 					className="colorful-button"
 					onClick={async () => {
 						try {
+							// @ts-ignore
 							controlsRef.current = await getQRCodeReaderControls(
 								selectedDeviceId
 							)
