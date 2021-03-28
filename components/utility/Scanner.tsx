@@ -14,57 +14,64 @@ const ScanBarcode: React.FC = () => {
 	const [brand, setBrand] = useState("");
 
 	const getQRCodeReaderControls = async (selectedDeviceId: string) => {
-		const codeReader = new BrowserMultiFormatOneDReader();
-		const previewElem = document.querySelector("video");
-		const videoElem = previewElem as HTMLVideoElement;
 
-		const BASE_URL =
-			"http://ec2-52-59-207-201.eu-central-1.compute.amazonaws.com/";
+		try {
+			const codeReader = new BrowserMultiFormatOneDReader();
+			const previewElem = document.querySelector("video");
+			const videoElem = previewElem as HTMLVideoElement;
 
-		const controls = await codeReader.decodeFromVideoDevice(
-			selectedDeviceId,
-			videoElem,
-			(result, error, controls) => {
-				// console.log("---- result: ", result);
-				// console.log("---- error: ", error);
-				// console.log("---- controls: ", controls);
+			const BASE_URL =
+				"http://ec2-52-59-207-201.eu-central-1.compute.amazonaws.com/";
 
-				if (result) {
-					// @ts-ignore
-					const scanResult = JSON.parse(result);
-					alert("Barcode number: " + scanResult);
+			const controls =
+				await codeReader.decodeFromVideoDevice(
+					selectedDeviceId,
+					videoElem,
+					(result, error, controls) => {
+						console.log("---- result: ", result);
 
-					fetch(BASE_URL + "product/" + scanResult)
-						.then((response) => response.json())
-						.then((data) => {
-							// product props: name, brand, barcode, corporation, state
-							const productName = data.product[0].name;
-							setName(productName);
-							const productBrand = data.product[0].brand;
-							setBrand(productBrand);
-						})
-						.catch((error) => {
-							alert("failed to fetch the info")
-							console.log(error);
-						});
-				}
-			}
-		);
-		// setTimeout(() => controls.stop(), 30000);
-		return controls;
+						if (result) {
+							// @ts-ignore
+							const scanResult = JSON.parse(result);
+							alert("Barcode number: " + scanResult);
+
+							fetch(BASE_URL + "product/" + scanResult)
+								.then((response) => response.json())
+								.then((data) => {
+									// product props: name, brand, barcode, corporation, state
+									const productName = data.product[0].name;
+									setName(productName);
+									const productBrand = data.product[0].brand;
+									setBrand(productBrand);
+								})
+								.catch((error) => {
+									alert("failed to fetch the info")
+									console.log(error);
+								});
+						}
+					}
+				)
+
+
+			// setTimeout(() => controls.stop(), 30000);
+			return controls;
+		}
+		catch (error) { console.log }
 	};
 
 	useEffect(() => {
 		const getDevices = async () => {
-			const videoInputDevices = await BrowserMultiFormatOneDReader.listVideoInputDevices();
-			const selectedDeviceId = videoInputDevices[0].deviceId;
+			try {
+				const videoInputDevices = await BrowserMultiFormatOneDReader.listVideoInputDevices();
+				const selectedDeviceId = videoInputDevices[0].deviceId;
 
-			console.log(`Started decode from camera with id ${selectedDeviceId}`);
+				console.log(`Started decode from camera with id ${selectedDeviceId}`);
 
-			setDevices(videoInputDevices);
-			setSelectedDeviceId(selectedDeviceId);
-		};
-
+				setDevices(videoInputDevices);
+				setSelectedDeviceId(selectedDeviceId);
+			}
+			catch (error) { console.log("Error: need self signed TLS Certs for reading camera list") };
+		}
 		getDevices();
 	}, []);
 
@@ -93,9 +100,12 @@ const ScanBarcode: React.FC = () => {
 				<button
 					className="colorful-button"
 					onClick={async () => {
-						controlsRef.current = await getQRCodeReaderControls(
-							selectedDeviceId
-						);
+						try {
+							controlsRef.current = await getQRCodeReaderControls(
+								selectedDeviceId
+							)
+						}
+						catch (err) { console.log("Error: cannot read the list of camera") }
 					}}
 				>
 					Start

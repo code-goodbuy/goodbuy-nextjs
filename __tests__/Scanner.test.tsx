@@ -16,11 +16,8 @@ describe("Test ScannerPage link", () => {
 describe("Test ScannerPage modal", () => {
   it("opens modal and check inside", () => {
     render(<Header />);
-    // modal opened
     fireEvent.click(screen.getByText('Scanner'))
-    // checks title
     expect(screen.getByText('Barcode')).toBeVisible();
-    // checks button trigger decoder
     const startButton = screen.getByText('Start');
     fireEvent.click(startButton);
     expect(screen.queryByText('video')).toBeInTheDocument;
@@ -34,7 +31,6 @@ describe("Test scanner modal decoder video preview", () => {
     const startButton = screen.getByText('Start');
     fireEvent.click(startButton);
     expect(screen.queryByText('video')).toBeInTheDocument;
-    // screen.debug();
   })
 })
 
