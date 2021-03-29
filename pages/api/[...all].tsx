@@ -2,10 +2,11 @@ import httpProxy from "http-proxy";
 import Cookies from "cookies";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { IncomingMessage } from "node:http";
+import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
 
 const API_URL = "https://gb-be.de";
 
-const proxy = httpProxy.createProxyServer();
+const proxy = httpProxy.createProxyServer({ secure: false }); //⚠️ find a real fix, won't work if secure
 
 export const config = {
 	//configuration: don't parse the whole request, so we can forward it to the backend
@@ -16,15 +17,13 @@ export const config = {
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
 	return new Promise((resolve, reject): void => {
-		console.log("url is: " + req.url);
 		if (req.url === undefined) {
+			res.status(409).json({ message: "error" });
 			reject();
 		} else {
 			//const pathname = new URL(req.url).pathname;
 			const pathname = req.url;
-			console.log("pathname is" + pathname);
-			console.log(pathname === "/api/login");
-			const isLogin = pathname === "/api/login"; //this fails. why?
+			const isLogin = pathname === "/api/login";
 			const cookies = new Cookies(req, res);
 			const authToken = cookies.get("auth-token");
 			//remove "api" from the url
@@ -33,26 +32,24 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 			req.headers.cookie = "";
 			// Set auth-token header from cookie:
 			function interceptLoginResponse(proxyRes: any, req: IncomingMessage, res: any) {
-				console.log("Called");
 				let apiResponseBody = "";
 				proxyRes.on("data", (chunk: string) => {
 					apiResponseBody += chunk;
-					console.log("api response: " + apiResponseBody);
 				});
 				proxyRes.on("end", () => {
 					try {
-						// Extract the jwt from API's response:
 						const { jwtAccessToken } = JSON.parse(apiResponseBody);
+						if (jwtAccessToken === undefined) {
+							res.status(409).json({ message: "error" });
+							reject("error");
+						}
 						console.log("token is: " + jwtAccessToken);
-						// Set the authToken as an HTTP-only cookie.
-						// We'll also set the SameSite attribute to
-						// 'lax' for some additional CSRF protection.
 						const cookies = new Cookies(req, res);
 						cookies.set("auth-token", jwtAccessToken, {
 							httpOnly: true,
 							sameSite: "lax"
 						});
-						res.status(200).json({ loggedIn: true });
+						res.status(200).json({ ...decodeJWT(jwtAccessToken) });
 						resolve("success");
 					} catch (err) {
 						reject(err);
@@ -65,7 +62,6 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
 			if (isLogin) {
 				proxy.once("proxyRes", (proxyRes, req, res) => {
-					console.log("something");
 					interceptLoginResponse(proxyRes, req, res);
 				});
 			}
@@ -81,8 +77,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 					selfHandleResponse: isLogin
 				},
 				(e) => {
-					console.error(e);
-					reject();
+					reject(e);
 				}
 			);
 		}
