@@ -20,7 +20,9 @@ describe("test sign up form", () => {
 	});
 
 	it("should display errors and shouldn't have a clickable submit button", async () => {
-		const { getByPlaceholderText, getByText, getByTestId } = render(<SignUpForm />);
+		const { getByPlaceholderText, getByText, getByTestId } = render(
+			<SignUpForm setAction={() => {}} />
+		);
 
 		const emailField = getByPlaceholderText("email");
 		const usernameField = getByPlaceholderText("username");

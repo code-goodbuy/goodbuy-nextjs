@@ -13,3 +13,9 @@ export interface PersonType {
 	url: string;
 	path: string;
 }
+export interface JWTPayloadType {
+	exp?: number;
+	iat?: number;
+	jti?: string;
+	email?: string;
+}

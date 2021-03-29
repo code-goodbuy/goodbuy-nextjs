@@ -3,7 +3,7 @@ import { AuthContext } from "../../lib/context/AuthContext";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 
-export default function Login() {
+export default function Auth() {
 	/**
 	 * Main Login / Register component
 	 */
@@ -39,7 +39,7 @@ export default function Login() {
 						Sign Up
 					</div>
 				</div>
-				<div>{action === "login" ? <LoginForm /> : <SignUpForm />}</div>
+				<div>{action === "login" ? <LoginForm /> : <SignUpForm setAction={setAction} />}</div>
 			</div>
 		</div>
 	);

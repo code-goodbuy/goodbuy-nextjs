@@ -12,27 +12,39 @@ export default function NavLinks({ className }: { className: string }) {
 		AuthContext
 	);
 	if (!isAuthenticating) {
-		return (
-			<div className={className}>
-				<p
-					onClick={toggleColorMode}
-					data-testid="colorSwitcher"
-					className="hover:text-primary dark:hover:text-secondary cursor-pointer"
-				>
-					{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
-				</p>
-				<p className="hover:text-primary dark:hover:text-secondary">
-					<Link href="#mission">Our Mission</Link>
-				</p>
-				<p className="hover:text-primary dark:hover:text-secondary">
-					<Link href="#about">About</Link>
-				</p>
-				{isLoggedIn ? (
+		if (isLoggedIn) {
+			return (
+				<div className={className}>
+					<p
+						onClick={toggleColorMode}
+						data-testid="colorSwitcher"
+						className="hover:text-primary dark:hover:text-secondary cursor-pointer"
+					>
+						{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
+					</p>
 					<button className="colorful-button" onClick={toggleIsLoggedIn}>
 						Log Out
 					</button>
-				) : (
-					<Link href="login">
+				</div>
+			);
+		} else {
+			return (
+				<div className={className}>
+					<p
+						onClick={toggleColorMode}
+						data-testid="colorSwitcher"
+						className="hover:text-primary dark:hover:text-secondary cursor-pointer"
+					>
+						{colorMode === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
+					</p>
+					<p className="hover:text-primary dark:hover:text-secondary">
+						<Link href="#mission">Our Mission</Link>
+					</p>
+					<p className="hover:text-primary dark:hover:text-secondary">
+						<Link href="#about">About</Link>
+					</p>
+
+					<Link href="/auth">
 						<button
 							className="colorful-button"
 							onClick={() => {
@@ -42,9 +54,9 @@ export default function NavLinks({ className }: { className: string }) {
 							Log In
 						</button>
 					</Link>
-				)}
-			</div>
-		);
+				</div>
+			);
+		}
 	} else {
 		return (
 			<div className={className}>
