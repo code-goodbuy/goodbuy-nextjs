@@ -11,7 +11,7 @@ export default function LoginForm() {
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
-	const { updateJWT, toggleIsLoggedIn } = useContext(AuthContext);
+	const { updateUserInfo, toggleIsLoggedIn } = useContext(AuthContext);
 
 	const router = useRouter();
 
@@ -55,7 +55,8 @@ export default function LoginForm() {
 			});
 			if (res && res.status === 200) {
 				let data = await res.json();
-				// updateJWT && updateJWT(data.jwtAccessToken);
+				console.log(data);
+				updateUserInfo && updateUserInfo(data);
 				toggleIsLoggedIn && toggleIsLoggedIn();
 				router.push("/");
 			} else {
