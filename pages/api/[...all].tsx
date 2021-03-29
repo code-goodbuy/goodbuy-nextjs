@@ -1,7 +1,7 @@
 import httpProxy from "http-proxy";
 import Cookies from "cookies";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { IncomingMessage, ServerResponse } from "node:http";
+import { IncomingMessage } from "node:http";
 
 const API_URL = "https://gb-be.de";
 
