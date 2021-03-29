@@ -10,7 +10,6 @@ export default function LoginForm() {
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
-	const BASE_URL = "https://gb-be.de";
 
 	const { updateJWT, toggleIsLoggedIn } = useContext(AuthContext);
 
@@ -40,13 +39,14 @@ export default function LoginForm() {
 	};
 
 	const handleLogin = async () => {
+		const BASE_URL = window.location.protocol + "//" + window.location.host;
 		setIsSendingData(true);
 		const userData = {
 			email,
 			password
 		};
 		try {
-			let res = await fetch(BASE_URL + "/login", {
+			let res = await fetch(BASE_URL + "/api/login", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
@@ -55,7 +55,7 @@ export default function LoginForm() {
 			});
 			if (res && res.status === 200) {
 				let data = await res.json();
-				updateJWT && updateJWT(data.jwtAccessToken);
+				// updateJWT && updateJWT(data.jwtAccessToken);
 				toggleIsLoggedIn && toggleIsLoggedIn();
 				router.push("/");
 			} else {
