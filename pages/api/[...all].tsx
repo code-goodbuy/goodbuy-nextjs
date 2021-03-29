@@ -32,7 +32,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 			// Don't forward cookies to the API:
 			req.headers.cookie = "";
 			// Set auth-token header from cookie:
-			function interceptLoginResponse(proxyRes: any, req: IncomingMessage, res: ServerResponse) {
+			function interceptLoginResponse(proxyRes: any, req: IncomingMessage, res: any) {
 				console.log("Called");
 				let apiResponseBody = "";
 				proxyRes.on("data", (chunk: string) => {
