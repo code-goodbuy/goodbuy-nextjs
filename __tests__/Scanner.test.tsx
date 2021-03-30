@@ -1,33 +1,59 @@
 import { render, screen, act, fireEvent, getByTestId } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Header from "../components/common/Header";
+import ScannerPage from "../components/utility/Scanner";
+// import API mocking utilities from Mock Service Worker
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+// @ts-ignore
+import { FetchMock } from '@react-mock/fetch';
 
-describe.skip("Test ScannerPage link", () => {
-  it("should have a scanner page link", () => {
-    const { getByTestId } = render(<Header />);
-    const scannerButton = getByTestId("scannerPage");
-    expect(scannerButton).toHaveTextContent("Scanner");
-  });
-});
-
-describe.skip("Test ScannerPage modal", () => {
-  it("opens modal and check inside", () => {
-    render(<Header />);
-    screen.debug()
-    fireEvent.click(screen.getByText('Scanner'))
-    expect(screen.getByText('Barcode')).toBeVisible();
-    const startButton = screen.getByText('Start');
-    fireEvent.click(startButton);
-    expect(screen.queryByText('video')).toBeInTheDocument();
+const server = setupServer(
+  rest.get('/greeting', (req, res, ctx) => {
+    return res(ctx.json({ greeting: 'hello there' }))
   })
-})
+)
 
-describe.skip("Test scanner modal decoder video preview", () => {
-  it("checks it's triggered after start button clicked", () => {
-    render(<Header />);
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+
+describe("Scanner Component", () => {
+  it("open modal and should be able to read the title", () => {
+    // given: arrange
+    render(<ScannerPage />);
+    // when: act
     fireEvent.click(screen.getByText('Scanner'));
-    const startButton = screen.getByText('Start');
-    fireEvent.click(startButton);
-    expect(screen.queryByText('video')).toBeInTheDocument();
+    // then: assert
+    expect(screen.getByText('Barcode')).toBeVisible();
+  });
+
+  it("find start button and check the scanner element", () => {
+    render(<ScannerPage />);
+    fireEvent.click(screen.getByText('Scanner'));
+    fireEvent.click(screen.getByText('Start'));
+    expect(screen.queryByTestId('video-elm')).toBeVisible();
+  });
+
+  it("send the result and receives the product info", async () => {
+    const alertMock = jest.spyOn(global, 'alert');
+    const result = '123456'
+    render(
+      <FetchMock
+        matcher="/product/123456"
+        response={200}
+        config={{ fallbackToNetwork: true }}
+      >
+        <ScannerPage />
+      </FetchMock>);
+    // FIXME 
+    expect(alertMock).not.toBeNull();
   })
+
+  // it("find close button, click and check wheter modal is still opened", () => {
+  //   render(<ScannerPage />);
+  //   fireEvent.click(screen.getByText('Scanner'));
+  //   fireEvent.click(screen.getByText('Close'));
+  //   expect(screen.queryByTestId('close-button')).not.toBeInTheDocument();
+  //   screen.debug();
+  // })
 })

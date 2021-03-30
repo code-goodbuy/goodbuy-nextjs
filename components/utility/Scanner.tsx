@@ -188,6 +188,7 @@ const ScannerPage: React.FC = () => {
 											borderColor: "#EF4444",
 										}}
 										onClick={() => setShowModal(false)}
+										data-testid="close-button"
 									>
 										Close
                   </button>
