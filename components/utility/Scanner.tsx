@@ -29,12 +29,14 @@ const ScanBarcode: React.FC = () => {
 					videoElem,
 					(result, error, controls) => {
 						console.log("---- result: ", result);
+						console.log("---- error: ", error);
+						console.log("---- controls: ", controls);
+
 
 						if (result) {
 							// @ts-ignore
 							const scanResult = JSON.parse(result);
 							alert("Barcode number: " + scanResult);
-
 							fetch(BASE_URL + "product/" + scanResult)
 								.then((response) => response.json())
 								.then((data) => {
@@ -52,12 +54,9 @@ const ScanBarcode: React.FC = () => {
 						}
 					}
 				)
-
-
-			// setTimeout(() => controls.stop(), 30000);
 			return controls;
 		}
-		catch (error) { console.log }
+		catch (error) { console.log(error) }
 	};
 
 	useEffect(() => {
