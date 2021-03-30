@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useContext } from "react";
 import { UIContext } from "../../lib/context/UIContext";
-import ScannerPage from "../utility/Scanner";
 
 export default function NavLinks({ className }: { className: string }) {
 	/**
