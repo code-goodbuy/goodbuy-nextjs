@@ -2,33 +2,49 @@ import React, { useContext, useEffect, useState } from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import AuthContextProvider, { AuthContext } from "../../lib/context/AuthContext";
+import { JWTPayloadType } from "../../lib/types/HelperTypes";
 
-const TempComponent = ({ token }: { token: string }) => {
-	const { updateJWT } = useContext(AuthContext);
+const TempComponent = ({ userInfo }: { userInfo: JWTPayloadType }) => {
+	const { updateUserInfo, toggleIsLoggedIn, isLoggedIn } = useContext(AuthContext);
 	const [msg, setMsg] = useState("nothing");
 	useEffect(() => {
 		try {
-			updateJWT(token);
+			updateUserInfo && updateUserInfo(userInfo);
+			toggleIsLoggedIn && toggleIsLoggedIn();
 			setMsg("success");
 		} catch {
 			setMsg("error");
 		}
 	}, []);
-	return <div data-testid="tokenMsg">{msg}</div>;
+	return (
+		<>
+			<div data-testid="msg">{msg}</div>
+			<div data-testid="loggedIn">{isLoggedIn ? "logged in" : "not logged in"}</div>
+		</>
+	);
 };
 
-describe("test auth", () => {
-	it("should test the auth", () => {
+describe("Test the context", () => {
+	test("the context values should change", () => {
 		//the test token below was generated online, so no security threats here
 		//jti is your-256-bit-secret
 		const { getByTestId } = render(
 			<AuthContextProvider>
-				<TempComponent token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiaWF0IjoxNjE2NzUwOTA3LCJleHAiOjQwMDAwMDAwMDAsImp0aSI6IjZlMDA3MTJmLTIxOTYtNGJjYS1iMzhmLTQ4MTFkOGI5MTAxOSJ9.hHvO7GQk4cqU1fL8-Ec6u7IFfpmBxMfNGsLKUqLeS64" />
+				<TempComponent
+					userInfo={{
+						"email": "test@test.test",
+						"exp": 4000000000,
+						"iat": 1616750907,
+						"jti": "6e00712f-2196-4bca-b38f-4811d8b91019"
+					}}
+				/>
 			</AuthContextProvider>
 		);
 
-		const result = getByTestId("tokenMsg");
+		const result = getByTestId("msg");
+		const isLoggedIn = getByTestId("loggedIn");
 
 		expect(result).toHaveTextContent("success");
+		expect(isLoggedIn).toHaveTextContent("logged in");
 	});
 });
