@@ -8,7 +8,7 @@ export default function Home() {
 	 * Renders The Landing Page
 	 */
 	const { isLoggedIn, userInfo } = useContext(AuthContext);
-	if (isLoggedIn) {
+	if (isLoggedIn === true) {
 		return (
 			<>
 				<Meta title={"GoodBuy | You are logged in"} />
@@ -17,11 +17,14 @@ export default function Home() {
 				</div>
 			</>
 		);
+	} else if (isLoggedIn === false) {
+		return (
+			<>
+				<Meta title={"GoodBuy | Welcome to GoodBuy"} />
+				<LandingPage />
+			</>
+		);
+	} else {
+		return <div className="min-h-screen w-100 normal-bg"></div>;
 	}
-	return (
-		<>
-			<Meta title={"GoodBuy | Welcome to GoodBuy"} />
-			<LandingPage />
-		</>
-	);
 }
