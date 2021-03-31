@@ -7,9 +7,9 @@ import {
 	checkPasswordStrength,
 	checkPasswordMatch
 } from "./helperFunctions";
-import { SignUpFormTypes as Props } from "../../lib/types/LoginTypes";
+import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 
-export default function SignUpForm({ setAction }: Props) {
+export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [email, setEmail] = useState<string>("");
 	const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>("");
@@ -118,7 +118,7 @@ export default function SignUpForm({ setAction }: Props) {
 					setServerResponse("Success! Redirecting...");
 					setTimeout(() => {
 						setAction("login");
-					}, 2000);
+					}, msBeforeRedirecting);
 				} else {
 					setServerResponse("An Error Occured");
 				}

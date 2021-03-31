@@ -39,7 +39,13 @@ export default function Auth() {
 						Sign Up
 					</div>
 				</div>
-				<div>{action === "login" ? <LoginForm /> : <SignUpForm setAction={setAction} />}</div>
+				<div>
+					{action === "login" ? (
+						<LoginForm />
+					) : (
+						<SignUpForm setAction={setAction} msBeforeRedirecting={1000} />
+					)}
+				</div>
 			</div>
 		</div>
 	);
