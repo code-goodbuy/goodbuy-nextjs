@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { ReactChildrenType } from "../types/ReactChildrenType";
 import { JWTPayloadType } from "../../lib/types/HelperTypes";
 
@@ -29,6 +29,18 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [userInfo, setUserInfo] = useState<JWTPayloadType | undefined>();
+
+	useEffect(() => {
+		fetch(window.location.protocol + "//" + window.location.host + "/api/check")
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.message === "logged" && data.email) {
+					setIsLoggedIn(true);
+					setUserInfo({ email: data.email });
+				}
+			})
+			.catch((err) => console.error(err));
+	}, []);
 
 	const changeIsAuthenticating = (newValue: boolean): void => {
 		/**
