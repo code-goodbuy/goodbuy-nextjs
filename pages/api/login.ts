@@ -31,7 +31,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 					reject(e);
 				}
 			);
-			proxy.once("proxyRes", (proxyRes, req, res) => {
+			proxy.once("proxyRes", (proxyRes, req, res: any) => {
 				let apiResponseBody = "";
 				proxyRes.on("data", (chunk: string) => {
 					apiResponseBody += chunk;
