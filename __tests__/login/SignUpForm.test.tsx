@@ -21,7 +21,7 @@ describe("test sign up form", () => {
 
 	it("should display errors and shouldn't have a clickable submit button", async () => {
 		const { getByPlaceholderText, getByText, getByTestId } = render(
-			<SignUpForm setAction={() => {}} />
+			<SignUpForm setAction={() => {}} msBeforeRedirecting={0} />
 		);
 
 		const emailField = getByPlaceholderText("email");
