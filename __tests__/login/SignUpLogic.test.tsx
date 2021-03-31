@@ -54,7 +54,7 @@ describe("test sign up logic", () => {
 		fireEvent.click(getByText("Sign Up"));
 
 		await waitFor(async () =>
-			expect(global.fetch).toHaveBeenCalledWith("https://gb-be.de/register", {
+			expect(global.fetch).toHaveBeenCalledWith("http://localhost/api/register", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
