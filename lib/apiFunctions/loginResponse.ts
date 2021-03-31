@@ -1,12 +1,5 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import Cookies from "cookies";
-import { JWTPayloadType } from "../types/HelperTypes";
-
-interface interceptType {
-	req: IncomingMessage;
-	res: ServerResponse;
-	jwtAccessToken: string;
-}
 
 export function setJWTCookie(req: IncomingMessage, res: ServerResponse, jwtAccessToken: string) {
 	const cookies = new Cookies(req, res);
