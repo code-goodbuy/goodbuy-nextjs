@@ -28,7 +28,6 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 	 */
 	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-	const [JWT, setJWT] = useState<string>("");
 	const [userInfo, setUserInfo] = useState<JWTPayloadType | undefined>();
 
 	const changeIsAuthenticating = (newValue: boolean): void => {
