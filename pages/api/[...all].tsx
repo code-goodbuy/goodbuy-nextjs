@@ -2,7 +2,11 @@ import httpProxy from "http-proxy";
 import Cookies from "cookies";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
-import { setJWTCookie, getJWT } from "../../lib/apiFunctions/loginResponse";
+import {
+	setJWTCookie,
+	getJWTCookie,
+	getJWTFromResponse
+} from "../../lib/apiFunctions/loginResponse";
 
 const API_URL = "https://gb-be.de";
 
@@ -22,8 +26,8 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 		} else {
 			const pathname = req.url;
 			const isLogin = pathname === "/api/login";
-			const cookies = new Cookies(req, res);
-			const authToken = cookies.get("auth-token");
+			const authToken = getJWTCookie(req, res);
+			console.log(authToken);
 			req.url = req.url.replace(/^\/api/, ""); //remove "api" from the url
 			req.headers.cookie = ""; //don't send other cookies to the backend
 			if (authToken) {
@@ -37,7 +41,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 						apiResponseBody += chunk;
 					});
 					proxyRes.on("end", () => {
-						const jwt = getJWT(apiResponseBody);
+						const jwt = getJWTFromResponse(apiResponseBody);
 						if (jwt === null) {
 							res.status(409);
 							reject("Error");

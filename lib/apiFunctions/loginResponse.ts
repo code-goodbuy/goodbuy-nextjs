@@ -16,7 +16,12 @@ export function setJWTCookie(req: IncomingMessage, res: ServerResponse, jwtAcces
 	});
 }
 
-export function getJWT(apiResponseBody: string): null | string {
+export function getJWTCookie(req: IncomingMessage, res: ServerResponse) {
+	const cookies = new Cookies(req, res);
+	return cookies.get("auth-token");
+}
+
+export function getJWTFromResponse(apiResponseBody: string): null | string {
 	try {
 		const { jwtAccessToken } = JSON.parse(apiResponseBody);
 		if (jwtAccessToken === undefined) {
