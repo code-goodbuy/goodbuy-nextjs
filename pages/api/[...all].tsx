@@ -6,7 +6,7 @@ import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
 
 const API_URL = "https://gb-be.de";
 
-const proxy = httpProxy.createProxyServer({ secure: false }); //⚠️ find a real fix, won't work if secure
+const proxy = httpProxy.createProxyServer({ changeOrigin: true });
 
 export const config = {
 	//configuration: don't parse the whole request, so we can forward it to the backend
@@ -43,7 +43,6 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 							res.status(409).json({ message: "error" });
 							reject("error");
 						}
-						console.log("token is: " + jwtAccessToken);
 						const cookies = new Cookies(req, res);
 						cookies.set("auth-token", jwtAccessToken, {
 							httpOnly: true,
