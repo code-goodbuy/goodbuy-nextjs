@@ -14,6 +14,14 @@ export function getJWTCookie(req: IncomingMessage, res: ServerResponse) {
 	return cookies.get("auth-token");
 }
 
+export function unsetJWTCookie(req: IncomingMessage, res: ServerResponse) {
+	const cookies = new Cookies(req, res);
+	cookies.set("auth-token", "", {
+		httpOnly: true,
+		sameSite: "lax"
+	});
+}
+
 export function getJWTFromResponse(apiResponseBody: string): null | string {
 	try {
 		const { jwtAccessToken } = JSON.parse(apiResponseBody);
