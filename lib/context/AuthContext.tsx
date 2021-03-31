@@ -27,7 +27,7 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 	 * updateUserInfo?: (newInfo: JWTPayloadType) => void;
 	 */
 	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
 	const [userInfo, setUserInfo] = useState<JWTPayloadType | undefined>();
 
 	useEffect(() => {
@@ -37,6 +37,8 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 				if (data.message === "logged" && data.email) {
 					setIsLoggedIn(true);
 					setUserInfo({ email: data.email });
+				} else {
+					setIsLoggedIn(false);
 				}
 			})
 			.catch((err) => console.error(err));
