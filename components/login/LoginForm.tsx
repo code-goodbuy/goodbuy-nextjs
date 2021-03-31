@@ -55,7 +55,6 @@ export default function LoginForm() {
 			});
 			if (res && res.status === 200) {
 				let data = await res.json();
-				console.log(data);
 				updateUserInfo && updateUserInfo(data);
 				toggleIsLoggedIn && toggleIsLoggedIn();
 				router.push("/");
