@@ -1,7 +1,7 @@
 import httpProxy from "http-proxy";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
-import { setJWTCookie, getJWTFromResponse } from "../../lib/apiFunctions/loginResponse";
+import { setJWTCookie, getJWTFromResponse } from "../../lib/apiFunctions/responseHelpers";
 
 const proxy = httpProxy.createProxyServer({ changeOrigin: true });
 
