@@ -2,6 +2,8 @@ import { render, act, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import LoginForm from "../../components/login/LoginForm";
 
+const useRouter = jest.spyOn(require("next/router"), "useRouter");
+
 async function mockFetch() {
 	return new Promise((resolve, reject) => {
 		resolve({
@@ -21,6 +23,25 @@ describe("Make sure the form behaves as expected", () => {
 			email: "name@domain.something",
 			password: "somePassword0!"
 		};
+		useRouter.mockImplementation(() => ({
+			route: "",
+			basePath: "",
+			pathname: "/",
+			query: {},
+			asPath: "",
+			push: async () => true,
+			replace: async () => true,
+			reload: () => null,
+			back: () => null,
+			prefetch: async () => undefined,
+			beforePopState: () => null,
+			isFallback: false,
+			events: {
+				on: () => null,
+				off: () => null,
+				emit: () => null
+			}
+		}));
 	});
 	it("Should redirect the user", async () => {
 		const { getByPlaceholderText, getByText } = render(<LoginForm />);
@@ -43,6 +64,7 @@ describe("Make sure the form behaves as expected", () => {
 				},
 				"body": JSON.stringify({ email: "name@domain.something", password: "somePassword0!" })
 			});
+			expect(useRouter).toHaveBeenCalled();
 		});
 	});
 });
