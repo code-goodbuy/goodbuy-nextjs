@@ -23,7 +23,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
-	const BASE_URL = "https://gb-be.de";
+	const BASE_URL = window.location.protocol + "//" + window.location.host;
 
 	useEffect(() => {
 		/**
@@ -106,7 +106,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			hasRequiredAge
 		};
 
-		fetch(BASE_URL + "/register", {
+		fetch(BASE_URL + "/api/register", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
