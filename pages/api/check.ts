@@ -24,7 +24,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 				} catch {
 					validJWT = false;
 				}
-				if (validJWT) {
+				if (validJWT && !(data instanceof Error)) {
 					res.status(200).json({ message: "logged", email: data?.email });
 					resolve("ok");
 				}
