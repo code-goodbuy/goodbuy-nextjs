@@ -6,8 +6,7 @@ const ScanBarcode: React.FC = () => {
 	const controlsRef = useRef<IScannerControls | null>(null);
 	const [selectedDeviceId, setSelectedDeviceId] = useState("");
 	const [devices, setDevices] = useState<Array<DeviceType>>([]);
-	const [name, setName] = useState("");
-	const [brand, setBrand] = useState("");
+	const [productInfo, setProductInfo] = useState({name: "", brand: ""});
 
 	const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 
@@ -39,9 +38,8 @@ const ScanBarcode: React.FC = () => {
 									// product props: name, brand, barcode, corporation, state
 									alert(BASE_URL + "product/" + scanResult)
 									const productName = data.product[0].name;
-									setName(productName);
 									const productBrand = data.product[0].brand;
-									setBrand(productBrand);
+									setProductInfo({name: productName, brand: productBrand})
 								})
 								.catch((error) => {
 									alert("Error: failed to fetch the info from database")
@@ -118,8 +116,9 @@ const ScanBarcode: React.FC = () => {
 			</div>
 			<br />
 			<div className="space-x-3">
-				Name: {name}<br />
-				Brand: {brand}
+				Name: {productInfo.name}
+				<br />
+				Brand: {productInfo.brand}
 			</div>
 		</div>
 	);
