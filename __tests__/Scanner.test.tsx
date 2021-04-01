@@ -1,4 +1,4 @@
-import { render, screen, act, fireEvent, getByTestId } from "@testing-library/react";
+import { render, screen, fireEvent} from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ScannerPage from "../components/utility/Scanner";
 // Mock Service Worker
