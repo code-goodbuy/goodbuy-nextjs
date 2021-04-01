@@ -23,9 +23,9 @@ const ScanBarcode: React.FC = () => {
 					selectedDeviceId,
 					videoElem,
 					(result, error, controls) => {
-						console.log("---- result: ", result);
-						console.log("---- error: ", error);
-						console.log("---- controls: ", controls);
+						// console.log("---- result: ", result);
+						// console.log("---- error: ", error);
+						// console.log("---- controls: ", controls);
 
 
 						if (result) {
@@ -43,7 +43,6 @@ const ScanBarcode: React.FC = () => {
 								})
 								.catch((error) => {
 									alert("Error: failed to fetch the info from database")
-									console.log(error);
 								});
 						}
 					}
