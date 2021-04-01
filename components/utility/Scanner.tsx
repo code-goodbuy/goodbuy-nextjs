@@ -48,7 +48,7 @@ const ScanBarcode: React.FC = () => {
 									setBrand(productBrand);
 								})
 								.catch((error) => {
-									alert("failed to fetch the info")
+									alert("Error: failed to fetch the info from database")
 									console.log(error);
 								});
 						}
@@ -56,7 +56,7 @@ const ScanBarcode: React.FC = () => {
 				)
 			return controls;
 		}
-		catch (error) { console.log(error) }
+		catch (error) { console.log("Error: failed to initiate scan") }
 	};
 
 	useEffect(() => {
