@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserMultiFormatOneDReader, IScannerControls } from "@zxing/browser";
-
-type Device = {
-	deviceId: string;
-	label: string;
-};
+import DeviceType from "../../lib/types/DeviceTypes";
 
 const ScanBarcode: React.FC = () => {
 	const controlsRef = useRef<IScannerControls | null>(null);
 	const [selectedDeviceId, setSelectedDeviceId] = useState("");
-	const [devices, setDevices] = useState<Array<Device>>([]);
+	const [devices, setDevices] = useState<Array<DeviceType>>([]);
 	const [name, setName] = useState("");
 	const [brand, setBrand] = useState("");
 
