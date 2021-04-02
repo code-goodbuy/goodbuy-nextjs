@@ -1,6 +1,7 @@
 import httpProxy from "http-proxy";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getJWTCookie } from "../../lib/apiFunctions/responseHelpers";
+import type { PageConfig } from "next";
 
 const proxy = httpProxy.createProxyServer({ changeOrigin: true });
 
@@ -10,7 +11,7 @@ export const config = {
 	}
 };
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+export default function route(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 	return new Promise((resolve, reject): void => {
 		if (req.url === undefined) {
 			res.status(409).json({ message: "error" });
@@ -36,4 +37,4 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 			);
 		}
 	});
-};
+}
