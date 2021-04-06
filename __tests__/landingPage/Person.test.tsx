@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Person from "../components/landingPage/Person";
-import { PersonType } from "../lib/types/HelperTypes";
+import Person from "../../components/landingPage/Person";
+import { PersonType } from "../../lib/types/HelperTypes";
 
 describe("Test Person Component", () => {
 	let expectedProps: PersonType;
