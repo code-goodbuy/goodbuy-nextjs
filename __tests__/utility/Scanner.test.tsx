@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ScannerPage from "../components/utility/Scanner";
+import ScannerPage from "../../components/utility/ScannerPage";
 // Mock Service Worker
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
@@ -16,11 +16,16 @@ const server = setupServer(
   })
 )
 
-beforeAll(() => server.listen())
+beforeAll(() => {
+  server.listen()
+  // silence error log
+  jest.spyOn(console, 'log').mockImplementation(jest.fn());
+  jest.spyOn(console, 'debug').mockImplementation(jest.fn());
+})
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-describe.skip("Scanner Component", () => {
+describe("Scanner Component", () => {
   it("open modal and should be able to read the title", () => {
     // given: arrange
     render(<ScannerPage />);
@@ -47,7 +52,6 @@ describe.skip("Scanner Component", () => {
       >
         <ScannerPage />
       </FetchMock>);
-    // FIXME 
     expect(alertMock).not.toBeNull();
   })
 
