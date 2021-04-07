@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-	updateWithoutSpaces,
-	checkEmail,
-	checkUsername,
-	checkPasswordStrength,
-	checkPasswordMatch
-} from "./helperFunctions";
+import { checkEmail, checkUsername, checkPasswordStrength, checkPasswordMatch } from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
+import Field from "./Field";
+import Checkbox from "./Checkbox";
 
 export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [email, setEmail] = useState<string>("");
@@ -15,7 +11,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [username, setUsername] = useState<string>("");
 	const [isValidUsername, setIsValidUsername] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
-	const [isStrongPassord, setIsStrongPassword] = useState<boolean>(false);
+	const [isStrongPassword, setIsStrongPassword] = useState<boolean>(false);
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
 	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(false);
 	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
@@ -23,6 +19,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
+
 	const BASE_URL = window.location.protocol + "//" + window.location.host;
 
 	useEffect(() => {
@@ -66,7 +63,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			username !== "" &&
 			isValidEmail &&
 			isValidUsername &&
-			isStrongPassord &&
+			isStrongPassword &&
 			isRepeatedPasswordCorrect &&
 			hasAcceptedTerms &&
 			hasRequiredAge
@@ -80,7 +77,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 		username,
 		isValidEmail,
 		isValidUsername,
-		isStrongPassord,
+		isStrongPassword,
 		isRepeatedPasswordCorrect,
 		hasAcceptedTerms,
 		hasRequiredAge
@@ -138,68 +135,19 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			id="login-form"
 			className="flex flex-col justify-center items-center my-14"
 		>
-			{serverResponse !== "" && (
-				<div className="pb-10 text-2xl colorful-text">{serverResponse}</div>
-			)}
-			{!isValidEmail && email !== "" && (
-				<label data-testid="emailError" className="error-label">
-					This email is not valid
-				</label>
-			)}
-			<input
-				type="text"
-				placeholder="email"
-				onChange={(e) => updateWithoutSpaces(setEmail, e.target.value)}
-				value={email || ""}
-				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
-			/>
-			{!isValidUsername && username !== "" && (
-				<label data-testid="usernameError" className="error-label">
-					This username is not valid
-				</label>
-			)}
-			<input
-				type="text"
-				placeholder="username"
-				onChange={(e) => updateWithoutSpaces(setUsername, e.target.value)}
-				value={username || ""}
-				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
-			/>
-			{!isStrongPassord && password !== "" && (
-				<label data-testid="passwordError" className="error-label">
-					This password is not strong enough
-				</label>
-			)}
-			<input
+			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
+			<Field value={email} setValue={setEmail} isValidValue={isValidEmail} type="text" name="Email" />
+			<Field value={username} setValue={setUsername} isValidValue={isValidUsername} type="text" name="Username" />
+			<Field value={password} setValue={setPassword} isValidValue={isStrongPassword} type="password" name="Password" />
+			<Field
+				value={repeatedPassword}
+				setValue={setRepeatedPassword}
+				isValidValue={isRepeatedPasswordCorrect}
 				type="password"
-				placeholder="password"
-				onChange={(e) => updateWithoutSpaces(setPassword, e.target.value)}
-				value={password || ""}
-				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
+				name="Repeated Password"
 			/>
-			{!isRepeatedPasswordCorrect && repeatedPassword !== "" && (
-				<label data-testid="repeatedPasswordError" className="error-label">
-					The passwords do not match
-				</label>
-			)}
-			<input
-				type="password"
-				placeholder="repeat password"
-				onChange={(e) => updateWithoutSpaces(setRepeatedPassword, e.target.value)}
-				value={repeatedPassword || ""}
-				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
-			/>
-			<label className="w-4/5 mb-8">
-				<input
-					data-testid="termsCheckbox"
-					type="checkbox"
-					checked={hasAcceptedTerms || false}
-					onChange={() => {
-						setHasAcceptedTerms(!hasAcceptedTerms);
-					}}
-					className="outline-none border-0 text-primary dark:text-secondary bg-gray-200 dark:bg-gray-700 cursor-pointer w-6 h-6 rounded-sm"
-				/>
-				<span className="normal-text justify-self-start ml-4">
+			<Checkbox condition={hasAcceptedTerms} updateCondition={setHasAcceptedTerms}>
+				<span>
 					I read and accept the{" "}
 					<span className="colorful-text">
 						<Link href="about:blank">
@@ -210,19 +158,10 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 					</span>
 					.
 				</span>
-			</label>
-			<label className="w-4/5 mb-8">
-				<input
-					data-testid="ageCheckbox"
-					type="checkbox"
-					checked={hasRequiredAge || false}
-					onChange={() => {
-						setHasRequiredAge(!hasRequiredAge);
-					}}
-					className="outline-none border-0 text-primary dark:text-secondary bg-gray-200 dark:bg-gray-700 cursor-pointer w-6 h-6 rounded-sm"
-				/>
-				<span className="normal-text justify-self-start ml-4">I am 16 or older.</span>
-			</label>
+			</Checkbox>
+			<Checkbox condition={hasRequiredAge} updateCondition={setHasRequiredAge}>
+				<span>I am 16 or older.</span>
+			</Checkbox>
 			<button
 				type="submit"
 				form="login-form"

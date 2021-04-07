@@ -16,8 +16,8 @@ describe("Test login form", () => {
 	it("shouldn't have a clickable button", async () => {
 		const { getByPlaceholderText, getByText } = render(<LoginForm />);
 
-		const emailField = getByPlaceholderText("email");
-		const passwordField = getByPlaceholderText("password");
+		const emailField = getByPlaceholderText("Email");
+		const passwordField = getByPlaceholderText("Password");
 		const submit = getByText("Log In");
 
 		await act(async () => {
@@ -31,8 +31,8 @@ describe("Test login form", () => {
 	it("should have a clickable button", async () => {
 		const { getByPlaceholderText, getByText } = render(<LoginForm />);
 
-		const emailField = getByPlaceholderText("email");
-		const passwordField = getByPlaceholderText("password");
+		const emailField = getByPlaceholderText("Email");
+		const passwordField = getByPlaceholderText("Password");
 		const submit = getByText("Log In");
 
 		await act(async () => {
