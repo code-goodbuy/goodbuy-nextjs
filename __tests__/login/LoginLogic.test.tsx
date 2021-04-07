@@ -46,8 +46,8 @@ describe("Make sure the form behaves as expected", () => {
 	it("Should redirect the user", async () => {
 		const { getByPlaceholderText, getByText } = render(<LoginForm />);
 
-		const emailField = getByPlaceholderText("email");
-		const passwordField = getByPlaceholderText("password");
+		const emailField = getByPlaceholderText("Email");
+		const passwordField = getByPlaceholderText("Password");
 
 		await act(async () => {
 			fireEvent.change(emailField, { target: { value: expected.email } });

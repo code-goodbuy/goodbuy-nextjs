@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { updateWithoutSpaces, checkEmail } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
+import Field from "./Field";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState<string>("");
@@ -75,24 +76,9 @@ export default function LoginForm() {
 			id="login-form"
 			className="flex flex-col justify-center items-center my-14"
 		>
-			{serverResponse !== "" && (
-				<div className="pb-10 text-2xl colorful-text">{serverResponse}</div>
-			)}
-			{!isValidEmail && <label className="error-label">This email is not valid</label>}
-			<input
-				type="text"
-				placeholder="email"
-				onChange={(e) => updateWithoutSpaces(setEmail, e.target.value)}
-				value={email || ""}
-				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
-			/>
-			<input
-				type="password"
-				placeholder="password"
-				onChange={(e) => updateWithoutSpaces(setPassword, e.target.value)}
-				value={password || ""}
-				className="field focus:ring-2 focus:ring-primary dark:focus:ring-2 dark:focus:ring-secondary"
-			/>
+			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
+			<Field value={email} setValue={setEmail} isValidValue={isValidEmail} type="text" name="Email" />
+			<Field value={password} setValue={setPassword} isValidValue={true} type="password" name="Password" />
 			<button
 				type="submit"
 				form="login-form"

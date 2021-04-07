@@ -1,4 +1,4 @@
-import { render, act, fireEvent } from "@testing-library/react";
+import { render, act, fireEvent, getByLabelText } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SignUpForm from "../../components/login/SignUpForm";
 
@@ -20,16 +20,16 @@ describe("test sign up form", () => {
 	});
 
 	it("should display errors and shouldn't have a clickable submit button", async () => {
-		const { getByPlaceholderText, getByText, getByTestId } = render(
+		const { getByPlaceholderText, getByText, getByLabelText } = render(
 			<SignUpForm setAction={() => {}} msBeforeRedirecting={0} />
 		);
 
-		const emailField = getByPlaceholderText("email");
-		const usernameField = getByPlaceholderText("username");
-		const passwordField = getByPlaceholderText("password");
-		const repeatPasswordField = getByPlaceholderText("repeat password");
-		const termsCheckbox = getByTestId("termsCheckbox");
-		const ageCheckbox = getByTestId("ageCheckbox");
+		const emailField = getByPlaceholderText("Email");
+		const usernameField = getByPlaceholderText("Username");
+		const passwordField = getByPlaceholderText("Password");
+		const repeatPasswordField = getByPlaceholderText("Repeated Password");
+		const termsCheckbox = getByLabelText("I read and accept the Terms and Conditions.");
+		const ageCheckbox = getByLabelText("I am 16 or older.");
 		const submit = getByText("Sign Up");
 
 		await act(async () => {
@@ -41,10 +41,10 @@ describe("test sign up form", () => {
 			fireEvent.click(ageCheckbox);
 		});
 
-		const emailError = getByTestId("emailError");
-		const usernameError = getByTestId("usernameError");
-		const passwordError = getByTestId("passwordError");
-		const repeatedPasswordError = getByTestId("repeatedPasswordError");
+		const emailError = getByText("Invalid Email");
+		const usernameError = getByText("Invalid Username");
+		const passwordError = getByText("Invalid Password");
+		const repeatedPasswordError = getByText("Invalid Repeated Password");
 
 		expect(emailError).toBeVisible();
 		expect(usernameError).toBeVisible();
