@@ -64,7 +64,8 @@ describe("test sign up logic", () => {
 					username: expected.validUsername,
 					password: expected.validPassword,
 					acceptedTerms: true,
-					hasRequiredAge: true
+					hasRequiredAge: true,
+					tokenVersion: 0
 				})
 			})
 		);
