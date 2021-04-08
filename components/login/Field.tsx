@@ -1,19 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+import { FieldType } from "../../lib/types/AuthTypes";
 import { updateWithoutSpaces } from "./helperFunctions";
 
-export default function Field({
-	value,
-	setValue,
-	isValidValue,
-	type,
-	name
-}: {
-	value: string;
-	setValue: Dispatch<SetStateAction<string>>;
-	isValidValue: boolean;
-	type: "text" | "password";
-	name: string;
-}) {
+export default function Field({ value, setValue, isValidValue, type, name }: FieldType) {
 	return (
 		<>
 			{!isValidValue && value !== "" && <label className="error-label">Invalid {name}</label>}

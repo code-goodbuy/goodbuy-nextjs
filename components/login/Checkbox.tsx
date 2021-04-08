@@ -1,14 +1,7 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
+import { CheckboxType } from "../../lib/types/AuthTypes";
 
-export default function Checkbox({
-	condition,
-	updateCondition,
-	children
-}: {
-	condition: boolean;
-	updateCondition: Dispatch<SetStateAction<boolean>>;
-	children: React.ReactNode;
-}) {
+export default function Checkbox({ condition, updateCondition, children }: CheckboxType) {
 	return (
 		<label className="w-4/5 mb-8">
 			<input
