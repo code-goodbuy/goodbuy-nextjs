@@ -1,6 +1,6 @@
 import { render, act, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import SignUpForm from "../../components/login/SignUpForm";
+import SignUpForm from "../../components/auth/SignUpForm";
 
 async function mockFetch() {
 	return new Promise((resolve, reject) => {

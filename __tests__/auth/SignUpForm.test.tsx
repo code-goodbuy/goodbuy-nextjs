@@ -1,6 +1,6 @@
 import { render, act, fireEvent, getByLabelText } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import SignUpForm from "../../components/login/SignUpForm";
+import SignUpForm from "../../components/auth/SignUpForm";
 
 describe("test sign up form", () => {
 	let expected: {

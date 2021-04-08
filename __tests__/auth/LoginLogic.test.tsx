@@ -1,6 +1,6 @@
 import { render, act, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import LoginForm from "../../components/login/LoginForm";
+import LoginForm from "../../components/auth/LoginForm";
 
 const useRouter = jest.spyOn(require("next/router"), "useRouter");
 

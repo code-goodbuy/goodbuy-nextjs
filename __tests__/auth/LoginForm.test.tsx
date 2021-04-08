@@ -1,6 +1,6 @@
 import { render, act, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import LoginForm from "../../components/login/LoginForm";
+import LoginForm from "../../components/auth/LoginForm";
 
 describe("Test login form", () => {
 	let expected: { validEmail: string; invalidEmail: string; password: string };

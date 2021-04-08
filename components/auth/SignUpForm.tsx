@@ -23,23 +23,14 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const BASE_URL = window.location.protocol + "//" + window.location.host;
 
 	useEffect(() => {
-		/**
-		 * Every time the email is updated, it checks if it is valid
-		 */
 		checkEmail(setIsValidEmail, email);
 	}, [email]);
 
 	useEffect(() => {
-		/**
-		 * Every time the username is updated, check if it is valid
-		 */
 		checkUsername(setIsValidUsername, username);
 	}, [username]);
 
 	useEffect(() => {
-		/**
-		 * Every time the password gets updated, check if it is strong
-		 */
 		checkPasswordStrength(setIsStrongPassword, password);
 		if (repeatedPassword !== "") {
 			//if the user changes the password and they already typed the second one, check if they match
@@ -48,16 +39,10 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	}, [password]);
 
 	useEffect(() => {
-		/**
-		 *  Every time the second password gets updated, check if it matches the other
-		 */
 		checkPasswordMatch(setIsRepeatedPasswordCorrect, repeatedPassword, password);
 	}, [repeatedPassword]);
 
 	useEffect(() => {
-		/**
-		 * Checks if the form can be submitted
-		 */
 		if (
 			email !== "" &&
 			username !== "" &&

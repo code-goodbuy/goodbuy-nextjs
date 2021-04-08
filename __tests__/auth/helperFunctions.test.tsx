@@ -5,7 +5,7 @@ import {
 	checkUsername,
 	checkPasswordStrength,
 	checkPasswordMatch
-} from "../../components/login/helperFunctions";
+} from "../../components/auth/helperFunctions";
 
 describe("test login helper functions", () => {
 	let stateValue: any;
