@@ -1,5 +1,5 @@
 import Meta from "../components/common/Meta";
-import Auth from "../components/login/Auth";
+import Auth from "../components/auth/Auth";
 
 export default function Home() {
 	/**
