@@ -93,14 +93,14 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	};
 
 	const handleSignUp = () => {
-		//test the sign up function
 		setIsSendingData(true);
 		const userData = {
 			email,
 			username,
 			password,
 			acceptedTerms: hasAcceptedTerms,
-			hasRequiredAge
+			hasRequiredAge,
+			tokenVersion: 0
 		};
 
 		fetch(BASE_URL + "/api/register", {
