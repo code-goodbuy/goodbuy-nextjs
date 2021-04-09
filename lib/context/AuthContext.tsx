@@ -1,6 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { ReactChildrenType } from "../types/ReactChildrenType";
-import jwt_decode from "jwt-decode";
 import { JWTPayloadType } from "../../lib/types/HelperTypes";
 
 interface AuthType {
@@ -8,8 +7,6 @@ interface AuthType {
 	changeIsAuthenticating?: (newValue: boolean) => void;
 	isLoggedIn?: boolean;
 	toggleIsLoggedIn?: () => void;
-	JWT?: string;
-	updateJWT?: (newJWT: string) => void;
 	userInfo?: JWTPayloadType;
 	updateUserInfo?: (newInfo: JWTPayloadType) => void;
 }
@@ -26,15 +23,26 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 	 * changeIsAuthenticating: (newValue: boolean): void;
 	 * isLoggedIn: boolean;
 	 * toggleIsLoggedIn: (): void;
-	 * JWT?: string;
-	 * updateJWT?: (newJWT: string) => void;
 	 * userInfo?: JWTPayloadType | undefined;
 	 * updateUserInfo?: (newInfo: JWTPayloadType) => void;
 	 */
 	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-	const [JWT, setJWT] = useState<string>("");
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
 	const [userInfo, setUserInfo] = useState<JWTPayloadType | undefined>();
+
+	useEffect(() => {
+		fetch(window.location.protocol + "//" + window.location.host + "/api/check")
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.message === "logged" && data.email) {
+					setIsLoggedIn(true);
+					setUserInfo({ email: data.email });
+				} else {
+					setIsLoggedIn(false);
+				}
+			})
+			.catch((err) => console.error(err));
+	}, []);
 
 	const changeIsAuthenticating = (newValue: boolean): void => {
 		/**
@@ -53,36 +61,6 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 		setUserInfo(newInfo);
 	};
 
-	const isValidJWT = (token: string): boolean => {
-		try {
-			jwt_decode<JWTPayloadType>(token);
-			return true;
-		} catch {
-			return false;
-		}
-	};
-
-	const isExpiredJWT = (exp: number): boolean => {
-		if (Date.now() >= exp * 1000) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	const updateJWT = (newJWT: string): void | Error => {
-		if (!isValidJWT(newJWT)) {
-			throw new Error("Invalid / Expired JWT");
-		}
-		let decoded = jwt_decode<JWTPayloadType>(newJWT);
-		if (decoded.exp && decoded.email && !isExpiredJWT(decoded.exp)) {
-			setJWT(newJWT);
-			updateUserInfo(decoded);
-		} else {
-			throw new Error("Invalid / Expired JWT");
-		}
-	};
-
 	return (
 		<AuthContext.Provider
 			value={{
@@ -90,8 +68,6 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 				changeIsAuthenticating,
 				isLoggedIn,
 				toggleIsLoggedIn,
-				JWT,
-				updateJWT,
 				userInfo,
 				updateUserInfo
 			}}

@@ -1,6 +1,6 @@
 import { render, act, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import SignUpForm from "../../components/login/SignUpForm";
+import SignUpForm from "../../components/auth/SignUpForm";
 
 async function mockFetch() {
 	return new Promise((resolve, reject) => {
@@ -18,6 +18,8 @@ describe("test sign up logic", () => {
 		validUsername: string;
 		validPassword: string;
 	};
+	let stateValue: any;
+	let changeForm = jest.fn().mockImplementation((s) => (stateValue = s));
 
 	beforeEach(() => {
 		global.fetch = jest.fn().mockImplementation(mockFetch);
@@ -29,16 +31,16 @@ describe("test sign up logic", () => {
 	});
 
 	it("should call the fetch API", async () => {
-		const { getByPlaceholderText, getByText, getByTestId } = render(
-			<SignUpForm setAction={() => {}} />
+		const { getByPlaceholderText, getByText, getByLabelText } = render(
+			<SignUpForm setAction={changeForm} msBeforeRedirecting={0} />
 		);
 
-		const emailField = getByPlaceholderText("email");
-		const usernameField = getByPlaceholderText("username");
-		const passwordField = getByPlaceholderText("password");
-		const repeatPasswordField = getByPlaceholderText("repeat password");
-		const termsCheckbox = getByTestId("termsCheckbox");
-		const ageCheckbox = getByTestId("ageCheckbox");
+		const emailField = getByPlaceholderText("Email");
+		const usernameField = getByPlaceholderText("Username");
+		const passwordField = getByPlaceholderText("Password");
+		const repeatPasswordField = getByPlaceholderText("Repeated Password");
+		const termsCheckbox = getByLabelText("I read and accept the Terms and Conditions.");
+		const ageCheckbox = getByLabelText("I am 16 or older.");
 
 		await act(async () => {
 			fireEvent.change(emailField, { target: { value: expected.validEmail } });
@@ -52,7 +54,7 @@ describe("test sign up logic", () => {
 		fireEvent.click(getByText("Sign Up"));
 
 		await waitFor(async () =>
-			expect(global.fetch).toHaveBeenCalledWith("https://gb-be.de/register", {
+			expect(global.fetch).toHaveBeenCalledWith("http://localhost/api/register", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
@@ -62,9 +64,11 @@ describe("test sign up logic", () => {
 					username: expected.validUsername,
 					password: expected.validPassword,
 					acceptedTerms: true,
-					hasRequiredAge: true
+					hasRequiredAge: true,
+					tokenVersion: 0
 				})
 			})
 		);
+		expect(changeForm).toHaveBeenCalledWith("login");
 	});
 });
