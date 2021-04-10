@@ -4,6 +4,7 @@ import { checkEmail, checkUsername, checkPasswordStrength, checkPasswordMatch } 
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
+import SubmitButton from "./SubmitButton";
 
 export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [email, setEmail] = useState<string>("");
@@ -147,15 +148,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			<Checkbox condition={hasRequiredAge} updateCondition={setHasRequiredAge}>
 				<span>I am 16 or older.</span>
 			</Checkbox>
-			<button
-				type="submit"
-				form="login-form"
-				className="colorful-button"
-				disabled={!isValidForm || isSendingData}
-				onClick={handleSignUp}
-			>
-				Sign Up
-			</button>
+			<SubmitButton disabled={!isValidForm || isSendingData} updater={handleSignUp} text="Sign Up" />
 		</form>
 	);
 }

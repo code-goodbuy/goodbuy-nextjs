@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { updateWithoutSpaces, checkEmail } from "./helperFunctions";
+import { checkEmail } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
+import SubmitButton from "./SubmitButton";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState<string>("");
@@ -79,15 +80,7 @@ export default function LoginForm() {
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
 			<Field value={email} setValue={setEmail} isValidValue={isValidEmail} type="text" name="Email" />
 			<Field value={password} setValue={setPassword} isValidValue={true} type="password" name="Password" />
-			<button
-				type="submit"
-				form="login-form"
-				className="colorful-button mb-6"
-				disabled={!isValidForm || isSendingData}
-				onClick={handleLogin}
-			>
-				Log In
-			</button>
+			<SubmitButton disabled={!isValidForm || isSendingData} updater={handleLogin} text="Log In" />
 		</form>
 	);
 }

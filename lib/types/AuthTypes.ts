@@ -18,3 +18,9 @@ export interface CheckboxType {
 	updateCondition: Dispatch<SetStateAction<boolean>>;
 	children: React.ReactNode;
 }
+
+export interface SubmitType {
+	updater: () => void;
+	disabled: boolean;
+	text: string;
+}
