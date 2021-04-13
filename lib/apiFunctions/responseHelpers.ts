@@ -1,28 +1,33 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import Cookies from "cookies";
 
-export function setJWTCookie(req: IncomingMessage, res: ServerResponse, jwtAccessToken: string) {
+export function setTokenCookie(
+	req: IncomingMessage,
+	res: ServerResponse,
+	name: "auth-token" | "refresh-token",
+	token: string
+) {
 	const cookies = new Cookies(req, res);
-	cookies.set("auth-token", jwtAccessToken, {
+	cookies.set(name, token, {
 		httpOnly: true,
 		sameSite: "lax"
 	});
 }
 
-export function getJWTCookie(req: IncomingMessage, res: ServerResponse) {
+export function getTokenCookie(req: IncomingMessage, res: ServerResponse, name: "auth-token" | "refresh-token") {
 	const cookies = new Cookies(req, res);
-	return cookies.get("auth-token");
+	return cookies.get(name);
 }
 
-export function unsetJWTCookie(req: IncomingMessage, res: ServerResponse) {
+export function unsetTokenCookie(req: IncomingMessage, res: ServerResponse, name: "auth-token" | "refresh-token") {
 	const cookies = new Cookies(req, res);
-	cookies.set("auth-token", "", {
+	cookies.set(name, "", {
 		httpOnly: true,
 		sameSite: "lax"
 	});
 }
 
-export function getJWTFromResponse(apiResponseBody: string): null | string {
+export function getTokenFromResponse(apiResponseBody: string): null | string {
 	try {
 		const { jwtAccessToken } = JSON.parse(apiResponseBody);
 		if (jwtAccessToken === undefined) {

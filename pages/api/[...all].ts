@@ -1,14 +1,11 @@
 import httpProxy from "http-proxy";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getJWTCookie } from "../../lib/apiFunctions/responseHelpers";
+import { getTokenCookie } from "../../lib/apiFunctions/responseHelpers";
+import { apiConfig } from "../../lib/apiFunctions/apiConfig";
 
 const proxy = httpProxy.createProxyServer({ changeOrigin: true });
 
-export const config = {
-	api: {
-		bodyParser: false //don't parse the whole request, so we can forward it to the backend
-	}
-};
+export const config = apiConfig;
 
 export default function route(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 	return new Promise((resolve, reject): void => {
@@ -16,7 +13,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			res.status(409).json({ message: "error" });
 			reject();
 		} else {
-			const authToken = getJWTCookie(req, res);
+			const authToken = getTokenCookie(req, res, "auth-token");
 			req.url = req.url.replace(/^\/api/, ""); //remove "api" from the url
 			req.headers.cookie = ""; //don't send other cookies to the backend
 			if (authToken) {

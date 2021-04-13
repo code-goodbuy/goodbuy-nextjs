@@ -1,13 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getJWTCookie } from "../../lib/apiFunctions/responseHelpers";
+import { getTokenCookie } from "../../lib/apiFunctions/responseHelpers";
 import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
-import type { PageConfig } from "next";
+import { apiConfig } from "../../lib/apiFunctions/apiConfig";
 
-export const config: PageConfig = {
-	api: {
-		bodyParser: false //don't parse the whole request, so we can forward it to the backend
-	}
-};
+export const config = apiConfig;
 
 export default function route(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 	return new Promise((resolve, reject): void => {
@@ -15,7 +11,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			res.status(409).json({ message: "error" });
 			reject();
 		} else {
-			const token = getJWTCookie(req, res);
+			const token = getTokenCookie(req, res, "auth-token");
 			if (token && token !== "") {
 				let validJWT = false;
 				let data;
