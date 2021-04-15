@@ -57,3 +57,10 @@ export interface HandleResponseType {
 	resolve: () => void;
 	reject: () => void;
 }
+
+export interface setAuthCookiesType {
+	req: IncomingMessage;
+	res: NextApiResponse;
+	jwt: string;
+	refreshToken: string;
+}
