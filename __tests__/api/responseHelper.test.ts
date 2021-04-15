@@ -17,7 +17,7 @@ jest.mock("cookies", () => {
 	}));
 });
 
-describe("Test cookies", () => {
+describe("Test cookies helper functions", () => {
 	let req: IncomingMessage, res: ServerResponse, token: string;
 
 	beforeEach(() => {
