@@ -1,8 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getTokenFromCookie, initCookies } from "./responseHelpers";
+import { ForwardRequestType, HandleEndType, HandleResponseType } from "../types/AuthTypes";
+import { decodeJWT } from "./jwtHelpers";
+import {
+	getTokenFromCookie,
+	getTokenFromResponse,
+	getTokenFromResponseCookie,
+	initCookies,
+	setTokenCookie
+} from "./responseHelpers";
 
-export function rejectIfInvalid(req: NextApiRequest, res: NextApiResponse, reject: () => void) {
-	if (req.url === undefined) {
+export function rejectIfCondition(res: NextApiResponse, reject: () => void, condition: boolean) {
+	if (condition) {
 		res.status(409).json({ message: "error" });
 		reject();
 	}
@@ -15,7 +23,48 @@ export function getCommonRequirements(req: NextApiRequest, res: NextApiResponse)
 	return { authToken, refreshToken };
 }
 
-export function resolveReq(res: NextApiResponse, resolve: () => void, message: string) {
-	res.status(200).json({ message: message });
+export function resolveReq(res: NextApiResponse, resolve: () => void, message: {}) {
+	res.status(200).json(message);
 	resolve();
+}
+
+export function prepareForForwarding(req: NextApiRequest, cookie = "") {
+	req.url = req?.url?.replace(/^\/api/, "");
+	req.headers.cookie = cookie;
+}
+
+export function forwardRequest({ req, res, proxy, handleRes, reject }: ForwardRequestType) {
+	const config = {
+		target: process.env.backendURL,
+		autoRewrite: false,
+		selfHandleResponse: handleRes
+	};
+	return proxy.web(req, res, config, () => {
+		reject();
+	});
+}
+
+export function handleEnd({ req, res, proxyRes, body, resolve, reject }: HandleEndType) {
+	const refreshToken = getTokenFromResponseCookie(proxyRes);
+	const jwt = getTokenFromResponse(body);
+
+	rejectIfCondition(res, reject, jwt === null || refreshToken === undefined);
+
+	const cookie = initCookies(req, res);
+	jwt && setTokenCookie(cookie, "auth-token", jwt);
+	refreshToken && setTokenCookie(cookie, "refresh-token", refreshToken);
+
+	jwt && resolveReq(res, resolve, { ...decodeJWT(jwt) });
+}
+
+export function handleResponse({ proxy, resolve, reject }: HandleResponseType) {
+	return proxy.once("proxyRes", (proxyRes, req, res: any) => {
+		let body = "";
+		proxyRes.on("data", (chunk: string) => {
+			body += chunk;
+		});
+		proxyRes.on("end", () => {
+			handleEnd({ req, res, proxyRes, body, resolve, reject });
+		});
+	});
 }
