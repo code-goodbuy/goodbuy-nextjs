@@ -22,8 +22,21 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 					validJWT = false;
 				}
 				if (validJWT && !(data instanceof Error)) {
-					res.status(200).json({ message: "logged", email: data?.email });
+					res.status(200).json({ message: "logged" });
 					resolve();
+				} else {
+					const refreshToken = getTokenCookie(req, res, "refresh-token");
+					let validRefresh = false;
+					try {
+						refreshToken && decodeJWT(refreshToken);
+						validRefresh = true;
+					} catch {
+						validRefresh = false;
+					}
+					if (validRefresh) {
+						res.status(200).json({ message: "refresh" });
+						resolve();
+					}
 				}
 			}
 			res.status(200).json({ message: "not logged" });
