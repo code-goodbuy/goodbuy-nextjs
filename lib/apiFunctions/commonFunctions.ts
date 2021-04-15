@@ -14,3 +14,8 @@ export function getCommonRequirements(req: NextApiRequest, res: NextApiResponse)
 	const refreshToken = getTokenFromCookie(cookie, "refresh-token");
 	return { authToken, refreshToken };
 }
+
+export function resolveReq(res: NextApiResponse, resolve: () => void, message: string) {
+	res.status(200).json({ message: message });
+	resolve();
+}
