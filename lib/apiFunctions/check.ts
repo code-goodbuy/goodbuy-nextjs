@@ -7,5 +7,6 @@ export default function check(req: NextApiRequest, res: NextApiResponse, proxy: 
 	return new Promise((resolve, reject): void => {
 		rejectIfInvalid(req, res, reject);
 		const { authToken, refreshToken } = getCommonRequirements(req, res);
+		const isAuthTokenValid = isValidJWT(authToken);
 	});
 }
