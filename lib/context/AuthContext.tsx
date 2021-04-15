@@ -26,17 +26,48 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 	 * userInfo?: JWTPayloadType | undefined;
 	 * updateUserInfo?: (newInfo: JWTPayloadType) => void;
 	 */
+	const getUserInfo = () => {
+		const infoFromStorage = window.localStorage.getItem("userInfo");
+		if (infoFromStorage) {
+			return JSON.parse(infoFromStorage);
+		}
+		return undefined;
+	};
+
 	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
 	const [userInfo, setUserInfo] = useState<JWTPayloadType | undefined>();
 
 	useEffect(() => {
+		setUserInfo(getUserInfo());
+		//check if the token is refreshable (data.message === refresh) and also write a new proxy route to intercept such request
 		fetch(window.location.protocol + "//" + window.location.host + "/api/check")
 			.then((res) => res.json())
 			.then((data) => {
-				if (data.message === "logged" && data.email) {
+				if (data.message === "logged") {
 					setIsLoggedIn(true);
-					setUserInfo({ email: data.email });
+				} else if (data.message === "refresh") {
+					fetch(window.location.protocol + "//" + window.location.host + "/api/refresh_token", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ "email": userInfo && userInfo.email })
+					})
+						.then((res) => {
+							if (res.status === 200) {
+								res.json();
+							} else {
+								throw Error("Server Error");
+							}
+						})
+						.then((data) => {
+							setIsLoggedIn(true);
+						})
+						.catch((err) => {
+							console.log(err);
+							setIsLoggedIn(false);
+						});
 				} else {
 					setIsLoggedIn(false);
 				}
@@ -59,6 +90,7 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 
 	const updateUserInfo = (newInfo: JWTPayloadType) => {
 		setUserInfo(newInfo);
+		window.localStorage.setItem("userInfo", JSON.stringify(newInfo));
 	};
 
 	return (
