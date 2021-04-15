@@ -33,14 +33,17 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 				proxyRes.on("data", (chunk: string) => {
 					apiResponseBody += chunk;
 				});
-				console.log(apiResponseBody);
 				proxyRes.on("end", () => {
+					const refreshToken = proxyRes.headers["set-cookie"]
+						?.toString()
+						.substring(4, proxyRes.headers["set-cookie"]?.toString().indexOf(";"));
 					const jwt = getTokenFromResponse(apiResponseBody);
-					if (jwt === null) {
+					if (jwt === null || refreshToken === undefined) {
 						res.status(409);
-						reject("Error");
+						reject("Error - No Token");
 					} else {
 						setTokenCookie(req, res, "auth-token", jwt);
+						setTokenCookie(req, res, "refresh-token", refreshToken);
 						res.status(200).json({ ...decodeJWT(jwt) });
 						resolve();
 					}
