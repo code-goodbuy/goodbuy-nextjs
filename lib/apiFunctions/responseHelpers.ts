@@ -29,7 +29,8 @@ export function unsetTokenCookie(req: IncomingMessage, res: ServerResponse, name
 
 export function getTokenFromResponse(apiResponseBody: string): null | string {
 	try {
-		const { jwtAccessToken } = JSON.parse(apiResponseBody);
+		const body = JSON.parse(apiResponseBody);
+		const jwtAccessToken = body.jwtAccessToken ? body.jwtAccessToken : body.accessToken;
 		if (jwtAccessToken === undefined) {
 			return null;
 		}
