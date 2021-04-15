@@ -46,8 +46,8 @@ export function forwardRequest({ req, res, proxy, handleRes, reject }: ForwardRe
 
 export function setAuthCookies({ req, res, jwt, refreshToken }: setAuthCookiesType) {
 	const cookie = initCookies(req, res);
-	jwt && setTokenCookie(cookie, "auth-token", jwt);
-	refreshToken && setTokenCookie(cookie, "refresh-token", refreshToken);
+	setTokenCookie(cookie, "auth-token", jwt);
+	setTokenCookie(cookie, "refresh-token", refreshToken);
 }
 
 export function handleEnd({ req, res, proxyRes, body, resolve, reject }: HandleEndType) {
