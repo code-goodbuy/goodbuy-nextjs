@@ -4,7 +4,6 @@ import { IncomingMessage, ServerResponse } from "node:http";
 import {
 	setTokenCookie,
 	getTokenFromCookie,
-	unsetTokenCookie,
 	getTokenFromResponse,
 	initCookies
 } from "../../lib/apiFunctions/responseHelpers";
@@ -42,11 +41,6 @@ describe("Test cookies helper functions", () => {
 	it("shohuld get a cookie", () => {
 		getTokenFromCookie(cookie, "auth-token");
 		expect(mockGetCookie).toHaveBeenCalled();
-	});
-
-	it("should delete a token", () => {
-		unsetTokenCookie(cookie, "auth-token");
-		expect(mockSetCookie).toHaveBeenCalledWith("auth-token", "", { "httpOnly": true, "sameSite": "lax" });
 	});
 
 	it("should get a token from a response", () => {

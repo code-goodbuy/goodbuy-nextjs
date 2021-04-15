@@ -16,13 +16,6 @@ export function getTokenFromCookie(cookie: Cookies, name: "auth-token" | "refres
 	return cookie.get(name);
 }
 
-export function unsetTokenCookie(cookie: Cookies, name: "auth-token" | "refresh-token") {
-	cookie.set(name, "", {
-		httpOnly: true,
-		sameSite: "lax"
-	});
-}
-
 export function getTokenFromResponse(apiResponseBody: string): null | string {
 	try {
 		const body = JSON.parse(apiResponseBody);
