@@ -1,14 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getCommonRequirements, rejectIfCondition, resolveReq } from "./commonFunctions";
-import { isExpiredJWT } from "./jwtHelpers";
-import { ResolveIfValidType } from "../types/AuthTypes";
-
-function resolveIfValid({ token, response, resolve, message }: ResolveIfValidType) {
-	const isTokenValid = token && !isExpiredJWT(token);
-	if (isTokenValid) {
-		return resolveReq(response, resolve, { "message": message });
-	}
-}
+import { getCommonRequirements, rejectIfCondition, resolveIfValid, resolveReq } from "./commonFunctions";
 
 export default function check(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 	return new Promise((resolve, reject): void => {
