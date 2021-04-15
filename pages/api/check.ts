@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getTokenFromCookie } from "../../lib/apiFunctions/responseHelpers";
+import { getTokenFromCookie, initCookies } from "../../lib/apiFunctions/responseHelpers";
 import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
 import { apiConfig } from "../../lib/apiFunctions/apiConfig";
 
@@ -11,7 +11,8 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			res.status(409).json({ message: "error" });
 			reject();
 		} else {
-			const token = getTokenFromCookie(req, res, "auth-token");
+			const cookie = initCookies(req, res);
+			const token = getTokenFromCookie(cookie, "auth-token");
 			if (token && token !== "") {
 				let validJWT = false;
 				let data;
@@ -25,7 +26,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 					res.status(200).json({ message: "logged" });
 					resolve();
 				} else {
-					const refreshToken = getTokenFromCookie(req, res, "refresh-token");
+					const refreshToken = getTokenFromCookie(cookie, "refresh-token");
 					let validRefresh = false;
 					try {
 						refreshToken && decodeJWT(refreshToken);

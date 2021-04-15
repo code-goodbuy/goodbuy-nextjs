@@ -1,7 +1,7 @@
 import httpProxy from "http-proxy";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
-import { setTokenCookie, getTokenFromResponse } from "../../lib/apiFunctions/responseHelpers";
+import { setTokenCookie, getTokenFromResponse, initCookies } from "../../lib/apiFunctions/responseHelpers";
 import { apiConfig } from "../../lib/apiFunctions/apiConfig";
 
 const proxy = httpProxy.createProxyServer({ changeOrigin: true });
@@ -42,8 +42,9 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 						res.status(409);
 						reject("Error - No Token");
 					} else {
-						setTokenCookie(req, res, "auth-token", jwt);
-						setTokenCookie(req, res, "refresh-token", refreshToken);
+						const cookie = initCookies(req, res);
+						setTokenCookie(cookie, "auth-token", jwt);
+						setTokenCookie(cookie, "refresh-token", refreshToken);
 						res.status(200).json({ ...decodeJWT(jwt) });
 						resolve();
 					}
