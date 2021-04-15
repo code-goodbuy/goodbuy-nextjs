@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import type { NextApiResponse } from "next";
 
 export interface SignUpFormTypes {
 	setAction: Dispatch<SetStateAction<"login" | "sign-up">>;
@@ -23,4 +24,11 @@ export interface SubmitType {
 	updater: () => void;
 	disabled: boolean;
 	text: string;
+}
+
+export interface ResolveIfValidType {
+	token: string | undefined;
+	response: NextApiResponse;
+	resolve: () => void;
+	message: string;
 }
