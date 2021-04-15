@@ -23,7 +23,7 @@ export const decodeJWT = (newJWT: string): JWTPayloadType | Error => {
 		throw new Error("Invalid / Expired JWT");
 	}
 	let decoded = jwt_decode<JWTPayloadType>(newJWT);
-	if (decoded.exp && decoded.email && !isExpiredJWT(decoded.exp)) {
+	if (decoded.exp && !isExpiredJWT(decoded.exp)) {
 		return decoded;
 	} else {
 		throw new Error("Invalid / Expired JWT");
