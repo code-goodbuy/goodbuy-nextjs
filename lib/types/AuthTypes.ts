@@ -46,7 +46,7 @@ export interface ForwardRequestType {
 export interface HandleEndType {
 	req: IncomingMessage;
 	res: NextApiResponse;
-	proxyRes: IncomingMessage;
+	proxyRes?: IncomingMessage;
 	body: string;
 	resolve: () => void;
 	reject: () => void;
@@ -56,6 +56,7 @@ export interface HandleResponseType {
 	proxy: httpProxy;
 	resolve: () => void;
 	reject: () => void;
+	handler: ({}: HandleEndType) => void;
 }
 
 export interface setAuthCookiesType {
