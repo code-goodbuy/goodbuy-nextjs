@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import type { NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type httpProxy from "http-proxy";
+import { IncomingMessage } from "node:http";
 
 export interface SignUpFormTypes {
 	setAction: Dispatch<SetStateAction<"login" | "sign-up">>;
@@ -31,4 +33,27 @@ export interface ResolveIfValidType {
 	response: NextApiResponse;
 	resolve: () => void;
 	message: string;
+}
+
+export interface ForwardRequestType {
+	req: NextApiRequest;
+	res: NextApiResponse;
+	proxy: httpProxy;
+	handleRes: boolean;
+	reject: () => void;
+}
+
+export interface HandleEndType {
+	req: IncomingMessage;
+	res: NextApiResponse;
+	proxyRes: IncomingMessage;
+	body: string;
+	resolve: () => void;
+	reject: () => void;
+}
+
+export interface HandleResponseType {
+	proxy: httpProxy;
+	resolve: () => void;
+	reject: () => void;
 }
