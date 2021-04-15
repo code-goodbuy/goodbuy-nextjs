@@ -1,7 +1,7 @@
 import jwt_decode from "jwt-decode";
 import { JWTPayloadType } from "../../lib/types/HelperTypes";
 
-const isValidJWT = (token: string): boolean => {
+export const isValidJWT = (token: string): boolean => {
 	try {
 		jwt_decode<JWTPayloadType>(token);
 		return true;
@@ -10,22 +10,16 @@ const isValidJWT = (token: string): boolean => {
 	}
 };
 
-const isExpiredJWT = (exp: number): boolean => {
-	if (Date.now() >= exp * 1000) {
-		return true;
-	} else {
-		return false;
-	}
+export const isExpiredJWT = (token: string): boolean => {
+	if (!isValidJWT(token)) return true;
+	const { exp } = jwt_decode<JWTPayloadType>(token);
+	if (exp && exp * 1000 >= Date.now()) return false;
+	return true;
 };
 
 export const decodeJWT = (newJWT: string): JWTPayloadType | Error => {
-	if (!isValidJWT(newJWT)) {
-		throw new Error("Invalid / Expired JWT");
+	if (!isExpiredJWT(newJWT)) {
+		return jwt_decode<JWTPayloadType>(newJWT);
 	}
-	let decoded = jwt_decode<JWTPayloadType>(newJWT);
-	if (decoded.exp && !isExpiredJWT(decoded.exp)) {
-		return decoded;
-	} else {
-		throw new Error("Invalid / Expired JWT");
-	}
+	throw new Error("Invalid / Expired JWT");
 };
