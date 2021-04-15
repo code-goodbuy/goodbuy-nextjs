@@ -4,7 +4,8 @@ import {
 	HandleEndType,
 	HandleResponseType,
 	ResolveIfValidType,
-	setAuthCookiesType
+	setAuthCookiesType,
+	PrepareForForwardingType
 } from "../types/AuthTypes";
 import { decodeJWT, isExpiredJWT } from "./jwtHelpers";
 import {
@@ -41,9 +42,12 @@ export function resolveIfValid({ token, response, resolve, message }: ResolveIfV
 	}
 }
 
-export function prepareForForwarding(req: NextApiRequest, cookie = "") {
+export function prepareForForwarding({ req, cookie = "", token = "" }: PrepareForForwardingType) {
 	req.url = req?.url?.replace(/^\/api/, "");
 	req.headers.cookie = cookie;
+	if (token !== "") {
+		req.headers["auth-token"] = token;
+	}
 }
 
 export function forwardRequest({ req, res, proxy, handleRes, reject }: ForwardRequestType) {
