@@ -1,6 +1,6 @@
 import httpProxy from "http-proxy";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getTokenCookie } from "../../lib/apiFunctions/responseHelpers";
+import { getTokenFromCookie } from "../../lib/apiFunctions/responseHelpers";
 import { apiConfig } from "../../lib/apiFunctions/apiConfig";
 
 const proxy = httpProxy.createProxyServer({ changeOrigin: true });
@@ -13,7 +13,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			res.status(409).json({ message: "error" });
 			reject();
 		} else {
-			const authToken = getTokenCookie(req, res, "auth-token");
+			const authToken = getTokenFromCookie(req, res, "auth-token");
 			req.url = req.url.replace(/^\/api/, ""); //remove "api" from the url
 			req.headers.cookie = ""; //don't send other cookies to the backend
 			if (authToken) {

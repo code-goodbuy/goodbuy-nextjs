@@ -2,7 +2,7 @@ import mock from "mock-http";
 import { IncomingMessage, ServerResponse } from "node:http";
 import {
 	setTokenCookie,
-	getTokenCookie,
+	getTokenFromCookie,
 	unsetTokenCookie,
 	getTokenFromResponse
 } from "../../lib/apiFunctions/responseHelpers";
@@ -37,7 +37,7 @@ describe("Test cookies helper functions", () => {
 	});
 
 	it("shohuld get a cookie", () => {
-		getTokenCookie(req, res, "auth-token");
+		getTokenFromCookie(req, res, "auth-token");
 		expect(mockGetCookie).toHaveBeenCalled();
 	});
 

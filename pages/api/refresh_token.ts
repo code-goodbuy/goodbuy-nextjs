@@ -1,7 +1,7 @@
 import httpProxy from "http-proxy";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
-import { setTokenCookie, getTokenFromResponse, getTokenCookie } from "../../lib/apiFunctions/responseHelpers";
+import { setTokenCookie, getTokenFromResponse, getTokenFromCookie } from "../../lib/apiFunctions/responseHelpers";
 import { apiConfig } from "../../lib/apiFunctions/apiConfig";
 
 const proxy = httpProxy.createProxyServer({ changeOrigin: true });
@@ -14,7 +14,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			res.status(500).json({ message: "error" });
 			reject();
 		} else {
-			const refreshToken = getTokenCookie(req, res, "refresh-token");
+			const refreshToken = getTokenFromCookie(req, res, "refresh-token");
 			req.url = req.url.replace(/^\/api/, ""); //remove "api" from the url
 			req.headers.cookie = `jid=${refreshToken}`;
 

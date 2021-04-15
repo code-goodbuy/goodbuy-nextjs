@@ -14,7 +14,7 @@ export function setTokenCookie(
 	});
 }
 
-export function getTokenCookie(req: IncomingMessage, res: ServerResponse, name: "auth-token" | "refresh-token") {
+export function getTokenFromCookie(req: IncomingMessage, res: ServerResponse, name: "auth-token" | "refresh-token") {
 	const cookies = new Cookies(req, res);
 	return cookies.get(name);
 }
