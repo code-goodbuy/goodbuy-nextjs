@@ -40,14 +40,13 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 
 	useEffect(() => {
 		setUserInfo(getUserInfo());
-		//check if the token is refreshable (data.message === refresh) and also write a new proxy route to intercept such request
-		fetch(window.location.protocol + "//" + window.location.host + "/api/check")
+		fetch("/api/check")
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.message === "logged") {
 					setIsLoggedIn(true);
 				} else if (data.message === "refresh") {
-					fetch(window.location.protocol + "//" + window.location.host + "/api/refresh_token", {
+					fetch("/api/refresh_token", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
@@ -61,7 +60,7 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 								throw Error("Server Error");
 							}
 						})
-						.then((data) => {
+						.then(() => {
 							setIsLoggedIn(true);
 						})
 						.catch((err) => {
