@@ -65,3 +65,9 @@ export interface setAuthCookiesType {
 	jwt: string;
 	refreshToken: string;
 }
+
+export interface PrepareForForwardingType {
+	req: NextApiRequest;
+	cookie?: string;
+	token?: string;
+}
