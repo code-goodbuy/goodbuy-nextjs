@@ -28,3 +28,9 @@ export function getTokenFromResponse(apiResponseBody: string): null | string {
 		return null;
 	}
 }
+
+export function getTokenFromResponseCookie(proxyRes: IncomingMessage) {
+	return proxyRes.headers["set-cookie"]
+		?.toString()
+		.substring(4, proxyRes.headers["set-cookie"]?.toString().indexOf(";"));
+}
