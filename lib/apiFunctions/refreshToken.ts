@@ -13,7 +13,7 @@ export default function refreshToken(req: NextApiRequest, res: NextApiResponse, 
 	return new Promise((resolve, reject): void => {
 		rejectIfCondition(res, reject, req.url === undefined);
 		const { refreshToken } = getCommonRequirements(req, res);
-		prepareForForwarding(req, `jid=${refreshToken}`);
+		prepareForForwarding({ req, cookie: `jid=${refreshToken}` });
 		forwardRequest({ req, res, proxy, handleRes: true, reject });
 		handleResponse({ proxy, resolve, reject, handler: handleRefresh });
 	});
