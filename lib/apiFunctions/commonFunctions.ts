@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ForwardRequestType, HandleEndType, HandleResponseType } from "../types/AuthTypes";
+import { ForwardRequestType, HandleEndType, HandleResponseType, setAuthCookiesType } from "../types/AuthTypes";
 import { decodeJWT } from "./jwtHelpers";
 import {
 	getTokenFromCookie,
@@ -44,15 +44,19 @@ export function forwardRequest({ req, res, proxy, handleRes, reject }: ForwardRe
 	});
 }
 
+export function setAuthCookies({ req, res, jwt, refreshToken }: setAuthCookiesType) {
+	const cookie = initCookies(req, res);
+	jwt && setTokenCookie(cookie, "auth-token", jwt);
+	refreshToken && setTokenCookie(cookie, "refresh-token", refreshToken);
+}
+
 export function handleEnd({ req, res, proxyRes, body, resolve, reject }: HandleEndType) {
 	const refreshToken = getTokenFromResponseCookie(proxyRes);
 	const jwt = getTokenFromResponse(body);
 
 	rejectIfCondition(res, reject, jwt === null || refreshToken === undefined);
 
-	const cookie = initCookies(req, res);
-	jwt && setTokenCookie(cookie, "auth-token", jwt);
-	refreshToken && setTokenCookie(cookie, "refresh-token", refreshToken);
+	jwt && refreshToken && setAuthCookies({ req, res, jwt, refreshToken });
 
 	jwt && resolveReq(res, resolve, { ...decodeJWT(jwt) });
 }
