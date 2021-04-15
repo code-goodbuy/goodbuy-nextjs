@@ -1,6 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ForwardRequestType, HandleEndType, HandleResponseType, setAuthCookiesType } from "../types/AuthTypes";
-import { decodeJWT } from "./jwtHelpers";
+import {
+	ForwardRequestType,
+	HandleEndType,
+	HandleResponseType,
+	ResolveIfValidType,
+	setAuthCookiesType
+} from "../types/AuthTypes";
+import { decodeJWT, isExpiredJWT } from "./jwtHelpers";
 import {
 	getTokenFromCookie,
 	getTokenFromResponse,
@@ -28,6 +34,13 @@ export function resolveReq(res: NextApiResponse, resolve: () => void, message: {
 	resolve();
 }
 
+export function resolveIfValid({ token, response, resolve, message }: ResolveIfValidType) {
+	const isTokenValid = token && !isExpiredJWT(token);
+	if (isTokenValid) {
+		return resolveReq(response, resolve, { "message": message });
+	}
+}
+
 export function prepareForForwarding(req: NextApiRequest, cookie = "") {
 	req.url = req?.url?.replace(/^\/api/, "");
 	req.headers.cookie = cookie;
@@ -50,25 +63,30 @@ export function setAuthCookies({ req, res, jwt, refreshToken }: setAuthCookiesTy
 	setTokenCookie(cookie, "refresh-token", refreshToken);
 }
 
-export function handleEnd({ req, res, proxyRes, body, resolve, reject }: HandleEndType) {
-	const refreshToken = getTokenFromResponseCookie(proxyRes);
+export function handleLogin({ req, res, proxyRes, body, resolve, reject }: HandleEndType) {
+	const refreshToken = proxyRes && getTokenFromResponseCookie(proxyRes);
 	const jwt = getTokenFromResponse(body);
-
 	rejectIfCondition(res, reject, jwt === null || refreshToken === undefined);
-
 	jwt && refreshToken && setAuthCookies({ req, res, jwt, refreshToken });
-
 	jwt && resolveReq(res, resolve, { ...decodeJWT(jwt) });
 }
 
-export function handleResponse({ proxy, resolve, reject }: HandleResponseType) {
+export function handleRefresh({ req, res, body, resolve, reject }: HandleEndType) {
+	const jwt = getTokenFromResponse(body);
+	rejectIfCondition(res, reject, jwt === null);
+	const cookie = initCookies(req, res);
+	jwt && setTokenCookie(cookie, "auth-token", jwt);
+	jwt && resolveReq(res, resolve, { ...decodeJWT(jwt) });
+}
+
+export function handleResponse({ proxy, resolve, reject, handler }: HandleResponseType) {
 	return proxy.once("proxyRes", (proxyRes, req, res: any) => {
 		let body = "";
 		proxyRes.on("data", (chunk: string) => {
 			body += chunk;
 		});
 		proxyRes.on("end", () => {
-			handleEnd({ req, res, proxyRes, body, resolve, reject });
+			handler({ req, res, proxyRes, body, resolve, reject });
 		});
 	});
 }
