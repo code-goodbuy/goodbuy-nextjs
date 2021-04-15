@@ -1,27 +1,23 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import Cookies from "cookies";
 
-export function setTokenCookie(
-	req: IncomingMessage,
-	res: ServerResponse,
-	name: "auth-token" | "refresh-token",
-	token: string
-) {
-	const cookies = new Cookies(req, res);
-	cookies.set(name, token, {
+export function initCookies(req: IncomingMessage, res: ServerResponse) {
+	return new Cookies(req, res);
+}
+
+export function setTokenCookie(cookie: Cookies, name: "auth-token" | "refresh-token", token: string) {
+	cookie.set(name, token, {
 		httpOnly: true,
 		sameSite: "lax"
 	});
 }
 
-export function getTokenFromCookie(req: IncomingMessage, res: ServerResponse, name: "auth-token" | "refresh-token") {
-	const cookies = new Cookies(req, res);
-	return cookies.get(name);
+export function getTokenFromCookie(cookie: Cookies, name: "auth-token" | "refresh-token") {
+	return cookie.get(name);
 }
 
-export function unsetTokenCookie(req: IncomingMessage, res: ServerResponse, name: "auth-token" | "refresh-token") {
-	const cookies = new Cookies(req, res);
-	cookies.set(name, "", {
+export function unsetTokenCookie(cookie: Cookies, name: "auth-token" | "refresh-token") {
+	cookie.set(name, "", {
 		httpOnly: true,
 		sameSite: "lax"
 	});
