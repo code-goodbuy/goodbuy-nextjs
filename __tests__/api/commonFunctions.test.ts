@@ -3,8 +3,7 @@ import {
 	resolveIfValid,
 	prepareForForwarding,
 	forwardRequest,
-	handleLogin,
-	resolveReq
+	handleLogin
 } from "../../lib/apiFunctions/commonFunctions";
 import mock from "mock-http";
 import { NextApiRequest } from "next";
@@ -66,7 +65,6 @@ describe("Test the functions that make the proxy work", () => {
 	it("should handle the login", () => {
 		res._internal.headers = { "set-cookie": `jid=${token}; other things;` };
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
-		// @ts-ignore;
 		handleLogin({ req, res, proxyRes: res._internal, body: `{"jwtAccessToken":"${token}"}`, resolve, reject: rej });
 		expect(resolve).toHaveBeenCalled();
 		expect(rej).not.toHaveBeenCalled();
