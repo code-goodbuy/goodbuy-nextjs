@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { decodeJWT } from "../../lib/apiFunctions/jwtHelpers";
+import { decodeJWT, isValidJWT } from "../../lib/apiFunctions/jwtHelpers";
 
 describe("test API logic", () => {
 	it("should return an object", () => {
@@ -13,6 +13,12 @@ describe("test API logic", () => {
 			"jti": "6e00712f-2196-4bca-b38f-4811d8b91019"
 		});
 	});
+
+	it("should return false", () => {
+		const res = isValidJWT("notAJwtToken");
+		expect(res).toBe(false);
+	});
+
 	it("shouhld throw an error", () => {
 		let res = "";
 		try {
