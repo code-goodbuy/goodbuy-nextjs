@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { decodeJWT, isValidJWT } from "../../lib/apiFunctions/jwtHelpers";
 
 describe("test API logic", () => {
