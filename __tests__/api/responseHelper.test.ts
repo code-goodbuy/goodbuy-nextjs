@@ -5,7 +5,8 @@ import {
 	setTokenCookie,
 	getTokenFromCookie,
 	getTokenFromResponse,
-	initCookies
+	initCookies,
+	getTokenFromResponseCookie
 } from "../../lib/apiFunctions/responseHelpers";
 
 let mockGetCookie = jest.fn();
@@ -45,6 +46,14 @@ describe("Test cookies helper functions", () => {
 
 	it("should get a token from a response", () => {
 		const output = getTokenFromResponse(`{"jwtAccessToken":"${token}"}`);
+		expect(output).toBe(token);
+	});
+
+	it("should fet a token from cookie", () => {
+		const response = new mock.Response();
+		response._internal.headers = { "set-cookie": `jid=${token}; other things;` };
+		// @ts-ignore: Not a proper response type but this has all the needed properties
+		const output = getTokenFromResponseCookie(response._internal);
 		expect(output).toBe(token);
 	});
 });
