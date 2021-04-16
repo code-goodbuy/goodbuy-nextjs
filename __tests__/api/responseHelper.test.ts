@@ -30,7 +30,7 @@ describe("Test cookies helper functions", () => {
 		});
 		res = new mock.Response({});
 		token =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODk5MzkwMjIsImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.tEc3R_z-7oJxJVYtNeic5xkBOmQZJx9aF9fOpBf6JVU";
+			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjkwODk5MzkwMjIsImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.5vHpQeDVhDFBApJ0cfGODfpt91Wv-7My2hJrxdRulNs";
 		cookie = initCookies(req, res);
 	});
 
@@ -49,7 +49,7 @@ describe("Test cookies helper functions", () => {
 		expect(output).toBe(token);
 	});
 
-	it("should fet a token from cookie", () => {
+	it("should set a token from cookie", () => {
 		const response = new mock.Response();
 		response._internal.headers = { "set-cookie": `jid=${token}; other things;` };
 		// @ts-ignore: Not a proper response type but this has all the needed properties
