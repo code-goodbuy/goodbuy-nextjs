@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type httpProxy from "http-proxy";
 import { IncomingMessage } from "node:http";
+import Cookies from "cookies";
 
 export interface SignUpFormTypes {
 	setAction: Dispatch<SetStateAction<"login" | "sign-up">>;
@@ -60,8 +61,7 @@ export interface HandleResponseType {
 }
 
 export interface setAuthCookiesType {
-	req: IncomingMessage;
-	res: NextApiResponse;
+	cookie: Cookies;
 	jwt: string;
 	refreshToken: string;
 }

@@ -1,3 +1,4 @@
+import Cookies from "cookies";
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
 	ForwardRequestType,
@@ -23,8 +24,7 @@ export function rejectIfCondition(res: NextApiResponse, reject: () => void, cond
 	}
 }
 
-export function getCommonRequirements(req: NextApiRequest, res: NextApiResponse) {
-	const cookie = initCookies(req, res);
+export function getCommonRequirements(cookie: Cookies) {
 	const authToken = getTokenFromCookie(cookie, "auth-token");
 	const refreshToken = getTokenFromCookie(cookie, "refresh-token");
 	return { authToken, refreshToken };
@@ -61,8 +61,7 @@ export function forwardRequest({ req, res, proxy, handleRes, reject }: ForwardRe
 	});
 }
 
-export function setAuthCookies({ req, res, jwt, refreshToken }: setAuthCookiesType) {
-	const cookie = initCookies(req, res);
+export function setAuthCookies({ cookie, jwt, refreshToken }: setAuthCookiesType) {
 	setTokenCookie(cookie, "auth-token", jwt);
 	setTokenCookie(cookie, "refresh-token", refreshToken);
 }
@@ -71,7 +70,8 @@ export function handleLogin({ req, res, proxyRes, body, resolve, reject }: Handl
 	const refreshToken = proxyRes && getTokenFromResponseCookie(proxyRes);
 	const jwt = getTokenFromResponse(body);
 	rejectIfCondition(res, reject, jwt === null || refreshToken === undefined);
-	jwt && refreshToken && setAuthCookies({ req, res, jwt, refreshToken });
+	const cookie = initCookies(req, res);
+	jwt && refreshToken && setAuthCookies({ cookie, jwt, refreshToken });
 	jwt && resolveReq(res, resolve, { ...decodeJWT(jwt) });
 }
 
