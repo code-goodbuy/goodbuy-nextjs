@@ -41,14 +41,13 @@ export default function LoginForm() {
 	};
 
 	const handleLogin = async () => {
-		const BASE_URL = window.location.protocol + "//" + window.location.host;
 		setIsSendingData(true);
 		const userData = {
 			email,
 			password
 		};
 		try {
-			let res = await fetch(BASE_URL + "/api/login", {
+			let res = await fetch("/api/login", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
