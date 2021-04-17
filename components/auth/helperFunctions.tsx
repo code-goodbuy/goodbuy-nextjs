@@ -24,7 +24,7 @@ export const isValidUsername = (username: string): boolean => {
 	return false;
 };
 
-export const checkPasswordStrength = (updater: Dispatch<SetStateAction<boolean>>, password: string): void => {
+export const isPasswordStrong = (password: string): boolean => {
 	if (password !== "") {
 		if (
 			password.length > 7 &&
@@ -34,11 +34,10 @@ export const checkPasswordStrength = (updater: Dispatch<SetStateAction<boolean>>
 			password.match(/[0-9]+/) &&
 			password.match(/[-_+=()!?@#\$%\^&\*{[}\].,<>'":;/|\\`~]+/)
 		) {
-			updater(true);
-		} else {
-			updater(false);
+			return true;
 		}
 	}
+	return false;
 };
 
 export const checkPasswordMatch = (

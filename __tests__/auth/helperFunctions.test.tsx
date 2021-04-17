@@ -3,7 +3,7 @@ import {
 	updateWithoutSpaces,
 	isValidEmail,
 	isValidUsername,
-	checkPasswordStrength,
+	isPasswordStrong,
 	checkPasswordMatch
 } from "../../components/auth/helperFunctions";
 
@@ -52,15 +52,11 @@ describe("test login helper functions", () => {
 	});
 
 	it("should check the password and return true", () => {
-		checkPasswordStrength(mockedUpdater, "Strong~Passw0rd");
-
-		assertFn(true);
+		expect(isPasswordStrong("Strong~Passw0rd")).toBe(true);
 	});
 
 	it("should check the password and return false", () => {
-		checkPasswordStrength(mockedUpdater, "123212312");
-
-		assertFn(false);
+		expect(isPasswordStrong("123123123")).toBe(false);
 	});
 
 	it("should check the match between passwords and return true", () => {

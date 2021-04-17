@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-	isValidEmail,
-	isValidUsername,
-	checkPasswordStrength,
-	checkPasswordMatch,
-	handleAuth
-} from "./helperFunctions";
+import { isValidEmail, isValidUsername, isPasswordStrong, checkPasswordMatch, handleAuth } from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
@@ -16,7 +10,6 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [email, setEmail] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const [isStrongPassword, setIsStrongPassword] = useState<boolean>(false);
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
 	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(false);
 	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
@@ -24,14 +17,6 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
-
-	useEffect(() => {
-		checkPasswordStrength(setIsStrongPassword, password);
-		if (repeatedPassword !== "") {
-			//if the user changes the password and they already typed the second one, check if they match
-			checkPasswordMatch(setIsRepeatedPasswordCorrect, repeatedPassword, password);
-		}
-	}, [password]);
 
 	useEffect(() => {
 		checkPasswordMatch(setIsRepeatedPasswordCorrect, repeatedPassword, password);
@@ -42,7 +27,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			username !== "" &&
 			isValidEmail(email) &&
 			isValidUsername(username) &&
-			isStrongPassword &&
+			isPasswordStrong(password) &&
 			isRepeatedPasswordCorrect &&
 			hasAcceptedTerms &&
 			hasRequiredAge
@@ -51,16 +36,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 		} else {
 			setIsValidForm(false);
 		}
-	}, [
-		email,
-		username,
-		isValidEmail,
-		isValidUsername,
-		isStrongPassword,
-		isRepeatedPasswordCorrect,
-		hasAcceptedTerms,
-		hasRequiredAge
-	]);
+	}, [email, username, password, isRepeatedPasswordCorrect, hasAcceptedTerms, hasRequiredAge]);
 
 	const clearForm = () => {
 		setEmail("");
@@ -105,7 +81,13 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 				type="text"
 				name="Username"
 			/>
-			<Field value={password} setValue={setPassword} isValidValue={isStrongPassword} type="password" name="Password" />
+			<Field
+				value={password}
+				setValue={setPassword}
+				isValidValue={isPasswordStrong(password)}
+				type="password"
+				name="Password"
+			/>
 			<Field
 				value={repeatedPassword}
 				setValue={setRepeatedPassword}
