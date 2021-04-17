@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { checkEmail, checkUsername, checkPasswordStrength, checkPasswordMatch } from "./helperFunctions";
+import {
+	checkEmail,
+	checkUsername,
+	checkPasswordStrength,
+	checkPasswordMatch,
+	sendAuthRequest,
+	handleRes
+} from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
@@ -89,24 +96,14 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			tokenVersion: 0
 		};
 		try {
-			let res = await fetch("/api/register", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(userData)
-			});
-
-			if (res && res.status === 200) {
+			let res = await sendAuthRequest("/api/register", userData);
+			let specificHandler = () => {
 				setServerResponse("Success! Redirecting...");
 				setTimeout(() => {
 					setAction("login");
 				}, msBeforeRedirecting);
-			} else {
-				setServerResponse("An Error Occured");
-			}
-			clearForm();
-			setIsSendingData(false);
+			};
+			handleRes({ res, setServerResponse, setIsSendingData, clearForm, specificHandler });
 		} catch (err) {
 			console.error(err);
 			setServerResponse("An Error Occured");

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { checkEmail } from "./helperFunctions";
+import { checkEmail, sendAuthRequest } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -47,13 +47,7 @@ export default function LoginForm() {
 			password
 		};
 		try {
-			let res = await fetch("/api/login", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(userData)
-			});
+			let res = await sendAuthRequest("/api/login", userData);
 			if (res && res.status === 200) {
 				let data = await res.json();
 				updateUserInfo && updateUserInfo({ email: data.email });
