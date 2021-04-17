@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { checkEmail, sendAuthRequest } from "./helperFunctions";
+import { checkEmail, handleRes, sendAuthRequest } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -48,14 +48,13 @@ export default function LoginForm() {
 		};
 		try {
 			let res = await sendAuthRequest("/api/login", userData);
-			if (res && res.status === 200) {
+			let specificHandler = async () => {
 				let data = await res.json();
 				updateUserInfo && updateUserInfo({ email: data.email });
 				toggleIsLoggedIn && toggleIsLoggedIn();
 				router.push("/");
-			} else {
-				setServerResponse("An Error Occured");
-			}
+			};
+			handleRes({ res, setServerResponse, setIsSendingData, clearForm, specificHandler });
 		} catch (e) {
 			console.error(e);
 		}
