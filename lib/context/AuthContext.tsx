@@ -1,17 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import { ReactChildrenType } from "../types/ReactChildrenType";
 import { JWTPayloadType } from "../../lib/types/HelperTypes";
+import { AuthContextType } from "../types/AuthTypes";
 
-interface AuthType {
-	isAuthenticating?: boolean;
-	changeIsAuthenticating?: (newValue: boolean) => void;
-	isLoggedIn?: boolean;
-	toggleIsLoggedIn?: () => void;
-	userInfo?: JWTPayloadType;
-	updateUserInfo?: (newInfo: JWTPayloadType) => void;
-}
-
-export const AuthContext = createContext<AuthType>({});
+export const AuthContext = createContext<AuthContextType>({});
 
 const AuthContextProvider = ({ children }: ReactChildrenType) => {
 	const getUserInfo = () => {

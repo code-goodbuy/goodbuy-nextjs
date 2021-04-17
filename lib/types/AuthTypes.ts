@@ -3,6 +3,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type httpProxy from "http-proxy";
 import { IncomingMessage } from "node:http";
 import Cookies from "cookies";
+import { JWTPayloadType } from "./HelperTypes";
+
+export interface AuthContextType {
+	isAuthenticating?: boolean;
+	changeIsAuthenticating?: (newValue: boolean) => void;
+	isLoggedIn?: boolean;
+	toggleIsLoggedIn?: () => void;
+	userInfo?: JWTPayloadType;
+	updateUserInfo?: (newInfo: JWTPayloadType) => void;
+}
 
 export interface SignUpFormTypes {
 	setAction: Dispatch<SetStateAction<"login" | "sign-up">>;
