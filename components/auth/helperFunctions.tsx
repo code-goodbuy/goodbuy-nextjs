@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { HandleResType } from "../../lib/types/HelperTypes";
 
 export const updateWithoutSpaces = (updater: Dispatch<SetStateAction<string>>, value: string) => {
 	updater(value.replace(/\s/g, ""));
@@ -54,4 +55,25 @@ export const checkPasswordMatch = (
 			updater(false);
 		}
 	}
+};
+
+export const sendAuthRequest = async (url: string, body: any) => {
+	const res = await fetch("/api/login", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(body)
+	});
+	return res;
+};
+
+export const handleRes = ({ res, setServerResponse, setIsSendingData, clearForm, specificHandler }: HandleResType) => {
+	if (res && res.status === 200) {
+		specificHandler();
+	} else {
+		setServerResponse("An Error Occured");
+	}
+	clearForm();
+	setIsSendingData(false);
 };
