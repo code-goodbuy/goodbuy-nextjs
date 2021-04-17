@@ -19,7 +19,6 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 
 	useEffect(() => {
 		if (
-			username !== "" &&
 			isValidEmail(email) &&
 			isValidUsername(username) &&
 			isPasswordStrong(password) &&

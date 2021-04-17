@@ -17,9 +17,6 @@ export default function LoginForm() {
 	const router = useRouter();
 
 	useEffect(() => {
-		/**
-		 * Checks if the form can be submitted
-		 */
 		if (email !== "" && isValidEmail(email) && password !== "") {
 			setIsValidForm(true);
 		} else {
@@ -38,14 +35,12 @@ export default function LoginForm() {
 			email,
 			password
 		};
-
 		let specificHandler = async (res: Response) => {
 			let data = await res.json();
 			updateUserInfo && updateUserInfo({ email: data.email });
 			toggleIsLoggedIn && toggleIsLoggedIn();
 			router.push("/");
 		};
-
 		handleAuth({ url: "/api/login", userData, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
 
