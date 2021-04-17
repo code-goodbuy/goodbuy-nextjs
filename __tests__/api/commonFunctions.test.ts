@@ -10,7 +10,12 @@ import mock from "mock-http";
 import { NextApiRequest } from "next";
 
 describe("Test the functions that make the proxy work", () => {
-	let req: NextApiRequest, res: any, rej: any, resolve: any, token: string;
+	let req: NextApiRequest,
+		res: any,
+		rej: any,
+		resolve: any,
+		token =
+			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5OTk5OTk5OTksImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.JyrM7CQymsHChoqFcj_-VCJwn0mDQtN9r8jnEJ_TySw";
 
 	let mockGetCookie = jest.fn((name) => name);
 	let mockSetCookie = jest.fn();
@@ -23,9 +28,6 @@ describe("Test the functions that make the proxy work", () => {
 	});
 
 	beforeEach(() => {
-		token =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5OTk5OTk5OTksImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.JyrM7CQymsHChoqFcj_-VCJwn0mDQtN9r8jnEJ_TySw";
-
 		const temp = new mock.Request({
 			url: "/test",
 			method: "POST",
