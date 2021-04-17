@@ -21,7 +21,7 @@ export default function Auth() {
 	function changeAction(text: string, newState: "login" | "sign-up") {
 		return (
 			<div
-				className={"action-selector rounded-tl-md rounded-tr-md" + (action !== newState && " colorful-bg-2")}
+				className={"action-selector rounded-md" + (action !== newState && " colorful-bg-2")}
 				onClick={() => {
 					setAction(newState);
 				}}
