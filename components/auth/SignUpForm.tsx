@@ -78,7 +78,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 		setHasRequiredAge(false);
 	};
 
-	const handleSignUp = () => {
+	const handleSignUp = async () => {
 		setIsSendingData(true);
 		const userData = {
 			email,
@@ -88,31 +88,30 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			hasRequiredAge,
 			tokenVersion: 0
 		};
-
-		fetch(BASE_URL + "/api/register", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(userData)
-		})
-			.then((res) => {
-				if (res.status === 200) {
-					setServerResponse("Success! Redirecting...");
-					setTimeout(() => {
-						setAction("login");
-					}, msBeforeRedirecting);
-				} else {
-					setServerResponse("An Error Occured");
-				}
-				clearForm();
-				setIsSendingData(false);
-			})
-			.catch((err) => {
-				console.error(err);
-				setServerResponse("An Error Occured");
-				setIsSendingData(false);
+		try {
+			let res = await fetch("/api/register", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(userData)
 			});
+
+			if (res && res.status === 200) {
+				setServerResponse("Success! Redirecting...");
+				setTimeout(() => {
+					setAction("login");
+				}, msBeforeRedirecting);
+			} else {
+				setServerResponse("An Error Occured");
+			}
+			clearForm();
+			setIsSendingData(false);
+		} catch (err) {
+			console.error(err);
+			setServerResponse("An Error Occured");
+			setIsSendingData(false);
+		}
 	};
 
 	return (
