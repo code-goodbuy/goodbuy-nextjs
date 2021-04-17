@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 /**
  * TS types for helper functions
  */
@@ -18,4 +20,12 @@ export interface JWTPayloadType {
 	iat?: number;
 	jti?: string;
 	email?: string;
+}
+
+export interface HandleResType {
+	res: Response;
+	setServerResponse: Dispatch<SetStateAction<string>>;
+	setIsSendingData: Dispatch<SetStateAction<boolean>>;
+	clearForm: () => void;
+	specificHandler: () => void;
 }
