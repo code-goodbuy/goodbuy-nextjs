@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { handleAuth } from "../../components/auth/helperFunctions";
 
 /**
  * TS types for helper functions
@@ -25,7 +26,7 @@ export interface JWTPayloadType {
 export interface HandleResType {
 	res: Response;
 	setServerResponse: Dispatch<SetStateAction<string>>;
-	specificHandler: () => void;
+	specificHandler: any;
 }
 
 export interface HandleErrType {
@@ -34,6 +35,15 @@ export interface HandleErrType {
 }
 
 export interface ResetFormType {
+	setIsSendingData: Dispatch<SetStateAction<boolean>>;
+	clearForm: () => void;
+}
+
+export interface handleAuthType {
+	url: string;
+	userData: any;
+	specificHandler: any;
+	setServerResponse: Dispatch<SetStateAction<string>>;
 	setIsSendingData: Dispatch<SetStateAction<boolean>>;
 	clearForm: () => void;
 }

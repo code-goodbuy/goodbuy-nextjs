@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { HandleResType, HandleErrType, ResetFormType } from "../../lib/types/HelperTypes";
+import { HandleResType, HandleErrType, ResetFormType, handleAuthType } from "../../lib/types/HelperTypes";
 
 export const updateWithoutSpaces = (updater: Dispatch<SetStateAction<string>>, value: string) => {
 	updater(value.replace(/\s/g, ""));
@@ -70,7 +70,7 @@ export const sendAuthRequest = async (url: string, body: any) => {
 
 export const handleRes = ({ res, setServerResponse, specificHandler }: HandleResType) => {
 	if (res && res.status === 200) {
-		specificHandler();
+		specificHandler(res);
 	} else {
 		setServerResponse("An Error Occured");
 	}
@@ -84,4 +84,22 @@ export const handleErr = ({ err, setServerResponse }: HandleErrType) => {
 export const resetForm = ({ setIsSendingData, clearForm }: ResetFormType) => {
 	clearForm();
 	setIsSendingData(false);
+};
+
+export const handleAuth = async ({
+	url,
+	userData,
+	specificHandler,
+	setServerResponse,
+	setIsSendingData,
+	clearForm
+}: handleAuthType) => {
+	try {
+		let res = await sendAuthRequest(url, userData);
+		handleRes({ res, setServerResponse, specificHandler });
+	} catch (err) {
+		handleErr(err);
+	} finally {
+		resetForm({ setIsSendingData, clearForm });
+	}
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { checkEmail, handleErr, handleRes, resetForm, sendAuthRequest } from "./helperFunctions";
+import { checkEmail, handleAuth } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -46,20 +46,15 @@ export default function LoginForm() {
 			email,
 			password
 		};
-		try {
-			let res = await sendAuthRequest("/api/login", userData);
-			let specificHandler = async () => {
-				let data = await res.json();
-				updateUserInfo && updateUserInfo({ email: data.email });
-				toggleIsLoggedIn && toggleIsLoggedIn();
-				router.push("/");
-			};
-			handleRes({ res, setServerResponse, specificHandler });
-		} catch (err) {
-			handleErr(err);
-		} finally {
-			resetForm({ setIsSendingData, clearForm });
-		}
+
+		let specificHandler = async (res: Response) => {
+			let data = await res.json();
+			updateUserInfo && updateUserInfo({ email: data.email });
+			toggleIsLoggedIn && toggleIsLoggedIn();
+			router.push("/");
+		};
+
+		handleAuth({ url: "/api/login", userData, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
 
 	return (

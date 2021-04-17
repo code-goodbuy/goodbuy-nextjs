@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-	checkEmail,
-	checkUsername,
-	checkPasswordStrength,
-	checkPasswordMatch,
-	sendAuthRequest,
-	handleRes,
-	handleErr,
-	resetForm
-} from "./helperFunctions";
+import { checkEmail, checkUsername, checkPasswordStrength, checkPasswordMatch, handleAuth } from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
@@ -97,20 +88,13 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			hasRequiredAge,
 			tokenVersion: 0
 		};
-		try {
-			let res = await sendAuthRequest("/api/register", userData);
-			let specificHandler = () => {
-				setServerResponse("Success! Redirecting...");
-				setTimeout(() => {
-					setAction("login");
-				}, msBeforeRedirecting);
-			};
-			handleRes({ res, setServerResponse, specificHandler });
-		} catch (err) {
-			handleErr(err);
-		} finally {
-			resetForm({ setIsSendingData, clearForm });
-		}
+		let specificHandler = () => {
+			setServerResponse("Success! Redirecting...");
+			setTimeout(() => {
+				setAction("login");
+			}, msBeforeRedirecting);
+		};
+		handleAuth({ url: "/api/register", userData, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
 
 	return (
