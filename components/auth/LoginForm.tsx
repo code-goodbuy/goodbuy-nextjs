@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { checkEmail, handleAuth } from "./helperFunctions";
+import { isValidEmail, handleAuth } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -7,7 +7,6 @@ import SubmitButton from "./SubmitButton";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState<string>("");
-	const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
 	const [password, setPassword] = useState<string>("");
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
@@ -19,16 +18,9 @@ export default function LoginForm() {
 
 	useEffect(() => {
 		/**
-		 * Every time the email is updated, it checks if it is valid
-		 */
-		checkEmail(setIsValidEmail, email);
-	}, [email]);
-
-	useEffect(() => {
-		/**
 		 * Checks if the form can be submitted
 		 */
-		if (email !== "" && isValidEmail && password !== "") {
+		if (email !== "" && isValidEmail(email) && password !== "") {
 			setIsValidForm(true);
 		} else {
 			setIsValidForm(false);
@@ -64,7 +56,7 @@ export default function LoginForm() {
 			className="flex flex-col justify-center items-center my-14"
 		>
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
-			<Field value={email} setValue={setEmail} isValidValue={isValidEmail} type="text" name="Email" />
+			<Field value={email} setValue={setEmail} isValidValue={isValidEmail(email)} type="text" name="Email" />
 			<Field value={password} setValue={setPassword} isValidValue={true} type="password" name="Password" />
 			<SubmitButton disabled={!isValidForm || isSendingData} updater={handleLogin} text="Log In" />
 		</form>

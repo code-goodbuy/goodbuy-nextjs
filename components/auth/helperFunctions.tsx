@@ -5,15 +5,14 @@ export const updateWithoutSpaces = (updater: Dispatch<SetStateAction<string>>, v
 	updater(value.replace(/\s/g, ""));
 };
 
-export const checkEmail = (updater: Dispatch<SetStateAction<boolean>>, email: string): void => {
+export const isValidEmail = (email: string) => {
 	if (email !== "") {
 		const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if (re.test(email.toLowerCase()) && email.length > 5 && email.length < 41) {
-			updater(true);
-		} else {
-			updater(false);
+			return true;
 		}
 	}
+	return false;
 };
 
 export const checkUsername = (updater: Dispatch<SetStateAction<boolean>>, username: string): void => {

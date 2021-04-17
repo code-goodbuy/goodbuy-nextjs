@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import {
 	updateWithoutSpaces,
-	checkEmail,
+	isValidEmail,
 	checkUsername,
 	checkPasswordStrength,
 	checkPasswordMatch
@@ -34,15 +34,13 @@ describe("test login helper functions", () => {
 	});
 
 	it("should check the email and return true", () => {
-		checkEmail(mockedUpdater, "person@mail.co.uk");
-
-		assertFn(true);
+		const res = isValidEmail("person@mail.co.uk");
+		expect(res).toBe(true);
 	});
 
 	it("should check the email and return false", () => {
-		checkEmail(mockedUpdater, "person(at)mail.co.uk");
-
-		assertFn(false);
+		const res = isValidEmail("person(at)mail.co.uk");
+		expect(res).toBe(false);
 	});
 
 	it("should check the username and return true", () => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { checkEmail, checkUsername, checkPasswordStrength, checkPasswordMatch, handleAuth } from "./helperFunctions";
+import { isValidEmail, checkUsername, checkPasswordStrength, checkPasswordMatch, handleAuth } from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
@@ -8,7 +8,6 @@ import SubmitButton from "./SubmitButton";
 
 export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [email, setEmail] = useState<string>("");
-	const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>("");
 	const [isValidUsername, setIsValidUsername] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
@@ -20,10 +19,6 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
-
-	useEffect(() => {
-		checkEmail(setIsValidEmail, email);
-	}, [email]);
 
 	useEffect(() => {
 		checkUsername(setIsValidUsername, username);
@@ -45,7 +40,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 		if (
 			email !== "" &&
 			username !== "" &&
-			isValidEmail &&
+			isValidEmail(email) &&
 			isValidUsername &&
 			isStrongPassword &&
 			isRepeatedPasswordCorrect &&
@@ -102,7 +97,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			className="flex flex-col justify-center items-center my-14"
 		>
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
-			<Field value={email} setValue={setEmail} isValidValue={isValidEmail} type="text" name="Email" />
+			<Field value={email} setValue={setEmail} isValidValue={isValidEmail(email)} type="text" name="Email" />
 			<Field value={username} setValue={setUsername} isValidValue={isValidUsername} type="text" name="Username" />
 			<Field value={password} setValue={setPassword} isValidValue={isStrongPassword} type="password" name="Password" />
 			<Field
