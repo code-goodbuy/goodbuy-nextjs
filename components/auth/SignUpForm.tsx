@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { isValidEmail, checkUsername, checkPasswordStrength, checkPasswordMatch, handleAuth } from "./helperFunctions";
+import {
+	isValidEmail,
+	isValidUsername,
+	checkPasswordStrength,
+	checkPasswordMatch,
+	handleAuth
+} from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
@@ -9,7 +15,6 @@ import SubmitButton from "./SubmitButton";
 export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [email, setEmail] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
-	const [isValidUsername, setIsValidUsername] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
 	const [isStrongPassword, setIsStrongPassword] = useState<boolean>(false);
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
@@ -19,10 +24,6 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
-
-	useEffect(() => {
-		checkUsername(setIsValidUsername, username);
-	}, [username]);
 
 	useEffect(() => {
 		checkPasswordStrength(setIsStrongPassword, password);
@@ -38,10 +39,9 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 
 	useEffect(() => {
 		if (
-			email !== "" &&
 			username !== "" &&
 			isValidEmail(email) &&
-			isValidUsername &&
+			isValidUsername(username) &&
 			isStrongPassword &&
 			isRepeatedPasswordCorrect &&
 			hasAcceptedTerms &&
@@ -98,7 +98,13 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 		>
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
 			<Field value={email} setValue={setEmail} isValidValue={isValidEmail(email)} type="text" name="Email" />
-			<Field value={username} setValue={setUsername} isValidValue={isValidUsername} type="text" name="Username" />
+			<Field
+				value={username}
+				setValue={setUsername}
+				isValidValue={isValidUsername(username)}
+				type="text"
+				name="Username"
+			/>
 			<Field value={password} setValue={setPassword} isValidValue={isStrongPassword} type="password" name="Password" />
 			<Field
 				value={repeatedPassword}

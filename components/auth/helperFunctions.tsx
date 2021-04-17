@@ -15,14 +15,13 @@ export const isValidEmail = (email: string) => {
 	return false;
 };
 
-export const checkUsername = (updater: Dispatch<SetStateAction<boolean>>, username: string): void => {
+export const isValidUsername = (username: string): boolean => {
 	if (username !== "") {
 		if (username.length > 5 && username.length < 23 && username.match(/[a-z]+/)) {
-			updater(true);
-		} else {
-			updater(false);
+			return true;
 		}
 	}
+	return false;
 };
 
 export const checkPasswordStrength = (updater: Dispatch<SetStateAction<boolean>>, password: string): void => {
