@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { isValidEmail, isValidUsername, isPasswordStrong, checkPasswordMatch, handleAuth } from "./helperFunctions";
+import { isValidEmail, isValidUsername, isPasswordStrong, handleAuth, areSamePasswords } from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
@@ -11,7 +11,6 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
-	const [isRepeatedPasswordCorrect, setIsRepeatedPasswordCorrect] = useState<boolean>(false);
 	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
 	const [hasRequiredAge, setHasRequiredAge] = useState<boolean>(false);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
@@ -19,16 +18,12 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [serverResponse, setServerResponse] = useState<string>("");
 
 	useEffect(() => {
-		checkPasswordMatch(setIsRepeatedPasswordCorrect, repeatedPassword, password);
-	}, [repeatedPassword]);
-
-	useEffect(() => {
 		if (
 			username !== "" &&
 			isValidEmail(email) &&
 			isValidUsername(username) &&
 			isPasswordStrong(password) &&
-			isRepeatedPasswordCorrect &&
+			areSamePasswords(repeatedPassword, password) &&
 			hasAcceptedTerms &&
 			hasRequiredAge
 		) {
@@ -36,7 +31,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 		} else {
 			setIsValidForm(false);
 		}
-	}, [email, username, password, isRepeatedPasswordCorrect, hasAcceptedTerms, hasRequiredAge]);
+	}, [email, username, password, repeatedPassword, hasAcceptedTerms, hasRequiredAge]);
 
 	const clearForm = () => {
 		setEmail("");
@@ -91,7 +86,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			<Field
 				value={repeatedPassword}
 				setValue={setRepeatedPassword}
-				isValidValue={isRepeatedPasswordCorrect}
+				isValidValue={areSamePasswords(repeatedPassword, password)}
 				type="password"
 				name="Repeated Password"
 			/>

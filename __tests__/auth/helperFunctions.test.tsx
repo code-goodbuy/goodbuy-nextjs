@@ -4,7 +4,7 @@ import {
 	isValidEmail,
 	isValidUsername,
 	isPasswordStrong,
-	checkPasswordMatch
+	areSamePasswords
 } from "../../components/auth/helperFunctions";
 
 describe("test login helper functions", () => {
@@ -60,14 +60,10 @@ describe("test login helper functions", () => {
 	});
 
 	it("should check the match between passwords and return true", () => {
-		checkPasswordMatch(mockedUpdater, "Password123", "Password123");
-
-		assertFn(true);
+		expect(areSamePasswords("Password123", "Password123")).toBe(true);
 	});
 
 	it("should check the match between passwords and return false", () => {
-		checkPasswordMatch(mockedUpdater, "Password123", "Password1231");
-
-		assertFn(false);
+		expect(areSamePasswords("Password123", "Password1231")).toBe(false);
 	});
 });

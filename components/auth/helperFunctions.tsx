@@ -40,18 +40,13 @@ export const isPasswordStrong = (password: string): boolean => {
 	return false;
 };
 
-export const checkPasswordMatch = (
-	updater: Dispatch<SetStateAction<boolean>>,
-	repeatedPassword: string,
-	password: string
-): void => {
+export const areSamePasswords = (repeatedPassword: string, password: string): boolean => {
 	if (repeatedPassword !== "") {
 		if (repeatedPassword === password) {
-			updater(true);
-		} else {
-			updater(false);
+			return true;
 		}
 	}
+	return false;
 };
 
 export const sendAuthRequest = async (url: string, body: any) => {
