@@ -100,7 +100,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	return (
 		<form
 			onSubmit={(e) => e.preventDefault()}
-			id="login-form"
+			id="signup-form"
 			className="flex flex-col justify-center items-center my-14"
 		>
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
