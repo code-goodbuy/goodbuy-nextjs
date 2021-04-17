@@ -21,8 +21,6 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
-	const BASE_URL = window.location.protocol + "//" + window.location.host;
-
 	useEffect(() => {
 		checkEmail(setIsValidEmail, email);
 	}, [email]);
