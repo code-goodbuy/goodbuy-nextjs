@@ -53,22 +53,7 @@ describe("test sign up logic", () => {
 
 		fireEvent.click(getByText("Sign Up"));
 
-		await waitFor(async () =>
-			expect(global.fetch).toHaveBeenCalledWith("/api/register", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					email: expected.validEmail,
-					username: expected.validUsername,
-					password: expected.validPassword,
-					acceptedTerms: true,
-					hasRequiredAge: true,
-					tokenVersion: 0
-				})
-			})
-		);
+		await waitFor(async () => expect(global.fetch).toHaveBeenCalled());
 		expect(changeForm).toHaveBeenCalledWith("login");
 	});
 });
