@@ -6,7 +6,8 @@ import {
 	checkPasswordStrength,
 	checkPasswordMatch,
 	sendAuthRequest,
-	handleRes
+	handleRes,
+	handleErr
 } from "./helperFunctions";
 import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
@@ -103,11 +104,9 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 					setAction("login");
 				}, msBeforeRedirecting);
 			};
-			handleRes({ res, setServerResponse, setIsSendingData, clearForm, specificHandler });
+			handleRes({ res, setServerResponse, clearForm, specificHandler });
 		} catch (err) {
-			console.error(err);
-			setServerResponse("An Error Occured");
-			setIsSendingData(false);
+			handleErr(err);
 		}
 	};
 

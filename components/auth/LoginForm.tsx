@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { checkEmail, handleRes, sendAuthRequest } from "./helperFunctions";
+import { checkEmail, handleErr, handleRes, sendAuthRequest } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -54,9 +54,9 @@ export default function LoginForm() {
 				toggleIsLoggedIn && toggleIsLoggedIn();
 				router.push("/");
 			};
-			handleRes({ res, setServerResponse, setIsSendingData, clearForm, specificHandler });
-		} catch (e) {
-			console.error(e);
+			handleRes({ res, setServerResponse, clearForm, specificHandler });
+		} catch (err) {
+			handleErr(err);
 		}
 
 		clearForm();
