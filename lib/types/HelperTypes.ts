@@ -25,11 +25,15 @@ export interface JWTPayloadType {
 export interface HandleResType {
 	res: Response;
 	setServerResponse: Dispatch<SetStateAction<string>>;
-	clearForm: () => void;
 	specificHandler: () => void;
 }
 
 export interface HandleErrType {
 	err: string;
 	setServerResponse: Dispatch<SetStateAction<string>>;
+}
+
+export interface ResetFormType {
+	setIsSendingData: Dispatch<SetStateAction<boolean>>;
+	clearForm: () => void;
 }
