@@ -58,7 +58,7 @@ export const checkPasswordMatch = (
 };
 
 export const sendAuthRequest = async (url: string, body: any) => {
-	const res = await fetch("/api/login", {
+	const res = await fetch(url, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
