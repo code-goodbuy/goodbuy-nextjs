@@ -14,18 +14,6 @@ interface AuthType {
 export const AuthContext = createContext<AuthType>({});
 
 const AuthContextProvider = ({ children }: ReactChildrenType) => {
-	/**
-	 * Context provider for authentication.
-	 *
-	 * Available properties:
-	 *
-	 * isAuthenticating: boolean
-	 * changeIsAuthenticating: (newValue: boolean): void;
-	 * isLoggedIn: boolean;
-	 * toggleIsLoggedIn: (): void;
-	 * userInfo?: JWTPayloadType | undefined;
-	 * updateUserInfo?: (newInfo: JWTPayloadType) => void;
-	 */
 	const getUserInfo = () => {
 		const infoFromStorage = window.localStorage.getItem("userInfo");
 		if (infoFromStorage) {
@@ -40,50 +28,53 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 
 	useEffect(() => {
 		setUserInfo(getUserInfo());
-		fetch("/api/check")
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.message === "logged") {
-					setIsLoggedIn(true);
-				} else if (data.message === "refresh") {
-					fetch("/api/refresh_token", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify({ "email": userInfo && userInfo.email })
-					})
-						.then((res) => {
-							if (res.status === 200) {
-								res.json();
-							} else {
-								throw Error("Server Error");
-							}
-						})
-						.then(() => {
-							setIsLoggedIn(true);
-						})
-						.catch((err) => {
-							console.log(err);
-							setIsLoggedIn(false);
-						});
-				} else {
-					setIsLoggedIn(false);
-				}
-			})
-			.catch((err) => console.error(err));
+		try {
+			manageAuth();
+		} catch {
+			setIsLoggedIn(false);
+		}
 	}, []);
 
+	const getAuthStatus = async () => {
+		const res = await fetch("/api/check");
+		const data = await res.json();
+		return data.message;
+	};
+
+	const refreshToken = async () => {
+		const res = await fetch("/api/refresh_token", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ "email": userInfo && userInfo.email })
+		});
+		if (res.status !== 200) {
+			throw Error("Server Error");
+		}
+		setIsLoggedIn(true);
+	};
+
+	const manageAuth = async () => {
+		const status = await getAuthStatus();
+		if (status === "logged") {
+			setIsLoggedIn(true);
+		} else if (status === "refresh") {
+			try {
+				refreshToken();
+			} catch {
+				setIsLoggedIn(false);
+			}
+		} else {
+			setIsLoggedIn(false);
+		}
+	};
+
 	const changeIsAuthenticating = (newValue: boolean): void => {
-		/**
-		 * Changes the value of IsAuthenticated
-		 */
 		setIsAuthenticating(newValue);
 	};
+
 	const toggleIsLoggedIn = (): void => {
-		/**
-		 * Changes the value of IsAuthenticated
-		 */
 		setIsLoggedIn((current) => !current);
 	};
 
