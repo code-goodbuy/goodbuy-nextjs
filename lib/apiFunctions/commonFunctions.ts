@@ -52,7 +52,7 @@ export function prepareForForwarding({ req, cookie = "", token = "" }: PrepareFo
 
 export function forwardRequest({ req, res, proxy, handleRes, reject }: ForwardRequestType) {
 	const config = {
-		target: process.env.backendURL,
+		target: process.env.backendURL ? process.env.backendURL : "https:gb-be.de",
 		autoRewrite: false,
 		selfHandleResponse: handleRes
 	};
