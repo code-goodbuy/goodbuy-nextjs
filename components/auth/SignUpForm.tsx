@@ -7,48 +7,53 @@ import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
 
 export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
-	const [email, setEmail] = useState<string>("");
-	const [username, setUsername] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
-	const [repeatedPassword, setRepeatedPassword] = useState<string>("");
-	const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
-	const [hasRequiredAge, setHasRequiredAge] = useState<boolean>(false);
+	const [data, setData] = useState({
+		email: "",
+		username: "",
+		password: "",
+		repeatedPassword: "",
+		hasAcceptedTerms: false,
+		hasRequiredAge: false
+	});
+
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
 	useEffect(() => {
 		if (
-			isValidEmail(email) &&
-			isValidUsername(username) &&
-			isPasswordStrong(password) &&
-			areSamePasswords(repeatedPassword, password) &&
-			hasAcceptedTerms &&
-			hasRequiredAge
+			isValidEmail(data.email) &&
+			isValidUsername(data.username) &&
+			isPasswordStrong(data.password) &&
+			areSamePasswords(data.repeatedPassword, data.password) &&
+			data.hasAcceptedTerms &&
+			data.hasRequiredAge
 		) {
 			setIsValidForm(true);
 		} else {
 			setIsValidForm(false);
 		}
-	}, [email, username, password, repeatedPassword, hasAcceptedTerms, hasRequiredAge]);
+	}, [data]);
 
 	const clearForm = () => {
-		setEmail("");
-		setUsername("");
-		setPassword("");
-		setRepeatedPassword("");
-		setHasAcceptedTerms(false);
-		setHasRequiredAge(false);
+		setData({
+			email: "",
+			username: "",
+			password: "",
+			repeatedPassword: "",
+			hasAcceptedTerms: false,
+			hasRequiredAge: false
+		});
 	};
 
 	const handleSignUp = async () => {
 		setIsSendingData(true);
 		const userData = {
-			email,
-			username,
-			password,
-			acceptedTerms: hasAcceptedTerms,
-			hasRequiredAge,
+			email: data.email,
+			username: data.password,
+			password: data.repeatedPassword,
+			acceptedTerms: data.hasAcceptedTerms,
+			hasRequiredAge: data.hasRequiredAge,
 			tokenVersion: 0
 		};
 		let specificHandler = () => {
@@ -60,6 +65,20 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 		handleAuth({ url: "/api/register", userData, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
 
+	function dataUpdater(field: string) {
+		if (field in data) {
+			return {
+				updater: (val: string | boolean) => {
+					//@ts-ignore: manually check the type
+					if (typeof data[field] === typeof val) {
+						//@ts-ignore: manually check the type
+						setData((data) => ({ ...data, [field]: val }));
+					}
+				}
+			};
+		}
+	}
+
 	return (
 		<form
 			onSubmit={(e) => e.preventDefault()}
@@ -67,29 +86,35 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			className="flex flex-col justify-center items-center my-14"
 		>
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
-			<Field value={email} setValue={setEmail} isValidValue={isValidEmail(email)} type="text" name="Email" />
 			<Field
-				value={username}
-				setValue={setUsername}
-				isValidValue={isValidUsername(username)}
+				value={data.email}
+				setValue={dataUpdater("email")?.updater}
+				isValidValue={isValidEmail(data.email)}
+				type="text"
+				name="Email"
+			/>
+			<Field
+				value={data.username}
+				setValue={dataUpdater("username")?.updater}
+				isValidValue={isValidUsername(data.username)}
 				type="text"
 				name="Username"
 			/>
 			<Field
-				value={password}
-				setValue={setPassword}
-				isValidValue={isPasswordStrong(password)}
+				value={data.password}
+				setValue={dataUpdater("password")?.updater}
+				isValidValue={isPasswordStrong(data.password)}
 				type="password"
 				name="Password"
 			/>
 			<Field
-				value={repeatedPassword}
-				setValue={setRepeatedPassword}
-				isValidValue={areSamePasswords(repeatedPassword, password)}
+				value={data.repeatedPassword}
+				setValue={dataUpdater("repeatedPassword")?.updater}
+				isValidValue={areSamePasswords(data.repeatedPassword, data.password)}
 				type="password"
 				name="Repeated Password"
 			/>
-			<Checkbox condition={hasAcceptedTerms} updateCondition={setHasAcceptedTerms}>
+			<Checkbox condition={data.hasAcceptedTerms} updateCondition={dataUpdater("hasAcceptedTerms")?.updater}>
 				<span>
 					I read and accept the{" "}
 					<span className="colorful-text">
@@ -102,7 +127,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 					.
 				</span>
 			</Checkbox>
-			<Checkbox condition={hasRequiredAge} updateCondition={setHasRequiredAge}>
+			<Checkbox condition={data.hasRequiredAge} updateCondition={dataUpdater("hasRequiredAge")?.updater}>
 				<span>I am 16 or older.</span>
 			</Checkbox>
 			<SubmitButton disabled={!isValidForm || isSendingData} updater={handleSignUp} text="Sign Up" />
