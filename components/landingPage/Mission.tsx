@@ -6,7 +6,7 @@ export default function Mission() {
 	 * The "Our Mission" Section Of The Landing Page
 	 */
 	return (
-		<div className="normal-bg flex flex-col h-screen max-h-900" id="mission">
+		<div className="normal-bg flex flex-col min-h-full h-auto lg:max-h-900" id="mission">
 			<h2 data-testid="mission-title" className="section-header">
 				Our Mission
 			</h2>
