@@ -8,7 +8,7 @@ export default function Checkbox({ condition, updateCondition, children }: Check
 				type="checkbox"
 				checked={condition || false}
 				onChange={() => {
-					updateCondition(!condition);
+					updateCondition && updateCondition(!condition);
 				}}
 				className="outline-none border-0 text-primary dark:text-secondary bg-gray-200 dark:bg-gray-700 cursor-pointer w-6 h-6 rounded-sm"
 			/>
