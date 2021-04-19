@@ -8,12 +8,11 @@ import {
 	areSamePasswords,
 	dataUpdater
 } from "./helperFunctions";
-import { SignUpFormTypes as Props } from "../../lib/types/AuthTypes";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
 
-export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
+export default function SignUpForm() {
 	const [data, setData] = useState({
 		email: "",
 		username: "",
@@ -64,10 +63,7 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			tokenVersion: 0
 		};
 		let specificHandler = () => {
-			setServerResponse("Success! Redirecting...");
-			setTimeout(() => {
-				setAction("login");
-			}, msBeforeRedirecting);
+			setServerResponse("Check your email and then log in");
 		};
 		handleAuth({ url: "/api/register", userData, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
