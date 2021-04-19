@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { isValidEmail, handleAuth } from "./helperFunctions";
+import { isValidEmail, handleAuth, dataUpdater } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -38,20 +38,6 @@ export default function LoginForm() {
 		handleAuth({ url: "/api/login", userData: data, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
 
-	function dataUpdater(field: string) {
-		if (field in data) {
-			return {
-				updater: (val: string | boolean) => {
-					//@ts-ignore: manually check the type
-					if (typeof data[field] === typeof val) {
-						//@ts-ignore: manually check the type
-						setData((data) => ({ ...data, [field]: val }));
-					}
-				}
-			};
-		}
-	}
-
 	return (
 		<form
 			onSubmit={(e) => e.preventDefault()}
@@ -61,14 +47,14 @@ export default function LoginForm() {
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
 			<Field
 				value={data.email}
-				setValue={dataUpdater("email")?.updater}
+				setValue={dataUpdater("email", data, setData)?.updater}
 				isValidValue={isValidEmail(data.email)}
 				type="text"
 				name="Email"
 			/>
 			<Field
 				value={data.password}
-				setValue={dataUpdater("password")?.updater}
+				setValue={dataUpdater("password", data, setData)?.updater}
 				isValidValue={true}
 				type="password"
 				name="Password"

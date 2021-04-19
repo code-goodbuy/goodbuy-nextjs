@@ -95,3 +95,17 @@ export const handleAuth = async ({
 		resetForm({ setIsSendingData, clearForm });
 	}
 };
+
+export const dataUpdater = (field: string, data: any, setData: Dispatch<SetStateAction<any>>) => {
+	if (field in data) {
+		return {
+			updater: (val: string | boolean) => {
+				//@ts-ignore: manually check the type
+				if (typeof data[field] === typeof val) {
+					//@ts-ignore: manually check the type
+					setData((data) => ({ ...data, [field]: val }));
+				}
+			}
+		};
+	}
+};
