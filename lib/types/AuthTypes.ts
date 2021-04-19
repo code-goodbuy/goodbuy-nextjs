@@ -21,7 +21,7 @@ export interface SignUpFormTypes {
 
 export interface FieldType {
 	value: string;
-	setValue: Dispatch<SetStateAction<string>>;
+	setValue: ((val: string | boolean) => void) | undefined;
 	isValidValue: boolean;
 	type: "text" | "password";
 	name: string;
@@ -29,7 +29,7 @@ export interface FieldType {
 
 export interface CheckboxType {
 	condition: boolean;
-	updateCondition: Dispatch<SetStateAction<boolean>>;
+	updateCondition: ((val: string | boolean) => void) | undefined;
 	children: React.ReactNode;
 }
 
