@@ -3,10 +3,15 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../lib/context/AuthContext";
 import LoginForm from "../components/auth/LoginForm";
 import SignUpForm from "../components/auth/SignUpForm";
+import { useRouter } from "next/router";
 
 const Auth = ({ action }: { action: "login" | "sign-up" }) => {
-	const { isAuthenticating, changeIsAuthenticating } = useContext(AuthContext);
+	const { isAuthenticating, changeIsAuthenticating, isLoggedIn } = useContext(AuthContext);
 	const [formAction, setFormAction] = useState<"login" | "sign-up">(action);
+	const router = useRouter();
+	if (isLoggedIn) {
+		router.push("/");
+	}
 
 	useEffect(() => {
 		changeIsAuthenticating && changeIsAuthenticating(true);
