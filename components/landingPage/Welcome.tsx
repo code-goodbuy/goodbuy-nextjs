@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TextTransition, { presets } from "react-text-transition";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Welcome() {
 	/**
@@ -69,7 +70,9 @@ export default function Welcome() {
 					<p className="normal-text text-xl mx-10 mt-5 max-w-xl 2xl:max-w-3xl">
 						Start using GoodBuy and measure the inpact of the products you use.
 					</p>
-					<button className="colorful-button self-center mt-10">Start Now</button>
+					<Link href="/auth?action=sign-up">
+						<button className="colorful-button self-center mt-10">Start Now</button>
+					</Link>
 				</div>
 				<div>
 					<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-lg lg:w-7xl lg:mt-4 lg:mr-8 lg:max-w-2xl 2xl:max-w-3xl">
