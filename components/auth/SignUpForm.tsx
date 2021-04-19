@@ -113,13 +113,11 @@ export default function SignUpForm({ setAction, msBeforeRedirecting }: Props) {
 			>
 				<span>
 					I read and accept the{" "}
-					<span className="colorful-text">
-						<Link href="about:blank">
-							<a target="_blank" rel="noreferrer noopener">
-								Terms and Conditions
-							</a>
-						</Link>
-					</span>
+					<Link href="about:blank">
+						<a target="_blank" rel="noreferrer noopener" className="colorful-text">
+							Terms and Conditions
+						</a>
+					</Link>
 					.
 				</span>
 			</Checkbox>
