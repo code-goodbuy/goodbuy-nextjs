@@ -43,24 +43,18 @@ const Auth = ({ action }: { action: "login" | "sign-up" }) => {
 						{changeAction("Login", "login")}
 						{changeAction("Sign Up", "sign-up")}
 					</div>
-					<div>
-						{formAction === "login" ? (
-							<LoginForm />
-						) : (
-							<SignUpForm setAction={setFormAction} msBeforeRedirecting={1000} />
-						)}
-					</div>
+					<div>{formAction === "login" ? <LoginForm /> : <SignUpForm />}</div>
 				</div>
 			</div>
 		</>
 	);
 };
 
-Auth.getInitialProps = async ({ query }: { query: any }) => {
+export async function getServerSideProps({ query }: { query: any }) {
 	if (query.action && (query.action === "login" || query.action === "sign-up")) {
-		return query;
+		return { props: { ...query } };
 	}
-	return { action: "login" };
-};
+	return { props: { action: "login" } };
+}
 
 export default Auth;
