@@ -18,8 +18,6 @@ describe("test sign up logic", () => {
 		validUsername: string;
 		validPassword: string;
 	};
-	let stateValue: any;
-	let changeForm = jest.fn().mockImplementation((s) => (stateValue = s));
 
 	beforeEach(() => {
 		global.fetch = jest.fn().mockImplementation(mockFetch);
@@ -31,9 +29,7 @@ describe("test sign up logic", () => {
 	});
 
 	it("should call the fetch API", async () => {
-		const { getByPlaceholderText, getByText, getByLabelText } = render(
-			<SignUpForm setAction={changeForm} msBeforeRedirecting={0} />
-		);
+		const { getByPlaceholderText, getByText, getByLabelText } = render(<SignUpForm />);
 
 		const emailField = getByPlaceholderText("Email");
 		const usernameField = getByPlaceholderText("Username");
@@ -54,6 +50,5 @@ describe("test sign up logic", () => {
 		fireEvent.click(getByText("Sign Up"));
 
 		await waitFor(async () => expect(global.fetch).toHaveBeenCalled());
-		expect(changeForm).toHaveBeenCalledWith("login");
 	});
 });
