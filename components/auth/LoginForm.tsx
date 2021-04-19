@@ -6,8 +6,7 @@ import Field from "./Field";
 import SubmitButton from "./SubmitButton";
 
 export default function LoginForm() {
-	const [email, setEmail] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
+	const [data, setData] = useState({ email: "", password: "" });
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
@@ -17,32 +16,41 @@ export default function LoginForm() {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (email !== "" && isValidEmail(email) && password !== "") {
+		if (isValidEmail(data.email) && data.password !== "") {
 			setIsValidForm(true);
 		} else {
 			setIsValidForm(false);
 		}
-	}, [email, password, isValidEmail]);
+	}, [data]);
 
 	const clearForm = () => {
-		setEmail("");
-		setPassword("");
+		setData({ email: "", password: "" });
 	};
 
 	const handleLogin = async () => {
 		setIsSendingData(true);
-		const userData = {
-			email,
-			password
-		};
 		let specificHandler = async (res: Response) => {
 			let data = await res.json();
 			updateUserInfo && updateUserInfo({ email: data.email });
 			toggleIsLoggedIn && toggleIsLoggedIn();
 			router.push("/");
 		};
-		handleAuth({ url: "/api/login", userData, specificHandler, setServerResponse, setIsSendingData, clearForm });
+		handleAuth({ url: "/api/login", userData: data, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
+
+	function dataUpdater(field: string) {
+		if (field in data) {
+			return {
+				updater: (val: string | boolean) => {
+					//@ts-ignore: manually check the type
+					if (typeof data[field] === typeof val) {
+						//@ts-ignore: manually check the type
+						setData((data) => ({ ...data, [field]: val }));
+					}
+				}
+			};
+		}
+	}
 
 	return (
 		<form
@@ -51,8 +59,20 @@ export default function LoginForm() {
 			className="flex flex-col justify-center items-center my-14"
 		>
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
-			<Field value={email} setValue={setEmail} isValidValue={isValidEmail(email)} type="text" name="Email" />
-			<Field value={password} setValue={setPassword} isValidValue={true} type="password" name="Password" />
+			<Field
+				value={data.email}
+				setValue={dataUpdater("email")?.updater}
+				isValidValue={isValidEmail(data.email)}
+				type="text"
+				name="Email"
+			/>
+			<Field
+				value={data.password}
+				setValue={dataUpdater("password")?.updater}
+				isValidValue={true}
+				type="password"
+				name="Password"
+			/>
 			<SubmitButton disabled={!isValidForm || isSendingData} updater={handleLogin} text="Log In" />
 		</form>
 	);
