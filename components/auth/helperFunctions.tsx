@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { HandleResType, HandleErrType, ResetFormType, handleAuthType } from "../../lib/types/HelperTypes";
 
-export const updateWithoutSpaces = (updater: Dispatch<SetStateAction<string>>, value: string) => {
-	updater(value.replace(/\s/g, ""));
+export const updateWithoutSpaces = (updater: ((val: string | boolean) => void) | undefined, value: string) => {
+	updater && updater(value.replace(/\s/g, ""));
 };
 
 export const isValidEmail = (email: string) => {
