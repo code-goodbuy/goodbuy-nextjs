@@ -14,11 +14,6 @@ export interface AuthContextType {
 	updateUserInfo?: (newInfo: JWTPayloadType) => void;
 }
 
-export interface SignUpFormTypes {
-	setAction: Dispatch<SetStateAction<"login" | "sign-up">>;
-	msBeforeRedirecting: number;
-}
-
 export interface FieldType {
 	value: string;
 	setValue: ((val: string | boolean) => void) | undefined;
