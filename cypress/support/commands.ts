@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("findAllAndType", (obj) => {
+	for (let [key, value] of Object.entries(obj)) {
+		typeof value === "string" && cy.findByPlaceholderText(key).type(value);
+	}
+});
+
+Cypress.Commands.add("clickAll", (list) => {
+	for (let e of list) {
+		cy.findByLabelText(e).click();
+	}
+});
