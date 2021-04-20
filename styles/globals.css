@@ -1,16 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+		Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	overflow-x: hidden;
 }
-
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
-
-* {
-  box-sizing: border-box;
+button {
+	@apply focus:outline-none;
+}
+.action-selector {
+	@apply colorful-text font-bold w-50% text-center text-xl p-5 cursor-pointer;
+}
+.colorful-text {
+	@apply text-primary dark:text-secondary;
+}
+.normal-text {
+	@apply text-black dark:text-white;
+}
+.colorful-bg {
+	@apply bg-primary dark:bg-secondary;
+}
+.colorful-bg-2 {
+	@apply bg-blue-100 dark:bg-red-200;
+}
+.colorful-bg-background {
+	@apply bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60 md:bg-opacity-0 md:dark:bg-opacity-0;
+}
+.normal-bg {
+	@apply bg-white dark:bg-black;
+}
+.colorful-button {
+	@apply bg-primary dark:bg-secondary border-2 border-primary dark:border-secondary rounded-lg ring-4 ring-blue-100 dark:ring-red-200 text-white px-5 focus:ring-0;
+}
+.colorful-button:disabled,
+.colorful-button[disabled] {
+	cursor: not-allowed;
+	@apply normal-bg colorful-text ring-0;
+}
+.colorful-button:hover {
+	@apply bg-white text-primary dark:bg-black dark:text-secondary;
+}
+.colorful-border {
+	@apply border-primary dark:border-secondary;
+}
+.section-header {
+	@apply colorful-text mt-16 text-4xl text-center lg:text-left lg:text-5xl font-bold lg:ml-10 lg:pl-5 pb-5 bg-blue-100 dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black;
+}
+.flex-vertical {
+	@apply flex flex-col;
+}
+.flex-horizontal {
+	@apply flex flex-row;
+}
+.dynamic > div > div {
+	z-index: 1 !important;
+}
+.field {
+	@apply outline-none border-0 p-2 normal-text text-lg bg-gray-200 dark:bg-gray-700 w-4/5 rounded-md mb-8;
+}
+.error-label {
+	@apply w-3/4 text-red-600;
+}
+.bear-image-bg {
+	background-image: url("/pics/bear.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+@media (min-width: 769px) {
+	.bear-image-bg {
+		background-image: none;
+	}
 }

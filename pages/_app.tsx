@@ -1,13 +1,22 @@
 import "../styles/globals.css";
 import { AppProps } from "next/app";
 import Layout from "../components/common/Layout";
+import UIContextProvider from "../lib/context/UIContext";
+import AuthContextProvider from "../lib/context/AuthContext";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function GoodBuy({ Component, pageProps }: AppProps) {
+	/**
+	 * Renders The WebApp
+	 */
 	return (
-		<Layout>
-			<Component {...pageProps} />
-		</Layout>
+		<AuthContextProvider>
+			<UIContextProvider>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</UIContextProvider>
+		</AuthContextProvider>
 	);
 }
 
-export default MyApp;
+export default GoodBuy;

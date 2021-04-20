@@ -15,3 +15,6 @@ The structure of this project is heavily inspired on [this repo](https://github.
    git remote set-url --add --push origin https://github.com/teamgoodbuy/goodbuy-nextjs.git
    git remote set-url --add --push origin https://github.com/code-goodbuy/goodbuy-nextjs.git
    ```
+
+## WIP: Barcode Scanner
+You can test the scanner at https://goodbuy-barcode-scanner.netlify.app/
