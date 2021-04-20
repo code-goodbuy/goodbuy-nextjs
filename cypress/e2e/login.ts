@@ -7,6 +7,16 @@ describe("Test login", () => {
 		cy.findByPlaceholderText("Email").click().type("tester2@mail.co");
 		cy.findByPlaceholderText("Password").click().type("Password1!");
 		cy.findByText("Log In").click();
+		cy.url().should("eq", Cypress.config().baseUrl + "/");
 		cy.get(".space-x-4 > .colorful-button").should("have.text", "Log Out");
+	});
+
+	it("Should display an error", () => {
+		cy.visit("/auth");
+		cy.findByPlaceholderText("Email").click().type("tester2@mail.co");
+		cy.findByPlaceholderText("Password").click().type("not a password");
+		cy.findByText("Log In").click();
+		cy.url().should("eq", Cypress.config().baseUrl + "/auth");
+		cy.findByText("An Error Occured");
 	});
 });
