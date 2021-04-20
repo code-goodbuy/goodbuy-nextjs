@@ -22,6 +22,7 @@
 	"devDependencies": {
 		"@react-mock/fetch": "^0.3.0",
 		"@tailwindcss/forms": "^0.3.2",
+		"@testing-library/cypress": "^7.0.6",
 		"@testing-library/jest-dom": "^5.11.9",
 		"@testing-library/react": "^11.2.5",
 		"@types/cookies": "^0.7.6",
