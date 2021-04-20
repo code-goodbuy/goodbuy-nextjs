@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom";
 import {
 	updateWithoutSpaces,
-	checkEmail,
-	checkUsername,
-	checkPasswordStrength,
-	checkPasswordMatch
+	isValidEmail,
+	isValidUsername,
+	isPasswordStrong,
+	areSamePasswords
 } from "../../components/auth/helperFunctions";
 
 describe("test login helper functions", () => {
@@ -34,50 +34,36 @@ describe("test login helper functions", () => {
 	});
 
 	it("should check the email and return true", () => {
-		checkEmail(mockedUpdater, "person@mail.co.uk");
-
-		assertFn(true);
+		const res = isValidEmail("person@mail.co.uk");
+		expect(res).toBe(true);
 	});
 
 	it("should check the email and return false", () => {
-		checkEmail(mockedUpdater, "person(at)mail.co.uk");
-
-		assertFn(false);
+		const res = isValidEmail("person(at)mail.co.uk");
+		expect(res).toBe(false);
 	});
 
 	it("should check the username and return true", () => {
-		checkUsername(mockedUpdater, "user_name");
-
-		assertFn(true);
+		expect(isValidUsername("user_name")).toBe(true);
 	});
 
 	it("should check the username and return false", () => {
-		checkUsername(mockedUpdater, "123212312");
-
-		assertFn(false);
+		expect(isValidUsername("123212312")).toBe(false);
 	});
 
 	it("should check the password and return true", () => {
-		checkPasswordStrength(mockedUpdater, "Strong~Passw0rd");
-
-		assertFn(true);
+		expect(isPasswordStrong("Strong~Passw0rd")).toBe(true);
 	});
 
 	it("should check the password and return false", () => {
-		checkPasswordStrength(mockedUpdater, "123212312");
-
-		assertFn(false);
+		expect(isPasswordStrong("123123123")).toBe(false);
 	});
 
 	it("should check the match between passwords and return true", () => {
-		checkPasswordMatch(mockedUpdater, "Password123", "Password123");
-
-		assertFn(true);
+		expect(areSamePasswords("Password123", "Password123")).toBe(true);
 	});
 
 	it("should check the match between passwords and return false", () => {
-		checkPasswordMatch(mockedUpdater, "Password123", "Password1231");
-
-		assertFn(false);
+		expect(areSamePasswords("Password123", "Password1231")).toBe(false);
 	});
 });

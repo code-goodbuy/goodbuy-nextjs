@@ -57,7 +57,7 @@ describe("Make sure the form behaves as expected", () => {
 		fireEvent.click(getByText("Log In"));
 
 		await waitFor(async () => {
-			expect(global.fetch).toHaveBeenCalledWith("http://localhost/api/login", {
+			expect(global.fetch).toHaveBeenCalledWith("/api/login", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"

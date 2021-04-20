@@ -1,47 +1,31 @@
 import { Dispatch, SetStateAction } from "react";
+import { HandleResType, HandleErrType, ResetFormType, handleAuthType } from "../../lib/types/HelperTypes";
 
-export const updateWithoutSpaces = (updater: Dispatch<SetStateAction<string>>, value: string) => {
-	/**
-	 * Takes in input the updater state function and the new value, updates the value in the state only if the new character is not a space
-	 */
-
-	updater(value.replace(/\s/g, ""));
+export const updateWithoutSpaces = (updater: ((val: string | boolean) => void) | undefined, value: string) => {
+	updater && updater(value.replace(/\s/g, ""));
 };
 
-export const checkEmail = (updater: Dispatch<SetStateAction<boolean>>, email: string): void => {
+export const isValidEmail = (email: string) => {
 	if (email !== "") {
-		//only run the function if the email is defined
 		const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if (re.test(email.toLowerCase()) && email.length > 5 && email.length < 41) {
-			updater(true);
-		} else {
-			updater(false);
+			return true;
 		}
 	}
+	return false;
 };
 
-export const checkUsername = (
-	updater: Dispatch<SetStateAction<boolean>>,
-	username: string
-): void => {
+export const isValidUsername = (username: string): boolean => {
 	if (username !== "") {
-		if (username.length > 5 && username.length < 23 && username.match(/[a-z]+/)) {
-			updater(true);
-		} else {
-			updater(false);
+		if (username.length > 4 && username.length < 23 && username.match(/[a-z]+/)) {
+			return true;
 		}
 	}
+	return false;
 };
 
-export const checkPasswordStrength = (
-	updater: Dispatch<SetStateAction<boolean>>,
-	password: string
-): void => {
-	/**
-	 * Checks if the password is strong enough.
-	 */
+export const isPasswordStrong = (password: string): boolean => {
 	if (password !== "") {
-		//only runt the rest of the function if the password is set
 		if (
 			password.length > 7 &&
 			password.length < 51 &&
@@ -50,23 +34,78 @@ export const checkPasswordStrength = (
 			password.match(/[0-9]+/) &&
 			password.match(/[-_+=()!?@#\$%\^&\*{[}\].,<>'":;/|\\`~]+/)
 		) {
-			updater(true);
-		} else {
-			updater(false);
+			return true;
 		}
+	}
+	return false;
+};
+
+export const areSamePasswords = (repeatedPassword: string, password: string): boolean => {
+	if (repeatedPassword !== "") {
+		if (repeatedPassword === password) {
+			return true;
+		}
+	}
+	return false;
+};
+
+export const sendAuthRequest = async (url: string, body: any) => {
+	const res = await fetch(url, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(body)
+	});
+	return res;
+};
+
+export const handleRes = ({ res, setServerResponse, specificHandler }: HandleResType) => {
+	if (res && res.status === 200) {
+		specificHandler(res);
+	} else {
+		setServerResponse("An Error Occured");
 	}
 };
 
-export const checkPasswordMatch = (
-	updater: Dispatch<SetStateAction<boolean>>,
-	repeatedPassword: string,
-	password: string
-): void => {
-	if (repeatedPassword !== "") {
-		if (repeatedPassword === password) {
-			updater(true);
-		} else {
-			updater(false);
-		}
+export const handleErr = ({ err, setServerResponse }: HandleErrType) => {
+	console.error(err);
+	setServerResponse("An Error Occured");
+};
+
+export const resetForm = ({ setIsSendingData, clearForm }: ResetFormType) => {
+	clearForm();
+	setIsSendingData(false);
+};
+
+export const handleAuth = async ({
+	url,
+	userData,
+	specificHandler,
+	setServerResponse,
+	setIsSendingData,
+	clearForm
+}: handleAuthType) => {
+	try {
+		let res = await sendAuthRequest(url, userData);
+		handleRes({ res, setServerResponse, specificHandler });
+	} catch (err) {
+		handleErr(err);
+	} finally {
+		resetForm({ setIsSendingData, clearForm });
+	}
+};
+
+export const dataUpdater = (field: string, data: any, setData: Dispatch<SetStateAction<any>>) => {
+	if (field in data) {
+		return {
+			updater: (val: string | boolean) => {
+				//@ts-ignore: manually check the type
+				if (typeof data[field] === typeof val) {
+					//@ts-ignore: manually check the type
+					setData((data) => ({ ...data, [field]: val }));
+				}
+			}
+		};
 	}
 };

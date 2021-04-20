@@ -1,17 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { unsetJWTCookie } from "../../lib/apiFunctions/responseHelpers";
-import type { PageConfig } from "next";
+import { apiConfig } from "../../lib/apiFunctions/apiConfig";
+import logout from "../../lib/apiFunctions/logout";
+import httpProxy from "http-proxy";
 
-export const config: PageConfig = {
-	api: {
-		bodyParser: false //don't parse the whole request, so we can forward it to the backend
-	}
-};
+const proxy = httpProxy.createProxyServer({ changeOrigin: true });
+
+export const config = apiConfig;
 
 export default function route(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-	return new Promise((resolve, reject): void => {
-		unsetJWTCookie(req, res);
-		res.status(200).json({ message: "logged out" });
-		resolve();
-	});
+	return logout(req, res, proxy);
 }

@@ -6,11 +6,11 @@ export default function Mission() {
 	 * The "Our Mission" Section Of The Landing Page
 	 */
 	return (
-		<div className="normal-bg flex flex-col min-h-screen h-full" id="mission">
+		<div className="normal-bg flex flex-col min-h-full h-auto lg:max-h-900" id="mission">
 			<h2 data-testid="mission-title" className="section-header">
 				Our Mission
 			</h2>
-			<div className="flex flex-col justify-around lg:flex-row-reverse items-center pb-10">
+			<div className="flex flex-col justify-around lg:flex-row-reverse items-center pb-10 pt-10">
 				<div className="flex flex-col justify-around items-center lg:ml-10">
 					<InfoCard
 						number={10000000}
@@ -67,9 +67,8 @@ export default function Mission() {
 						</figcaption>
 					</figure>
 					<p className="normal-text text-xl mx-10 mt-5 lg:mt-12 max-w-xl">
-						Non-sustainable products contribute–among the others–to deforestation, CO2 emissions,
-						and water waste. At GoodBuy, we want to make sure you have the means to make an informed
-						decision about the products you buy.
+						Non-sustainable products contribute–among the others–to deforestation, CO2 emissions, and water waste. At
+						GoodBuy, we want to make sure you have the means to make an informed decision about the products you buy.
 					</p>
 				</div>
 			</div>

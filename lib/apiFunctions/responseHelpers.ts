@@ -1,30 +1,25 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import Cookies from "cookies";
 
-export function setJWTCookie(req: IncomingMessage, res: ServerResponse, jwtAccessToken: string) {
-	const cookies = new Cookies(req, res);
-	cookies.set("auth-token", jwtAccessToken, {
+export function initCookies(req: IncomingMessage, res: ServerResponse) {
+	return new Cookies(req, res);
+}
+
+export function setTokenCookie(cookie: Cookies, name: "auth-token" | "refresh-token", token: string) {
+	cookie.set(name, token, {
 		httpOnly: true,
 		sameSite: "lax"
 	});
 }
 
-export function getJWTCookie(req: IncomingMessage, res: ServerResponse) {
-	const cookies = new Cookies(req, res);
-	return cookies.get("auth-token");
+export function getTokenFromCookie(cookie: Cookies, name: "auth-token" | "refresh-token") {
+	return cookie.get(name);
 }
 
-export function unsetJWTCookie(req: IncomingMessage, res: ServerResponse) {
-	const cookies = new Cookies(req, res);
-	cookies.set("auth-token", "", {
-		httpOnly: true,
-		sameSite: "lax"
-	});
-}
-
-export function getJWTFromResponse(apiResponseBody: string): null | string {
+export function getTokenFromResponse(apiResponseBody: string): null | string {
 	try {
-		const { jwtAccessToken } = JSON.parse(apiResponseBody);
+		const body = JSON.parse(apiResponseBody);
+		const jwtAccessToken = body.jwtAccessToken ? body.jwtAccessToken : body.accessToken;
 		if (jwtAccessToken === undefined) {
 			return null;
 		}
@@ -32,4 +27,10 @@ export function getJWTFromResponse(apiResponseBody: string): null | string {
 	} catch (err) {
 		return null;
 	}
+}
+
+export function getTokenFromResponseCookie(proxyRes: IncomingMessage) {
+	return proxyRes.headers["set-cookie"]
+		?.toString()
+		.substring(4, proxyRes.headers["set-cookie"]?.toString().indexOf(";"));
 }
