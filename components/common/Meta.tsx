@@ -4,15 +4,6 @@ import Head from "next/head";
 import { MetaType } from "../../lib/types/MetaTypes";
 
 const Meta = ({ title, keywords, description }: MetaType) => {
-	/**
-	 * Component for metadata customization
-	 *
-	 * Available Properties:
-	 *
-	 * title: string;
-	 * keywords: string
-	 * description: string
-	 */
 	const { colorMode } = useContext(UIContext);
 	return (
 		<Head>
@@ -34,8 +25,7 @@ const Meta = ({ title, keywords, description }: MetaType) => {
 Meta.defaultProps = {
 	title: "GoodBuy",
 	keywords: "goodbuy 2021 sustainable shopping",
-	description:
-		"Choose Products That Are Good For The Environment And The People That Produce Them With GoodBuy!"
+	description: "Choose Products That Are Good For The Environment And The People That Produce Them With GoodBuy!"
 };
 
 export default Meta;
