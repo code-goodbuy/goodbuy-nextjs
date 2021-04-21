@@ -12,14 +12,15 @@ function User({ username, data }: { username: string; data: any }) {
 	return (
 		<>
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
-			<div className="min-h-screen normal-bg">
+			<div className="min-h-screen normal-bg normal-text">
 				<div className="pt-40" data-testid="profile-pic">
 					<Image src={data.imageURL} layout="fixed" width="150" height="150" />
 				</div>
 				<p className="colorful-text text-2xl font-bold m-auto">{username}</p>
-				<p className="normal-text">Scanned: {data?.scannedProducts || 0}</p>
-				<p className="normal-text">Followers: {data?.followers || 0}</p>
-				<p className="normal-text">Following: {data?.following || 0}</p>
+				<p>Scanned: {data?.scannedProducts || 0}</p>
+				<p>Followers: {data?.followers || 0}</p>
+				<p>Following: {data?.following || 0}</p>
+				<p data-testid="description">{data?.description}</p>
 			</div>
 		</>
 	);
