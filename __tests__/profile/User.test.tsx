@@ -28,5 +28,6 @@ describe("Test profile page", () => {
 		expect(scanned).toBeVisible();
 		expect(followers).toBeVisible();
 		expect(following).toBeVisible();
+		expect(image).toBeVisible();
 	});
 });
