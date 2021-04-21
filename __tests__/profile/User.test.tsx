@@ -23,11 +23,13 @@ describe("Test profile page", () => {
 		const followers = getByText("Followers: 50");
 		const following = getByText("Following: 70");
 		const image = getByTestId("profile-pic");
+		const description = getByTestId("description");
 
 		expect(username).toBeVisible();
 		expect(scanned).toBeVisible();
 		expect(followers).toBeVisible();
 		expect(following).toBeVisible();
 		expect(image).toBeVisible();
+		expect(description).toBeVisible();
 	});
 });
