@@ -12,7 +12,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			scannedProducts: "30",
 			userID: "mockUserId",
 			description: "I like using goodbuy",
-			imageURL: "/public/pics/face.png"
+			imageURL: "/pics/face.png"
 		};
 		resolve();
 		res.status(200).send(data);
