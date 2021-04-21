@@ -11,13 +11,6 @@ const Verify = ({ token }: { token: string }) => {
 		router.push("/");
 	}
 
-	useEffect(() => {
-		changeIsAuthenticating && changeIsAuthenticating(true);
-		return () => {
-			changeIsAuthenticating && changeIsAuthenticating(false);
-		};
-	}, []);
-
 	const validate = async (token: string) => {
 		const res = await fetch(process.env.backendURL + "/confirm_email/" + token, { method: "POST" });
 		if (res.status === 200) {
@@ -28,7 +21,13 @@ const Verify = ({ token }: { token: string }) => {
 		}
 	};
 
-	validate(token);
+	useEffect(() => {
+		changeIsAuthenticating && changeIsAuthenticating(true);
+		validate(token);
+		return () => {
+			changeIsAuthenticating && changeIsAuthenticating(false);
+		};
+	}, []);
 
 	return (
 		<>
