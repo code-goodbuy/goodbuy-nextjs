@@ -56,11 +56,10 @@ export default function SignUpForm() {
 		setIsSendingData(true);
 		const userData = {
 			email: data.email,
-			username: data.password,
-			password: data.repeatedPassword,
+			username: data.username,
+			password: data.password,
 			acceptedTerms: data.hasAcceptedTerms,
-			hasRequiredAge: data.hasRequiredAge,
-			tokenVersion: 0
+			hasRequiredAge: data.hasRequiredAge
 		};
 		let specificHandler = () => {
 			setServerResponse("Check your email and then log in");
