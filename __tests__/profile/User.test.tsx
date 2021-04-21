@@ -4,7 +4,7 @@ import User from "../../pages/user/[username]";
 
 describe("Test profile page", () => {
 	it("Should render the informations properly", () => {
-		const { getByText } = render(
+		const { getByText, getByTestId } = render(
 			<User
 				username="test"
 				data={{
@@ -22,6 +22,7 @@ describe("Test profile page", () => {
 		const scanned = getByText("Scanned: 30");
 		const followers = getByText("Followers: 50");
 		const following = getByText("Following: 70");
+		const image = getByTestId("profile-pic");
 
 		expect(username).toBeVisible();
 		expect(scanned).toBeVisible();
