@@ -1,4 +1,11 @@
 function User({ username, data }: { username: string; data: any }) {
+	if (data.message === "Not Found") {
+		return (
+			<div className="min-h-screen normal-bg">
+				<p className="pt-40 colorful-text text-2xl font-bold m-auto">Error 404</p>
+			</div>
+		);
+	}
 	return (
 		<div className="min-h-screen normal-bg">
 			<p className="pt-40 colorful-text text-2xl font-bold m-auto">{username}</p>
@@ -10,9 +17,19 @@ function User({ username, data }: { username: string; data: any }) {
 }
 
 export async function getServerSideProps({ query }: { query: any }) {
-	const res = await fetch("http://localhost:3000/api/dev/get-info");
-	const data = await res.json();
-	return { props: { username: query.username, data } };
+	const res = await fetch("http://localhost:3000/api/dev/get-info", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({ "user": query.username })
+	});
+	console.log("here");
+	if (res.status !== 404) {
+		const data = await res.json();
+		return { props: { username: query.username, data } };
+	}
+	return { props: { username: query.username, data: { message: "Not Found" } } };
 }
 
 export default User;
