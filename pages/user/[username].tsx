@@ -29,7 +29,6 @@ export async function getServerSideProps({ query }: { query: any }) {
 		},
 		body: JSON.stringify({ "user": query.username })
 	});
-	console.log("here");
 	if (res.status !== 404) {
 		const data = await res.json();
 		return { props: { username: query.username, data } };
