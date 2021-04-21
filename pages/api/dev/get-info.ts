@@ -11,7 +11,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			following: "70",
 			scannedProducts: "30",
 			userID: "mockUserId",
-			description: "I like using goodbuy",
+			description: "I like using GoodBuy 😀. I care about the environment 🌳.",
 			imageURL: "/pics/face.png"
 		};
 		resolve();
