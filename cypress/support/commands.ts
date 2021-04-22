@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("findAllAndType", (obj) => {
+Cypress.Commands.add("findFieldsAndType", (obj) => {
 	for (let [key, value] of Object.entries(obj)) {
 		typeof value === "string" && cy.findByPlaceholderText(key).type(value);
 	}
