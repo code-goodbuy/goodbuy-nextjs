@@ -18,14 +18,16 @@ function User({ username, data }: { username: string; data: any }) {
 				<div className="pt-40" data-testid="profile-pic">
 					<Image src={data.imageURL} layout="fixed" width="150" height="150" />
 				</div>
-				<p className="colorful-text text-2xl font-bold m-auto">{username}</p>
+				<p className="colorful-text text-2xl font-bold m-auto" data-testid="username">
+					{username}
+				</p>
 				<p>Scanned: {data?.scannedProducts || 0}</p>
 				<p>Followers: {data?.followers || 0}</p>
 				<p>Following: {data?.following || 0}</p>
 				<p data-testid="description">{data?.description}</p>
 				<button className="colorful-button">Follow</button>
 				{data?.listOfScanned?.map((c: PostType) => (
-					<Post title={c.title} EAN={c.EAN} country={c.country} username={username} />
+					<Post key={c.EAN} title={c.title} EAN={c.EAN} country={c.country} username={username} />
 				))}
 			</div>
 		</>
