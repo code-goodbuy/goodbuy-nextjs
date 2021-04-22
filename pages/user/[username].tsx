@@ -11,24 +11,50 @@ function User({ username, data }: { username: string; data: any }) {
 			</div>
 		);
 	}
+
+	const Counter = ({ number, name }: { number: number; name: string }) => {
+		return (
+			<div className="text-center p-4">
+				<h3 className="text-lg font-bold">{number || 0}</h3>
+				<p>{name}</p>
+			</div>
+		);
+	};
+
 	return (
 		<>
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
-			<div className="min-h-screen normal-bg normal-text pb-10">
-				<div className="pt-40" data-testid="profile-pic">
-					<Image src={data.imageURL} layout="fixed" width="150" height="150" />
+			<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:flex-row lg:justify-evenly pt-20">
+				<div className="flex flex-col items-center justify-start w-90 lg:w-4/12 lg:max-w-md">
+					<div className="pt-10" data-testid="profile-pic">
+						<Image src={data.imageURL} layout="fixed" width="150" height="150" />
+					</div>
+					<p className="colorful-text text-2xl font-bold" data-testid="username">
+						{username}
+					</p>
+					<div className="flex flex-row">
+						<Counter number={data?.scannedProducts || 0} name={"Scanned"} />
+						<Counter number={data?.followers || 0} name={"Followers"} />
+						<Counter number={data?.following || 0} name={"Following"} />
+					</div>
+					<p data-testid="description" className="mb-5">
+						{data?.description}
+					</p>
+
+					<button className="colorful-button">Follow</button>
 				</div>
-				<p className="colorful-text text-2xl font-bold m-auto" data-testid="username">
-					{username}
-				</p>
-				<p>Scanned: {data?.scannedProducts || 0}</p>
-				<p>Followers: {data?.followers || 0}</p>
-				<p>Following: {data?.following || 0}</p>
-				<p data-testid="description">{data?.description}</p>
-				<button className="colorful-button">Follow</button>
-				{data?.listOfScanned?.map((c: PostType) => (
-					<Post key={c.EAN} title={c.title} EAN={c.EAN} country={c.country} username={username} />
-				))}
+				<div className="w-90 lg:w-6/12 lg:max-w-3xl">
+					{data?.listOfScanned?.map((c: PostType) => (
+						<Post
+							key={c.EAN}
+							title={c.title}
+							EAN={c.EAN}
+							country={c.country}
+							username={username}
+							image={data?.imageURL}
+						/>
+					))}
+				</div>
 			</div>
 		</>
 	);
