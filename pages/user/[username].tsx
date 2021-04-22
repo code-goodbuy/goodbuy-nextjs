@@ -24,7 +24,7 @@ function User({ username, data }: { username: string; data: any }) {
 	return (
 		<>
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
-			<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:flex-row lg:justify-evenly pt-20">
+			<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:items-start lg:flex-row lg:justify-evenly pt-20">
 				<div className="flex flex-col items-center justify-start w-90 lg:w-4/12 lg:max-w-md">
 					<div className="pt-10" data-testid="profile-pic">
 						<Image src={data.imageURL} layout="fixed" width="150" height="150" />
@@ -61,9 +61,9 @@ function User({ username, data }: { username: string; data: any }) {
 }
 
 export async function getServerSideProps({ query, req }: { query: any; req: any }) {
-	const headers = req.headers;
-	const protocol = headers.referer.substr(0, headers.referer.indexOf("/") + 2);
+	const headers = await req.headers;
 	const host = headers.host;
+	const protocol = host.includes("localhost") ? "http://" : "https://";
 	const res = await fetch(protocol + host + "/api/dev/get-info", {
 		method: "POST",
 		headers: {
