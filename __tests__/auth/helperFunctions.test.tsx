@@ -44,7 +44,7 @@ describe("test login helper functions", () => {
 	});
 
 	it("should check the username and return true", () => {
-		expect(isValidUsername("user_name")).toBe(true);
+		expect(isValidUsername("username")).toBe(true);
 	});
 
 	it("should check the username and return false", () => {
