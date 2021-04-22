@@ -60,8 +60,11 @@ function User({ username, data }: { username: string; data: any }) {
 	);
 }
 
-export async function getServerSideProps({ query }: { query: any }) {
-	const res = await fetch("http://localhost:3000/api/dev/get-info", {
+export async function getServerSideProps({ query, req }: { query: any; req: any }) {
+	const headers = req.headers;
+	const protocol = headers.referer.substr(0, headers.referer.indexOf("/") + 2);
+	const host = headers.host;
+	const res = await fetch(protocol + host + "/api/dev/get-info", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
