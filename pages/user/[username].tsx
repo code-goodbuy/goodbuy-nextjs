@@ -21,6 +21,7 @@ function User({ username, data }: { username: string; data: any }) {
 				<p>Followers: {data?.followers || 0}</p>
 				<p>Following: {data?.following || 0}</p>
 				<p data-testid="description">{data?.description}</p>
+				<button className="colorful-button">Follow</button>
 			</div>
 		</>
 	);
