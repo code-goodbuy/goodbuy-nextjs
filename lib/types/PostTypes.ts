@@ -3,4 +3,5 @@ export interface PostType {
 	"EAN": string;
 	"country": string;
 	"username": string;
+	"image": string;
 }
