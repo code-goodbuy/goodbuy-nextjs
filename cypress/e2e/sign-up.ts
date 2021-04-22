@@ -20,7 +20,7 @@ describe("Test Sign Up", () => {
 		cy.visit("/auth?action=sign-up");
 		cy.findAllAndType({
 			"Email": "tester2@mail.co",
-			"Username": "tester-user",
+			"Username": "testeruser",
 			"Password": "Password1!",
 			"Repeated Password": "Password1!"
 		});
