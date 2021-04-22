@@ -4,9 +4,6 @@ import InfoCard, { getPartialNumber } from "../../components/landingPage/InfoCar
 import { InfoCardType } from "../../lib/types/HelperTypes";
 
 describe("Test InfoCard", () => {
-	/**
-	 * check for correct behavior of the infocard component
-	 */
 	let expectedProps: InfoCardType;
 
 	beforeEach(() => {
