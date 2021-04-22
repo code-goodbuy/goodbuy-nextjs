@@ -63,7 +63,7 @@ function User({ username, data }: { username: string; data: any }) {
 export async function getServerSideProps({ query, req }: { query: any; req: any }) {
 	const headers = await req.headers;
 	const host = headers.host;
-	const protocol = host.includes("localhost") ? "http://" : "https://";
+	const protocol = host.includes(":3000") ? "http://" : "https://";
 	const res = await fetch(protocol + host + "/api/dev/get-info", {
 		method: "POST",
 		headers: {
