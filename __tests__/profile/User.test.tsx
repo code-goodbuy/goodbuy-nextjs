@@ -25,6 +25,7 @@ describe("Test profile page", () => {
 		const image = getByTestId("profile-pic");
 		const description = getByTestId("description");
 		const follow = getByText("Follow");
+		const product = getByText("Coca Cola");
 
 		expect(username).toBeVisible();
 		expect(scanned).toBeVisible();
@@ -33,5 +34,6 @@ describe("Test profile page", () => {
 		expect(image).toBeVisible();
 		expect(description).toBeVisible();
 		expect(follow).toBeVisible();
+		expect(product).toBeVisible();
 	});
 });
