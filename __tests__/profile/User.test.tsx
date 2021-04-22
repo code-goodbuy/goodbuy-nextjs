@@ -25,9 +25,9 @@ describe("Test profile page", () => {
 		);
 
 		const username = getByTestId("username");
-		const scanned = getByText("Scanned: 30");
-		const followers = getByText("Followers: 50");
-		const following = getByText("Following: 70");
+		const scanned = getByText("30");
+		const followers = getByText("50");
+		const following = getByText("70");
 		const image = getByTestId("profile-pic");
 		const description = getByTestId("description");
 		const follow = getByText("Follow");
