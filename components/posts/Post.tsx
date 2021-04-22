@@ -2,7 +2,6 @@ import { PostType } from "../../lib/types/PostTypes";
 import Image from "next/image";
 
 export default function Post({ title, EAN, country, username, image }: PostType) {
-	console.log(image);
 	return (
 		<div className="border-2 colorful-border rounded-2xl my-6 p-2 normal-text w-90 lg:w-11/12 max-w-3xl">
 			<div className="flex flex-row items-center">
