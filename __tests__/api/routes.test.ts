@@ -8,7 +8,7 @@ import type { PageConfig } from "next";
 let handler: typeof logout & { config?: PageConfig } = logout;
 handler.config = config;
 
-async function testRoute(route: any, url: string, tests: any) {
+async function testRoute(route: any, url: string, message: string) {
 	handler = route;
 	handler.config = config;
 
@@ -25,23 +25,17 @@ async function testRoute(route: any, url: string, tests: any) {
 				}
 			});
 			const data = await res.json();
-			tests(data);
+			expect(data).toStrictEqual({ message: message });
 		}
 	});
 }
 
 describe("test routes", () => {
 	it("should log out the user", async () => {
-		const tests = (data: any) => {
-			expect(data).toStrictEqual({ message: "logged out" });
-		};
-		await testRoute(logout, "/api/logout", tests);
+		await testRoute(logout, "/api/logout", "logged out");
 	});
 
 	it("should check the user logged in state", async () => {
-		const tests = (data: any) => {
-			expect(data).toStrictEqual({ message: "not logged" });
-		};
-		await testRoute(check, "/api/check", tests);
+		await testRoute(check, "/api/check", "not logged");
 	});
 });
