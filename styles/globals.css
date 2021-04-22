@@ -76,6 +76,18 @@ button {
 	background-position: center;
 	background-size: cover;
 }
+.img-bg {
+	background-size: cover;
+	background-position: center;
+}
+.square-150 {
+	width: 150px;
+	height: 150px;
+}
+.square-50 {
+	width: 50px;
+	height: 50px;
+}
 @media (min-width: 769px) {
 	.bear-image-bg {
 		background-image: none;
