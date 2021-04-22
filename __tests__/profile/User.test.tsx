@@ -24,7 +24,7 @@ describe("Test profile page", () => {
 			></User>
 		);
 
-		const username = getByText("test");
+		const username = getByTestId("username");
 		const scanned = getByText("Scanned: 30");
 		const followers = getByText("Followers: 50");
 		const following = getByText("Following: 70");
