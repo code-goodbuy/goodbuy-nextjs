@@ -50,7 +50,7 @@ button {
 	@apply bg-white text-primary dark:bg-black dark:text-secondary;
 }
 .colorful-border {
-	@apply border-2 border-primary dark:border-secondary;
+	@apply border-primary dark:border-secondary;
 }
 .section-header {
 	@apply colorful-text mt-16 text-4xl text-center lg:text-left lg:text-5xl font-bold lg:ml-10 lg:pl-5 pb-5 bg-blue-100 dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black;
