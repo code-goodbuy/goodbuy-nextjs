@@ -13,7 +13,13 @@ describe("Test profile page", () => {
 					scannedProducts: "30",
 					userID: "mockUserId",
 					description: "I like using goodbuy",
-					imageURL: "/public/pics/face.png"
+					imageURL: "/public/pics/face.png",
+					listOfScanned: [
+						{ title: "Lindt Excellence Noir 85% 100 g", EAN: "3046920022606", country: "France" },
+						{ title: "Penne Rigate Barilla", EAN: "8076802085738", country: "Italy" },
+						{ title: "Coca Cola", EAN: "5000112581508", country: "United Kingdom" },
+						{ title: "Arrowhead Water", EAN: "	0071142933631", country: "United States & Canada" }
+					]
 				}}
 			></User>
 		);

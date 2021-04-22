@@ -1,5 +1,7 @@
 import Meta from "../../components/common/Meta";
 import Image from "next/image";
+import Post from "../../components/posts/Post";
+import { PostType } from "../../lib/types/PostTypes";
 
 function User({ username, data }: { username: string; data: any }) {
 	if (data.message === "Not Found") {
@@ -12,7 +14,7 @@ function User({ username, data }: { username: string; data: any }) {
 	return (
 		<>
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
-			<div className="min-h-screen normal-bg normal-text">
+			<div className="min-h-screen normal-bg normal-text pb-10">
 				<div className="pt-40" data-testid="profile-pic">
 					<Image src={data.imageURL} layout="fixed" width="150" height="150" />
 				</div>
@@ -22,6 +24,9 @@ function User({ username, data }: { username: string; data: any }) {
 				<p>Following: {data?.following || 0}</p>
 				<p data-testid="description">{data?.description}</p>
 				<button className="colorful-button">Follow</button>
+				{data?.listOfScanned?.map((c: PostType) => (
+					<Post title={c.title} EAN={c.EAN} country={c.country} username={username} />
+				))}
 			</div>
 		</>
 	);
