@@ -24,6 +24,7 @@ describe("Test profile page", () => {
 		const following = getByText("Following: 70");
 		const image = getByTestId("profile-pic");
 		const description = getByTestId("description");
+		const follow = getByText("Follow");
 
 		expect(username).toBeVisible();
 		expect(scanned).toBeVisible();
@@ -31,5 +32,6 @@ describe("Test profile page", () => {
 		expect(following).toBeVisible();
 		expect(image).toBeVisible();
 		expect(description).toBeVisible();
+		expect(follow).toBeVisible();
 	});
 });
