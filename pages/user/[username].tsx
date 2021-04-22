@@ -1,5 +1,4 @@
 import Meta from "../../components/common/Meta";
-import Image from "next/image";
 import Post from "../../components/posts/Post";
 import { PostType } from "../../lib/types/PostTypes";
 
@@ -26,8 +25,8 @@ function User({ username, data }: { username: string; data: any }) {
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
 			<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:items-start lg:flex-row lg:justify-evenly pt-20">
 				<div className="flex flex-col items-center justify-start w-90 lg:w-4/12 lg:max-w-md">
-					<div className="pt-10" data-testid="profile-pic">
-						<Image src={data.imageURL} layout="fixed" width="150" height="150" />
+					<div className="mt-10 rounded-full border-4 colorful-border w-40 h-40" data-testid="profile-pic">
+						<img src={data.imageURL} width="160" height="160" className="object-cover rounded-full" />
 					</div>
 					<p className="colorful-text text-2xl font-bold" data-testid="username">
 						{username}
