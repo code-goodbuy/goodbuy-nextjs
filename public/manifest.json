@@ -1,0 +1,33 @@
+{
+	"name": "GoodBuy",
+	"short_name": "GoodBuy",
+	"theme_color": "#000000",
+	"background_color": "#000000",
+	"display": "fullscreen",
+	"orientation": "portrait",
+	"scope": "/",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "icons/favicon-16x16.png",
+			"sizes": "16x16",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon-32x32.png",
+			"sizes": "32x32",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon-180x180.png",
+			"sizes": "188x180",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/safari-pinned-tab.svg",
+			"sizes": "any",
+			"purpose": "any maskable"
+		}
+	],
+	"splash_pages": null
+}
