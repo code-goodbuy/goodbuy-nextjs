@@ -17,7 +17,7 @@ export const isValidEmail = (email: string) => {
 
 export const isValidUsername = (username: string): boolean => {
 	if (username !== "") {
-		if (username.length > 4 && username.length < 23 && username.match(/[a-z]+/)) {
+		if (username.length > 4 && username.length < 23 && username.match(/^[0-9a-zA-Z]+$/)) {
 			return true;
 		}
 	}
