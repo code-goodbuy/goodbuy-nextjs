@@ -7,7 +7,6 @@ export default function Post({ title, EAN, country, username, image }: PostType)
 				<div
 					className="rounded-full border-4 colorful-border square-50 img-bg"
 					style={{ backgroundImage: "url(" + image + ")" }}
-					data-testid="profile-pic"
 				></div>
 				<p className="pl-2">{username}</p>
 			</div>
