@@ -2,9 +2,16 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import User from "../../pages/user/[username]";
 
+function expectAllToBeVisible(elements: HTMLElement[]) {
+	for (let e of elements) {
+		expect(e).toBeVisible();
+	}
+}
+
 describe("Test profile page", () => {
 	it("Should render the informations properly", () => {
-		const { getByText, getByTestId } = render(
+		// given + when
+		const { getByTestId, getByText } = render(
 			<User
 				username="test"
 				data={{
@@ -18,23 +25,16 @@ describe("Test profile page", () => {
 				}}
 			></User>
 		);
-
-		const username = getByTestId("username");
-		const scanned = getByText("30");
-		const followers = getByText("50");
-		const following = getByText("70");
-		const image = getByTestId("profile-pic");
-		const description = getByTestId("description");
-		const follow = getByText("Follow");
-		const product = getByText("Coca Cola");
-
-		expect(username).toBeVisible();
-		expect(scanned).toBeVisible();
-		expect(followers).toBeVisible();
-		expect(following).toBeVisible();
-		expect(image).toBeVisible();
-		expect(description).toBeVisible();
-		expect(follow).toBeVisible();
-		expect(product).toBeVisible();
+		// then
+		expectAllToBeVisible([
+			getByTestId("username"),
+			getByText("30"),
+			getByText("50"),
+			getByText("70"),
+			getByTestId("profile-pic"),
+			getByTestId("description"),
+			getByText("Follow"),
+			getByText("Coca Cola")
+		]);
 	});
 });
