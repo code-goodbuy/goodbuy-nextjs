@@ -8,7 +8,7 @@ import { useContext } from "react";
 function User({ username, data }: { username: string; data: any }) {
 	const { isLoggedIn } = useContext(AuthContext);
 	const router = useRouter();
-	if (isLoggedIn) {
+	if (!isLoggedIn) {
 		router.push("/");
 	}
 	if (data.message === "Not Found") {
