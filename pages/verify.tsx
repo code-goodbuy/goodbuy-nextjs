@@ -12,7 +12,7 @@ const Verify = ({ token }: { token: string }) => {
 	}
 
 	const validate = async (token: string) => {
-		const res = await fetch(process.env.backendURL + "/confirm_email/" + token, { method: "POST" });
+		const res = await fetch(process.env.backendURL + "/api/confirm_email/" + token, { method: "POST" });
 		if (res.status === 200) {
 			setMessage("Success");
 			router.push("/auth");
