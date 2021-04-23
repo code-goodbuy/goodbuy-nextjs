@@ -16,7 +16,6 @@ describe("Test Sign Up", () => {
 
 	it("Should register a new user", () => {
 		cy.intercept(Cypress.config().baseUrl + "/api/register", { status: 200 });
-
 		cy.visit("/auth?action=sign-up");
 		cy.findFieldsAndType({
 			"Email": "tester2@mail.co",

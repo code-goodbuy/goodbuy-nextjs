@@ -9,14 +9,15 @@ let handler: typeof logout & { config?: PageConfig } = logout;
 handler.config = config;
 
 async function testRoute(route: any, url: string, message: string) {
+	//given
 	handler = route;
 	handler.config = config;
-
 	await testApiHandler({
 		requestPatcher: (req) => {
 			req.url = url;
 		},
 		handler,
+		//when
 		test: async ({ fetch }) => {
 			const res = await fetch({
 				method: "POST",
@@ -24,6 +25,7 @@ async function testRoute(route: any, url: string, message: string) {
 					"content-type": "application/json"
 				}
 			});
+			// then
 			const data = await res.json();
 			expect(data).toStrictEqual({ message: message });
 		}

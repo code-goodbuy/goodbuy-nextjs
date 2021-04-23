@@ -4,11 +4,12 @@ import LandingPage from "../../components/landingPage/LandingPage";
 
 describe("Test landing page", () => {
 	it("shouhld render the titles", async () => {
+		// given + when
 		const { getByTestId, getByText } = render(<LandingPage />);
 		const mainTitle = getByTestId("main-title");
 		const missionTitle = getByTestId("mission-title");
 		const btn = getByText("Start Now");
-
+		//then
 		expect(mainTitle).toBeVisible();
 		expect(missionTitle).toBeVisible();
 		expect(btn).toBeVisible;
