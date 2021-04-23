@@ -3,14 +3,17 @@ import Post from "../../components/posts/Post";
 import { PostType } from "../../lib/types/PostTypes";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../lib/context/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 function User({ username, data }: { username: string; data: any }) {
 	const { isLoggedIn } = useContext(AuthContext);
 	const router = useRouter();
-	if (!isLoggedIn) {
-		router.push("/");
-	}
+	useEffect(() => {
+		if (isLoggedIn !== undefined && !isLoggedIn) {
+			router.push("/");
+		}
+	}, [isLoggedIn]);
+
 	if (data.message === "Not Found") {
 		return (
 			<div className="min-h-screen normal-bg">
