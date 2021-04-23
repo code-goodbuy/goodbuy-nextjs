@@ -1,18 +1,22 @@
 import Meta from "../../components/common/Meta";
 import Post from "../../components/posts/Post";
 import { PostType } from "../../lib/types/PostTypes";
-import { useRouter } from "next/router";
 import { AuthContext } from "../../lib/context/AuthContext";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
+import useRedirect from "../../lib/hooks/useRedirect";
+
+const Counter = ({ number, name }: { number: number; name: string }) => {
+	return (
+		<div className="text-center p-4">
+			<h3 className="text-lg font-bold">{number || 0}</h3>
+			<p>{name}</p>
+		</div>
+	);
+};
 
 function User({ username, data }: { username: string; data: any }) {
 	const { isLoggedIn } = useContext(AuthContext);
-	const router = useRouter();
-	useEffect(() => {
-		if (isLoggedIn !== undefined && !isLoggedIn) {
-			router.push("/");
-		}
-	}, [isLoggedIn]);
+	useRedirect(isLoggedIn !== undefined && !isLoggedIn, [isLoggedIn]);
 
 	if (data.message === "Not Found") {
 		return (
@@ -21,15 +25,6 @@ function User({ username, data }: { username: string; data: any }) {
 			</div>
 		);
 	}
-
-	const Counter = ({ number, name }: { number: number; name: string }) => {
-		return (
-			<div className="text-center p-4">
-				<h3 className="text-lg font-bold">{number || 0}</h3>
-				<p>{name}</p>
-			</div>
-		);
-	};
 
 	return (
 		<>

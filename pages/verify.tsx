@@ -2,14 +2,14 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import Meta from "../components/common/Meta";
 import { AuthContext } from "../lib/context/AuthContext";
+import useRedirect from "../lib/hooks/useRedirect";
 
 const Verify = ({ token }: { token: string }) => {
 	const { changeIsAuthenticating, isLoggedIn } = useContext(AuthContext);
 	const [message, setMessage] = useState("");
 	const router = useRouter();
-	if (isLoggedIn) {
-		router.push("/");
-	}
+
+	useRedirect(isLoggedIn !== undefined && isLoggedIn, [isLoggedIn]);
 
 	const validate = async (token: string) => {
 		const res = await fetch(process.env.backendURL + "/api/confirm_email/" + token, { method: "POST" });
