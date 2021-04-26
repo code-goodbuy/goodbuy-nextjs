@@ -7,11 +7,12 @@ import SectionLink from "./SectionLink";
 
 export default function NavLinks({ className }: { className: string }) {
 	const { isLoggedIn, isAuthenticating } = useContext(AuthContext);
-	if (!isAuthenticating) {
+	if (!isAuthenticating && isLoggedIn !== undefined) {
 		if (isLoggedIn) {
 			return (
 				<div className={className}>
 					<ColorModeButton />
+					<SectionLink id={"/user/"} text={"Profile"} />
 					<LogOutButton />
 				</div>
 			);
