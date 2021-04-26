@@ -1,18 +1,10 @@
 import Meta from "../../components/common/Meta";
-import Post from "../../components/posts/Post";
+import Post from "../../components/common/Post";
 import { PostType } from "../../lib/types/PostTypes";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useContext } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
-
-const Counter = ({ number, name }: { number: number; name: string }) => {
-	return (
-		<div className="text-center p-4">
-			<h3 className="text-lg font-bold">{number || 0}</h3>
-			<p>{name}</p>
-		</div>
-	);
-};
+import Counter from "../../components/Profile/Counter";
 
 function User({ username, data }: { username: string; data: any }) {
 	const { isLoggedIn } = useContext(AuthContext);
