@@ -1,6 +1,6 @@
 import Meta from "../../components/common/Meta";
 import Post from "../../components/common/Post";
-import { PostType } from "../../lib/types/PostTypes";
+import { DBPost } from "../../lib/types/PostTypes";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useContext } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
@@ -43,15 +43,8 @@ function User({ username, data }: { username: string; data: any }) {
 					<button className="colorful-button">Follow</button>
 				</div>
 				<div className="w-90 lg:w-6/12 lg:max-w-3xl">
-					{data?.listOfScanned?.map((c: PostType) => (
-						<Post
-							key={c.EAN}
-							title={c.title}
-							EAN={c.EAN}
-							country={c.country}
-							username={username}
-							image={data?.imageURL}
-						/>
+					{data?.listOfScanned?.map((c: DBPost) => (
+						<Post key={c.EAN} post={c} username={username} profileImage={data?.imageURL} />
 					))}
 				</div>
 			</div>
