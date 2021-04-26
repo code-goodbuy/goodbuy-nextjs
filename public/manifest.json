@@ -39,7 +39,7 @@
 			"type": "image/png"
 		},
 		{
-			"src": "/icons/safari-pinned-tab.svg",
+			"src": "/icons/favicon-1024x1024.png",
 			"sizes": "any",
 			"purpose": "any maskable"
 		}
