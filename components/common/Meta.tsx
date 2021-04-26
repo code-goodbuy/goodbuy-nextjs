@@ -17,6 +17,10 @@ const Meta = ({ title, keywords, description }: MetaType) => {
 			<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
 			<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
 			<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+			<link rel="icon" type="image/png" sizes="128x128" href="/icons/favicon-128x128.png" />
+			<link rel="icon" type="image/png" sizes="256x256" href="/icons/favicon-256x256.png" />
+			<link rel="icon" type="image/png" sizes="512x512" href="/icons/favicon-512x512.png" />
+			<link rel="icon" type="image/png" sizes="1024x1024" href="/icons/favicon-1024x1024.png" />
 			<link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#0197f6" />
 			<title>{title}</title>
 		</Head>

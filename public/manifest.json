@@ -19,8 +19,13 @@
 			"type": "image/png"
 		},
 		{
-			"src": "icons/favicon-180x180.png",
-			"sizes": "180x180",
+			"src": "icons/favicon-128x128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/favicon-256x265.png",
+			"sizes": "256x265",
 			"type": "image/png"
 		},
 		{
