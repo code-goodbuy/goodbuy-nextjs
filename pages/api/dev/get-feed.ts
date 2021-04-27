@@ -33,7 +33,8 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 					EAN: "	0071142933631",
 					country: "United States & Canada",
 					likes: 8,
-					imageURL: "/pics/lightLogo.png"
+					imageURL: "/pics/lightLogo.png",
+					username: "blueeagle"
 				},
 				{
 					title: "Nutella",

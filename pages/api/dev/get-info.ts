@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export default function route(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 	return new Promise((resolve, reject) => {
-		if (req.body.user.length < 6) {
+		if (req.body.user.length < 5) {
 			resolve();
 			res.status(404).send({ "message": "user does not exist" });
 		}
