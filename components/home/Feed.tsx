@@ -15,11 +15,9 @@ export default function Feed() {
 		getPosts();
 	}, []);
 	return (
-		<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:items-start lg:flex-row lg:justify-evenly pt-20">
-			<div className="w-90 lg:w-6/12 lg:max-w-3xl">
-				<h1 className="colorful-text font-bold text-2xl mx-auto text-center">Your Feed</h1>
-				{posts !== undefined && posts?.map((c: PostType) => <Post key={c.EAN} {...c} />)}
-			</div>
+		<div className="w-90 lg:w-6/12 lg:max-w-3xl normal-bg normal-text pb-10 flex flex-col items-center pt-20">
+			<h1 className="colorful-text font-bold text-2xl mx-auto text-center">Your Feed</h1>
+			{posts !== undefined && posts?.map((c: PostType) => <Post key={c.EAN} {...c} />)}
 		</div>
 	);
 }
