@@ -44,7 +44,7 @@ function User({ username, data }: { username: string; data: any }) {
 				</div>
 				<div className="w-90 lg:w-6/12 lg:max-w-3xl">
 					{data?.listOfScanned?.map((c: DBPost) => (
-						<Post key={c.EAN} {...Object.assign(c, { username, profileImage: data?.imageURL })} />
+						<Post key={c.EAN} {...Object.assign(c, { username, imageURL: data?.imageURL })} />
 					))}
 				</div>
 			</div>
