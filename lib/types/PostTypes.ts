@@ -7,5 +7,5 @@ export interface DBPost {
 
 export interface PostType extends DBPost {
 	username: string;
-	profileImage: string;
+	imageURL: string;
 }
