@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../lib/context/AuthContext";
 import Meta from "../components/common/Meta";
 import LandingPage from "../components/landingPage/LandingPage";
+import Feed from "../components/home/Feed";
 
 export default function Home() {
 	/**
@@ -12,9 +13,10 @@ export default function Home() {
 		return (
 			<>
 				<Meta title={"GoodBuy | You are logged in"} />
-				<div className="min-h-screen normal-bg">
+				<div className="h-auto normal-bg">
 					<p className="pt-20 pl-10 normal-text">email: {userInfo?.email}</p>
 				</div>
+				<Feed />
 			</>
 		);
 	} else if (isLoggedIn === false) {
