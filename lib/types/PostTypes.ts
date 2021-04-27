@@ -5,8 +5,7 @@ export interface DBPost {
 	likes: number;
 }
 
-export interface PostType {
-	post: DBPost;
+export interface PostType extends DBPost {
 	username: string;
 	profileImage: string;
 }
