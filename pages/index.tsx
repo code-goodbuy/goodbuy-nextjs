@@ -9,7 +9,7 @@ export default function App() {
 	if (isLoggedIn === true) {
 		return (
 			<>
-				<Meta title={"GoodBuy | You are logged in"} />
+				<Meta title={"GoodBuy | Homepage"} />
 				<Home />
 			</>
 		);
