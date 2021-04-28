@@ -78,3 +78,29 @@ Here is a description of the content of each folder in the directory:
 │   └── pics                # Pictures used in the application.
 └── styles                  # Custom CSS classes using Tailwind.
 ```
+
+## Current Features 🔥
+
+The features currently available in this app include:
+* Secure authentication with HTTP-only Cookies;
+* Email Confirmation;
+* Dark mode;
+* Responsive design in each page;
+* HTTP proxy for requests forwarding & handling;
+* Barcode Scanner (not yet implemented);
+* Unit, Integration, and End-to-End tests;
+* Deployed on Vercel;
+* Performance optimization and possibility to install the app as a PWA.
+
+## Upcoming Features 🔮
+
+The features that will be implemented soon in the future include:
+* Feed caching;
+* Possibility to edit profile data;
+* Barcode Scanner Implementation;
+* Followers and Likes;
+* History of Scanned Products;
+* Homepage feed (with real data);
+* Improved user search;
+* Suggested (real) users;
+* Legal Details (Terms and Conditions, EULA notice, impressum).
