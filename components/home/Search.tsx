@@ -27,7 +27,7 @@ export default function Search() {
 			<input
 				type="submit"
 				value="🔍"
-				className="colorful-bg pl-2 pr-4 rounded-tr-full rounded-br-full hover:bg-gray-200 dark:hover:bg-gray-700"
+				className="colorful-bg pl-2 pr-4 rounded-tr-full rounded-br-full hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
 			/>
 		</form>
 	);
