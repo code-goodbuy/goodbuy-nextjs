@@ -4,7 +4,7 @@ import { ProfilePic } from "./Misc";
 
 export default function Post({ title, EAN, country, likes, username, imageURL }: PostType) {
 	return (
-		<div className="border-2 colorful-border rounded-2xl my-6 mx-auto p-2 normal-text w-90 lg:w-11/12 max-w-3xl shadow-lg">
+		<div className="border-2 colorful-border rounded-2xl my-4 mx-auto p-2 normal-text w-90 lg:w-11/12 max-w-3xl shadow-lg">
 			<div className="flex flex-row items-center">
 				<ProfilePic imageURL={imageURL} />
 				<p className="pl-2">
