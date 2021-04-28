@@ -95,6 +95,9 @@ input {
 	outline: none;
 	outline-width: 0;
 }
+.suggestions-height {
+	max-height: calc(100vh - 14rem - 40px);
+}
 @media (min-width: 769px) {
 	.bear-image-bg {
 		background-image: none;
