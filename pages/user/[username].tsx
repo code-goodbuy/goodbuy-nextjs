@@ -4,7 +4,7 @@ import { DBPost } from "../../lib/types/PostTypes";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useContext } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
-import Counter from "../../components/Profile/Counter";
+import Counter from "../../components/profile/Counter";
 
 function User({ username, data }: { username: string; data: any }) {
 	const { isLoggedIn } = useContext(AuthContext);
