@@ -7,32 +7,27 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 				{
 					scannedProducts: 56,
 					imageURL: "/pics/face.png",
-					username: "spiralshape"
-				},
-				{
-					scannedProducts: 20,
-					imageURL: "/pics/bear.jpg",
-					username: "pandafishrye"
-				},
-				{
-					scannedProducts: 16,
-					imageURL: "/pics/CODE.png",
-					username: "ryecheetah"
-				},
-				{
-					scannedProducts: 107,
-					imageURL: "/pics/lightLogo.png",
-					username: "blueeagle"
-				},
-				{
-					scannedProducts: 71,
-					imageURL: "/pics/face.png",
-					username: "owlranmiregg"
+					username: "octagon"
 				},
 				{
 					scannedProducts: 22,
 					imageURL: "/pics/darkLogo.png",
-					username: "snowantviola"
+					username: "notafish"
+				},
+				{
+					scannedProducts: 20,
+					imageURL: "/pics/bear.jpg",
+					username: "realpolarbear"
+				},
+				{
+					scannedProducts: 16,
+					imageURL: "/pics/CODE.png",
+					username: "username0"
+				},
+				{
+					scannedProducts: 107,
+					imageURL: "/pics/lightLogo.png",
+					username: "butterfly"
 				}
 			]
 		};
