@@ -8,11 +8,11 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/code-goodbuy/goodbuy-nextjs)
 ![GitHub contributors](https://img.shields.io/github/contributors/code-goodbuy/goodbuy-nextjs)
 
-![Icon](https://i.postimg.cc/G3XWbdwc/favicon-1024x1024.png)
+<img src="https://i.postimg.cc/G3XWbdwc/favicon-1024x1024.png" align="right" width="400"/>
 
 [GoodBuy](https://github.com/code-goodbuy/goodbuy-nodejs) frontend app built using nextjs, typescript and tailwindcss.
 
-Working preview: [goodbuy.vercel.app](https://goodbuy.vercel.app).
+🚀 Working preview: [goodbuy.vercel.app](https://goodbuy.vercel.app).
 
 ## Project Status 🚧
 
@@ -38,3 +38,43 @@ This app uses Jest, Testing-Library, and Cypress for Unit, Integration, and End-
 You can run the Unit and Integration tests by simply running ```npm run test```.
 
 If you want to run the End-to-End tests, make sure you build and start the app, then, in another terminal window run either ```npm run cy:run``` (to run Cypress without its GUI) or ```npm run cy:open``` (to run Cypress with its GUI).
+
+## Project Structure 🏗
+
+Here is a description of the content of each folder in the directory:
+
+```
+.                           # Root directory.
+├── __mocks__               # Jest mocking configuration for CSS and other static files.
+├── __tests__               # Unit and Integration tests using Jest and Testing Library.
+│   ├── api                 # Tests for proxy routes and functions.
+│   ├── auth                # Tests for authentication components and logic.
+│   ├── landingPage         # Tests for landing page components.
+│   ├── profile             # Tests for profile page components and logic.
+│   └── utility             # Tests for the barcode scanner scanner component.    
+├── components              # Components.
+|   ├── auth                # Authentication components and functions.
+│   ├── common              # Components shared across the web app.
+│   ├── home                # Homepage components.
+│   ├── landingPage         # Landing page components.
+│   ├── profile             # Profile components.
+│   └── utility             # Barcode scanner components.
+├── cypress                 # End-to-End tests using Cypress.
+│   ├── e2e                 # End-to-End tests.
+│   ├── fixtures            # Cypress configuration for mocked data.
+|   ├── plugins             # Cypress configuration for plugins.
+│   └── support             # Custom Cypress methods and configuration.   
+├── lib                     # App logic and types.
+│   ├── apiFunctions        # Logic for the proxy routes.
+│   ├── contexts            # React contexts used by the app.
+|   ├── hooks               # Custom hooks.
+│   └── types               # TypeScript types.
+├── pages                   # Pages accessible by the user and serverless functions.
+│   ├── api                 # Serverless functions, proxy routes to communicate with the backend.
+|   |   └── dev             # Development temporary routes to fetch mock data not yet available in the backend.
+│   └── user                # '/user/[username]' dynamic route.
+├── public                  # Static files and PWA configurations.
+│   ├── icons               # Icons used by the application.
+│   └── pics                # Pictures used in the application.
+└── styles                  # Custom CSS classes using Tailwind.
+```
