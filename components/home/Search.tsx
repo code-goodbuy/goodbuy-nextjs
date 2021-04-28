@@ -10,9 +10,9 @@ export default function Search() {
 	};
 
 	return (
-		<div className="w-75 lg:w-5/12 lg:max-w-3xl">
+		<div className="w-75 lg:w-5/12 lg:max-w-3xl sticky top-7">
 			<form
-				className="normal-bg lg:w-5/12 mt-28 m-2 flex justify-center lg:fixed lg:top-8 lg:left-8"
+				className="normal-bg lg:w-5/12 lg:max-w-3xl mt-28 m-2 flex justify-center lg:fixed lg:top-8 lg:left-8"
 				onSubmit={(e) => {
 					e.preventDefault();
 					query.length > 4 && router.push("/user/" + query);
