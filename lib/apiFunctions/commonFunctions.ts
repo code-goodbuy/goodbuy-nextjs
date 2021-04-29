@@ -46,6 +46,7 @@ export function prepareForForwarding({ req, cookie = "", token = "" }: PrepareFo
 	req.headers.cookie = cookie;
 	if (token !== "") {
 		req.headers["auth-token"] = token;
+		req.headers.Authorization = `Bearer ${token}`;
 	}
 }
 
