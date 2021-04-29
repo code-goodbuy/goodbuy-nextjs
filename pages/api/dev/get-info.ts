@@ -12,7 +12,7 @@ export default function route(req: NextApiRequest, res: NextApiResponse): Promis
 			scannedProducts: "30",
 			userID: "mockUserId",
 			description: "Hi! you are reading my description 📓! I like using GoodBuy 😀. I care about the environment 🌳.",
-			imageURL: "/pics/face.png",
+			imageURL: "https://raw.githubusercontent.com/code-goodbuy/goodbuy-nextjs/main/public/pics/face.png",
 			listOfScanned: [
 				{ title: "Lindt Excellence Noir 85% 100 g", EAN: "3046920022606", country: "France", likes: 6 },
 				{ title: "Penne Rigate Barilla", EAN: "8076802085738", country: "Italy", likes: 16 },
