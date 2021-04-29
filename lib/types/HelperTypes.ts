@@ -1,3 +1,4 @@
+import { userInfo } from "node:os";
 import { Dispatch, SetStateAction } from "react";
 import { handleAuth } from "../../components/auth/helperFunctions";
 
@@ -21,6 +22,13 @@ export interface JWTPayloadType {
 	iat?: number;
 	jti?: string;
 	email?: string;
+}
+
+export interface UserInfoType extends JWTPayloadType {
+	username?: string;
+	description?: string;
+	imageUrl?: string;
+	_id?: string;
 }
 
 export interface HandleResType {
