@@ -2,13 +2,21 @@ import Meta from "../../components/common/Meta";
 import Post from "../../components/common/Post";
 import { DBPost } from "../../lib/types/PostTypes";
 import { AuthContext } from "../../lib/context/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
 import Counter from "../../components/profile/Counter";
 
 function User({ username, data }: { username: string; data: any }) {
-	const { isLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn, userInfo } = useContext(AuthContext);
+	const [isCurrentUser, setIsCurrentUser] = useState(false);
+
 	useRedirect(isLoggedIn !== undefined && !isLoggedIn, [isLoggedIn]);
+
+	useEffect(() => {
+		if (username == userInfo?.username) {
+			setIsCurrentUser((c) => true);
+		}
+	}, [userInfo, isLoggedIn]);
 
 	if (data.message === "Not Found") {
 		return (
@@ -25,7 +33,7 @@ function User({ username, data }: { username: string; data: any }) {
 				<div className="flex flex-col items-center justify-start w-90 lg:w-4/12 lg:max-w-md">
 					<div
 						className="mt-10 rounded-full border-4 colorful-border img-bg square-150"
-						style={{ backgroundImage: "url(" + data.imageURL + ")" }}
+						style={{ backgroundImage: "url(" + (isCurrentUser ? userInfo?.imageURL : data.imageURL) + ")" }}
 						data-testid="profile-pic"
 					></div>
 					<p className="colorful-text text-2xl font-bold" data-testid="username">
@@ -37,10 +45,13 @@ function User({ username, data }: { username: string; data: any }) {
 						<Counter number={data?.following || 0} name={"Following"} />
 					</div>
 					<p data-testid="description" className="mb-5">
-						{data?.description}
+						{isCurrentUser ? userInfo?.description : data?.description}
 					</p>
-
-					<button className="colorful-button">Follow</button>
+					{isCurrentUser ? (
+						<button className="colorful-button">Edit</button>
+					) : (
+						<button className="colorful-button">Follow</button>
+					)}
 				</div>
 				<div className="w-90 lg:w-6/12 lg:max-w-3xl">
 					{data?.listOfScanned?.map((c: DBPost) => (
