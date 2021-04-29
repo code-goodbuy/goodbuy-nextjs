@@ -29,7 +29,7 @@ To install this project and run it locally, please follow the following steps:
 3. Navigate to the branch you are interested in (```git checkout BRANCH_NAME```);
 4. Install the npm packages by running ```npm i ```;
 5. Either run the development server with ```npm run dev``` or build and run the app for better performances by running ```npm run build && npm run start```;
-6. Visit http://localhost:3000
+6. Visit http://localhost:3000.
 
 ## Testing 🧪
 
