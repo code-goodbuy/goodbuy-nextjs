@@ -27,7 +27,7 @@ export interface JWTPayloadType {
 export interface UserInfoType extends JWTPayloadType {
 	username?: string;
 	description?: string;
-	imageUrl?: string;
+	imageURL?: string;
 	_id?: string;
 }
 
