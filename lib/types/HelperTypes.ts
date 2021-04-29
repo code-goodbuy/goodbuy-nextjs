@@ -1,10 +1,5 @@
-import { userInfo } from "node:os";
 import { Dispatch, SetStateAction } from "react";
-import { handleAuth } from "../../components/auth/helperFunctions";
 
-/**
- * TS types for helper functions
- */
 export interface InfoCardType {
 	number: number;
 	unit: string;
