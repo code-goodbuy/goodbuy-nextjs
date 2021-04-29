@@ -19,6 +19,7 @@ export interface FieldType {
 	isValidValue: boolean;
 	type: "text" | "password";
 	name: string;
+	allowedSpaces?: boolean;
 }
 
 export interface CheckboxType {
