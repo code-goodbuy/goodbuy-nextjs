@@ -104,3 +104,10 @@ The features that will be implemented soon in the future include:
 * Improved user search;
 * Suggested (real) users;
 * Legal Details (Terms and Conditions, EULA notice, impressum).
+
+## Reflection 💭 
+
+The goal for this project was to build an MVP for GoodBuy, an app that would store information about the environmental footprint of products and let its users access those information by scanning a product.<br/>
+While building what we have so far of the web application, I had the chance to learn some modern technology used in the field such as TailwindCSS, TypeScript, and React with its framework Nextjs.<br/>
+I also learned how to build the features listed in the [Current Features](https://github.com/code-goodbuy/goodbuy-nextjs/tree/profile#current-features-) section, often using some third-party libraries and implementing those myself by reading the official documentation.<br/>
+During this project, it often felt as I was racing against time, and that was probably the biggest challenge I faced. I did not really overcome this challenge since we do not have an MVP yet, but many of the features left to implement listed in the [Upcoming Features](https://github.com/code-goodbuy/goodbuy-nextjs/tree/profile#upcoming-features-) section should be really easy to implement once their related API endpoint is ready.<br/>
