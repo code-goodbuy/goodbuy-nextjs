@@ -5,10 +5,12 @@ import { AuthContext } from "../../lib/context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
 import Counter from "../../components/profile/Counter";
+import UpdateForm from "../../components/profile/UpdateForm";
 
 function User({ username, data }: { username: string; data: any }) {
 	const { isLoggedIn, userInfo } = useContext(AuthContext);
 	const [isCurrentUser, setIsCurrentUser] = useState(false);
+	const [isUpdatingInfo, setIsUpdatingInfo] = useState(false);
 
 	useRedirect(isLoggedIn !== undefined && !isLoggedIn, [isLoggedIn]);
 
@@ -29,6 +31,9 @@ function User({ username, data }: { username: string; data: any }) {
 	return (
 		<>
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
+			{isUpdatingInfo && userInfo?.email !== undefined && (
+				<UpdateForm stateUpdater={setIsUpdatingInfo} currentInfo={userInfo} />
+			)}
 			<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:items-start lg:flex-row lg:justify-evenly pt-20">
 				<div className="flex flex-col items-center justify-start w-90 lg:w-4/12 lg:max-w-md">
 					<div
@@ -48,7 +53,14 @@ function User({ username, data }: { username: string; data: any }) {
 						{isCurrentUser ? userInfo?.description : data?.description}
 					</p>
 					{isCurrentUser ? (
-						<button className="colorful-button">Edit</button>
+						<button
+							className="colorful-button"
+							onClick={() => {
+								setIsUpdatingInfo((c) => true);
+							}}
+						>
+							Edit
+						</button>
 					) : (
 						<button className="colorful-button">Follow</button>
 					)}
