@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 import { ReactChildrenType } from "../types/ReactChildrenType";
 import { JWTPayloadType, UserInfoType } from "../../lib/types/HelperTypes";
 import { AuthContextType } from "../types/AuthTypes";
-import { data } from "msw/lib/types/context";
 
 export const AuthContext = createContext<AuthContextType>({});
 
