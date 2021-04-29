@@ -1,16 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type httpProxy from "http-proxy";
 import { IncomingMessage } from "node:http";
 import Cookies from "cookies";
-import { JWTPayloadType } from "./HelperTypes";
+import { JWTPayloadType, UserInfoType } from "./HelperTypes";
 
 export interface AuthContextType {
 	isAuthenticating?: boolean;
 	changeIsAuthenticating?: (newValue: boolean) => void;
 	isLoggedIn?: boolean;
 	toggleIsLoggedIn?: () => void;
-	userInfo?: JWTPayloadType;
+	userInfo?: UserInfoType;
 	updateUserInfo?: (newInfo: JWTPayloadType) => void;
 }
 
