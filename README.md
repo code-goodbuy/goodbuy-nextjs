@@ -90,8 +90,8 @@ The features currently available in this app include:
 * Barcode Scanner (not yet implemented);
 * Unit, Integration, and End-to-End tests;
 * Deployed on Vercel;
-* Performance optimization and possibility to install the app as a PWA.
-* Possibility to edit profile data;
+* Performance optimization and possibility to install the app as a PWA;
+* Possibility to edit profile data.
 
 ## Upcoming Features 🔮
 
