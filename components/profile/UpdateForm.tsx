@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { UpdaterType } from "../../lib/types/ProfileTypes";
 import { dataUpdater } from "../auth/helperFunctions";
 import Router from "next/router";
+import { setIsValidURL } from "./helperFunctions";
 
 import Field from "../auth/Field";
 import SubmitButton from "../auth/SubmitButton";
@@ -11,19 +12,8 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
-	const isImage = async (url: string) => {
-		const http = new XMLHttpRequest();
-		try {
-			http.open("HEAD", url, false);
-			http.send();
-			const res = http.status != 404;
-			setData({ ...data, isValidURL: res });
-		} catch {
-			setData({ ...data, isValidURL: false });
-		}
-	};
 	useEffect(() => {
-		isImage(data.imageURL);
+		setIsValidURL(data.imageURL, setData, data);
 	}, [data.imageURL]);
 
 	const handleSubmit = async () => {
@@ -47,6 +37,19 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 		setIsSendingData(false);
 	};
 
+	const isDisabledForm = () => {
+		if (isSendingData || (data.imageURL === "" && data.description === "")) {
+			return true;
+		}
+		if (data.description !== "" && data.description.length > 256) {
+			return true;
+		}
+		if (data.imageURL && (!data.isValidURL || data.imageURL.length < 7)) {
+			return true;
+		}
+		return false;
+	};
+
 	return (
 		<div className="fixed z-10 top-0 left-0 w-100 h-screen bg-opacity-50 bg-black flex justify-center items-center">
 			<div className="rounded-xl mx-8 normal-bg ring-2 ring-primary dark:ring-secondary w-90 lg:w-50% flex flex-col justify-center items-center mt-4 md:mt-12 h-auto">
@@ -62,7 +65,7 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 				<Field
 					value={data.imageURL}
 					setValue={dataUpdater("imageURL", data, setData)?.updater}
-					isValidValue={data.isValidURL}
+					isValidValue={data.isValidURL && data.imageURL.length > 7}
 					type="text"
 					name="New Image URL"
 				/>
@@ -74,11 +77,7 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 					name="New Description"
 					allowedSpaces={true}
 				/>
-				<SubmitButton
-					disabled={(data.imageURL === "" && data.description === "") || isSendingData}
-					updater={handleSubmit}
-					text="Update your Info"
-				/>
+				<SubmitButton disabled={isDisabledForm()} updater={handleSubmit} text="Update your Info" />
 			</div>
 		</div>
 	);
