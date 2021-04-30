@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { UpdaterType } from "../../lib/types/ProfileTypes";
 import { dataUpdater } from "../auth/helperFunctions";
 import Router from "next/router";
-import { setIsValidURL } from "./helperFunctions";
+import { sendChangeRequest, setIsValidURL, isDisabledForm } from "./helperFunctions";
 
 import Field from "../auth/Field";
 import SubmitButton from "../auth/SubmitButton";
@@ -18,36 +18,14 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 
 	const handleSubmit = async () => {
 		setIsSendingData(true);
-		const config = {
-			method: "PUT",
-			headers: { "content-type": "application/json" },
-			body: JSON.stringify({
-				email: currentInfo.email,
-				imageURL: data.imageURL !== "" ? data.imageURL : currentInfo.imageURL,
-				description: data.description !== "" ? data.description : currentInfo.description
-			})
-		};
-		const res = await fetch("/api/profile", config);
-		if (res.status !== 200) {
+		const { message } = await sendChangeRequest(currentInfo, data);
+		if (message === "Error") {
 			setServerResponse("Error");
 		} else {
 			setServerResponse("");
 			Router.reload();
 		}
 		setIsSendingData(false);
-	};
-
-	const isDisabledForm = () => {
-		if (isSendingData || (data.imageURL === "" && data.description === "")) {
-			return true;
-		}
-		if (data.description !== "" && data.description.length > 256) {
-			return true;
-		}
-		if (data.imageURL && (!data.isValidURL || data.imageURL.length < 7)) {
-			return true;
-		}
-		return false;
 	};
 
 	return (
@@ -77,7 +55,7 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 					name="New Description"
 					allowedSpaces={true}
 				/>
-				<SubmitButton disabled={isDisabledForm()} updater={handleSubmit} text="Update your Info" />
+				<SubmitButton disabled={isDisabledForm(isSendingData, data)} updater={handleSubmit} text="Update your Info" />
 			</div>
 		</div>
 	);
