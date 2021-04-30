@@ -80,14 +80,14 @@ export const resetForm = ({ setIsSendingData, clearForm }: ResetFormType) => {
 
 export const handleAuth = async ({
 	url,
-	userData,
+	data,
 	specificHandler,
 	setServerResponse,
 	setIsSendingData,
 	clearForm
 }: handleAuthType) => {
 	try {
-		let res = await sendAuthRequest(url, userData);
+		let res = await sendAuthRequest(url, data);
 		handleRes({ res, setServerResponse, specificHandler });
 	} catch (err) {
 		handleErr(err);

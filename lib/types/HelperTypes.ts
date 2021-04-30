@@ -44,7 +44,7 @@ export interface ResetFormType {
 
 export interface handleAuthType {
 	url: string;
-	userData: any;
+	data: any;
 	specificHandler: any;
 	setServerResponse: Dispatch<SetStateAction<string>>;
 	setIsSendingData: Dispatch<SetStateAction<boolean>>;
