@@ -91,12 +91,12 @@ The features currently available in this app include:
 * Unit, Integration, and End-to-End tests;
 * Deployed on Vercel;
 * Performance optimization and possibility to install the app as a PWA.
+* Possibility to edit profile data;
 
 ## Upcoming Features 🔮
 
 The features that will be implemented soon in the future include:
 * Feed caching;
-* Possibility to edit profile data;
 * Barcode Scanner Implementation;
 * Followers and Likes;
 * History of Scanned Products;
