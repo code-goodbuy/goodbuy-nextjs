@@ -9,7 +9,6 @@ export default function Home() {
 				<Search />
 				<Suggestions />
 			</div>
-
 			<Feed />
 		</div>
 	);
