@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
 import Counter from "../../components/profile/Counter";
 import UpdateForm from "../../components/profile/UpdateForm";
+import { IncomingMessage } from "node:http";
 
 function User({ username, data }: { username: string; data: any }) {
 	const { isLoggedIn, userInfo } = useContext(AuthContext);
@@ -75,10 +76,10 @@ function User({ username, data }: { username: string; data: any }) {
 	);
 }
 
-export async function getServerSideProps({ query, req }: { query: any; req: any }) {
+export async function getServerSideProps({ query, req }: { query: { username: string }; req: IncomingMessage }) {
 	const headers = await req.headers;
 	const host = headers.host;
-	const protocol = host.includes(":3000") ? "http://" : "https://";
+	const protocol = host && host.includes(":3000") ? "http://" : "https://";
 	const res = await fetch(protocol + host + "/api/dev/get-info", {
 		method: "POST",
 		headers: {
