@@ -12,11 +12,15 @@ const Verify = ({ token }: { token: string }) => {
 	useRedirect(isLoggedIn !== undefined && isLoggedIn, [isLoggedIn]);
 
 	const validate = async (token: string) => {
-		const res = await fetch(process.env.backendURL + "/api/confirm_email/" + token, { method: "POST" });
-		if (res.status === 200) {
-			setMessage("Success");
-			router.push("/auth");
-		} else {
+		try {
+			const res = await fetch(process.env.backendURL + "/api/confirm_email/" + token, { method: "POST" });
+			if (res.status === 200) {
+				setMessage("Success");
+				router.push("/auth");
+			} else {
+				setMessage("Error");
+			}
+		} catch {
 			setMessage("Error");
 		}
 	};
