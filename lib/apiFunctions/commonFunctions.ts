@@ -1,5 +1,5 @@
 import Cookies from "cookies";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiResponse } from "next";
 import {
 	ForwardRequestType,
 	HandleEndType,
