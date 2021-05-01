@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { UserInfoType } from "../../lib/types/HelperTypes";
 
-export const setIsValidURL = async (url: string, updater: Dispatch<SetStateAction<any>>, data: any) => {
+export const setIsValidURL = async (url: string, updater: Dispatch<SetStateAction<any>>, data: UserInfoType) => {
 	const http = new XMLHttpRequest();
 	try {
 		http.open("HEAD", url, false);
