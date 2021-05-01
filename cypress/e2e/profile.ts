@@ -12,6 +12,7 @@ describe("Test Profile", () => {
 	};
 
 	it("Should edit the profile", () => {
+		// given
 		cy.request({
 			url: "http://localhost:3000/api/login",
 			method: "POST",
@@ -24,8 +25,10 @@ describe("Test Profile", () => {
 			})
 		});
 		cy.visit("/user/testergbde");
+		// when
 		cy.findByText("Edit").click();
 		cy.findFieldsAndType({ "New Image URL": expected.invalidURL, "New Description": expected.invalidDescription });
+		// then
 		cy.findByText("Invalid New Image URL");
 		cy.findByText("Invalid New Description");
 	});
