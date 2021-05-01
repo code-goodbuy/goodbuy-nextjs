@@ -2,19 +2,15 @@ import { useContext } from "react";
 import { AuthContext } from "../lib/context/AuthContext";
 import Meta from "../components/common/Meta";
 import LandingPage from "../components/landingPage/LandingPage";
+import Home from "../components/home/Home";
 
-export default function Home() {
-	/**
-	 * Renders The Landing Page
-	 */
-	const { isLoggedIn, userInfo } = useContext(AuthContext);
+export default function App() {
+	const { isLoggedIn } = useContext(AuthContext);
 	if (isLoggedIn === true) {
 		return (
 			<>
-				<Meta title={"GoodBuy | You are logged in"} />
-				<div className="min-h-screen normal-bg">
-					<p className="pt-20 pl-10 normal-text">email: {userInfo?.email}</p>
-				</div>
+				<Meta title={"GoodBuy | Homepage"} />
+				<Home />
 			</>
 		);
 	} else if (isLoggedIn === false) {

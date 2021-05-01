@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { ReactChildrenType } from "../types/ReactChildrenType";
-import { JWTPayloadType } from "../../lib/types/HelperTypes";
+import { JWTPayloadType, UserInfoType } from "../../lib/types/HelperTypes";
 import { AuthContextType } from "../types/AuthTypes";
 
 export const AuthContext = createContext<AuthContextType>({});
@@ -16,7 +16,7 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 
 	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-	const [userInfo, setUserInfo] = useState<JWTPayloadType | undefined>();
+	const [userInfo, setUserInfo] = useState<UserInfoType | undefined>();
 
 	useEffect(() => {
 		setUserInfo(getUserInfo());
@@ -26,6 +26,23 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 			setIsLoggedIn(false);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (isLoggedIn === true) {
+			fetchUserData();
+		}
+	}, [isLoggedIn]);
+
+	const fetchUserData = async () => {
+		const res = await fetch("/api/profile");
+
+		if (res.status === 200) {
+			const data = await res.json();
+			data.description = data.description ?? "Default description";
+			data.imageURL = data.imageURL ?? "/pics/face.png";
+			setUserInfo(data);
+		}
+	};
 
 	const getAuthStatus = async () => {
 		const res = await fetch("/api/check");

@@ -1,9 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { handleAuth } from "../../components/auth/helperFunctions";
 
-/**
- * TS types for helper functions
- */
 export interface InfoCardType {
 	number: number;
 	unit: string;
@@ -23,6 +19,13 @@ export interface JWTPayloadType {
 	email?: string;
 }
 
+export interface UserInfoType extends JWTPayloadType {
+	username?: string;
+	description?: string;
+	imageURL?: string;
+	_id?: string;
+}
+
 export interface HandleResType {
 	res: Response;
 	setServerResponse: Dispatch<SetStateAction<string>>;
@@ -39,9 +42,18 @@ export interface ResetFormType {
 	clearForm: () => void;
 }
 
+export interface AuthDataType {
+	email: string;
+	username?: string;
+	password: string;
+	repeatedPassword?: string;
+	acceptedTerms?: boolean;
+	hasRequiredAge?: boolean;
+}
+
 export interface handleAuthType {
 	url: string;
-	userData: any;
+	data: AuthDataType;
 	specificHandler: any;
 	setServerResponse: Dispatch<SetStateAction<string>>;
 	setIsSendingData: Dispatch<SetStateAction<boolean>>;

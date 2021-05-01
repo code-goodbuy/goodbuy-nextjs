@@ -17,7 +17,7 @@ export const isValidEmail = (email: string) => {
 
 export const isValidUsername = (username: string): boolean => {
 	if (username !== "") {
-		if (username.length > 4 && username.length < 23 && username.match(/[a-z]+/)) {
+		if (username.length > 4 && username.length < 23 && username.match(/((^[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
 			return true;
 		}
 	}
@@ -80,14 +80,14 @@ export const resetForm = ({ setIsSendingData, clearForm }: ResetFormType) => {
 
 export const handleAuth = async ({
 	url,
-	userData,
+	data,
 	specificHandler,
 	setServerResponse,
 	setIsSendingData,
 	clearForm
 }: handleAuthType) => {
 	try {
-		let res = await sendAuthRequest(url, userData);
+		let res = await sendAuthRequest(url, data);
 		handleRes({ res, setServerResponse, specificHandler });
 	} catch (err) {
 		handleErr(err);

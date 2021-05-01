@@ -14,32 +14,32 @@ describe("Test login form", () => {
 	});
 
 	it("shouldn't have a clickable button", async () => {
+		// given
 		const { getByPlaceholderText, getByText } = render(<LoginForm />);
-
 		const emailField = getByPlaceholderText("Email");
 		const passwordField = getByPlaceholderText("Password");
 		const submit = getByText("Log In");
-
+		// when
 		await act(async () => {
 			fireEvent.change(emailField, { target: { value: expected.invalidEmail } });
 			fireEvent.change(passwordField, { target: { value: expected.password } });
 		});
-
+		// then
 		expect(submit).toBeDisabled();
 	});
 
 	it("should have a clickable button", async () => {
+		// given
 		const { getByPlaceholderText, getByText } = render(<LoginForm />);
-
 		const emailField = getByPlaceholderText("Email");
 		const passwordField = getByPlaceholderText("Password");
 		const submit = getByText("Log In");
-
+		//when
 		await act(async () => {
 			fireEvent.change(emailField, { target: { value: expected.validEmail } });
 			fireEvent.change(passwordField, { target: { value: expected.password } });
 		});
-
+		// then
 		expect(submit).not.toBeDisabled();
 	});
 });

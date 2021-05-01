@@ -11,16 +11,6 @@ describe("test login helper functions", () => {
 	let stateValue: any;
 	let mockedUpdater = jest.fn().mockImplementation((s) => (stateValue = s));
 
-	let assertFn = (v: any) => {
-		/**
-		 * Standard assert for helper functions.
-		 *
-		 * arguments: v:any (the expected value)
-		 */
-		expect(mockedUpdater).toHaveBeenCalledTimes(1);
-		expect(stateValue).toEqual(v);
-	};
-
 	beforeEach(() => {
 		stateValue = null;
 		mockedUpdater.mockReset();
@@ -28,23 +18,23 @@ describe("test login helper functions", () => {
 	});
 
 	it("should update the calue without whitespaces", () => {
+		//given + when
 		updateWithoutSpaces(mockedUpdater, "  string ");
-
-		assertFn("string");
+		//then
+		expect(mockedUpdater).toHaveBeenCalledTimes(1);
+		expect(stateValue).toEqual("string");
 	});
 
 	it("should check the email and return true", () => {
-		const res = isValidEmail("person@mail.co.uk");
-		expect(res).toBe(true);
+		expect(isValidEmail("person@mail.co.uk")).toBe(true);
 	});
 
 	it("should check the email and return false", () => {
-		const res = isValidEmail("person(at)mail.co.uk");
-		expect(res).toBe(false);
+		expect(isValidEmail("person(at)mail.co.uk")).toBe(false);
 	});
 
 	it("should check the username and return true", () => {
-		expect(isValidUsername("user_name")).toBe(true);
+		expect(isValidUsername("username")).toBe(true);
 	});
 
 	it("should check the username and return false", () => {

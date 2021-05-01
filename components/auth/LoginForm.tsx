@@ -35,7 +35,7 @@ export default function LoginForm() {
 			toggleIsLoggedIn && toggleIsLoggedIn();
 			router.push("/");
 		};
-		handleAuth({ url: "/api/login", userData: data, specificHandler, setServerResponse, setIsSendingData, clearForm });
+		handleAuth({ url: "/api/login", data, specificHandler, setServerResponse, setIsSendingData, clearForm });
 	};
 
 	return (

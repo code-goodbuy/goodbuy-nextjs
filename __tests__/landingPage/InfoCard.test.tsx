@@ -4,9 +4,6 @@ import InfoCard, { getPartialNumber } from "../../components/landingPage/InfoCar
 import { InfoCardType } from "../../lib/types/HelperTypes";
 
 describe("Test InfoCard", () => {
-	/**
-	 * check for correct behavior of the infocard component
-	 */
 	let expectedProps: InfoCardType;
 
 	beforeEach(() => {
@@ -19,10 +16,11 @@ describe("Test InfoCard", () => {
 	});
 
 	it("should display the correct number of days passed", async () => {
+		// given + when
 		const { getByText } = render(<InfoCard {...expectedProps} />);
 		const title = getByText(getPartialNumber(expectedProps.number) + " " + expectedProps.unit);
 		const text = getByText(expectedProps.text);
-
+		// then
 		expect(title).toBeVisible();
 		expect(text).toBeVisible();
 	});

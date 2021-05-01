@@ -6,8 +6,8 @@ html,
 body {
 	padding: 0;
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-		Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+		Helvetica Neue, sans-serif;
 	overflow-x: hidden;
 }
 a {
@@ -64,8 +64,11 @@ button {
 .dynamic > div > div {
 	z-index: 1 !important;
 }
+.field-bg {
+	@apply bg-gray-200 dark:bg-gray-700;
+}
 .field {
-	@apply outline-none border-0 p-2 normal-text text-lg bg-gray-200 dark:bg-gray-700 w-4/5 rounded-md mb-8;
+	@apply outline-none border-0 p-2 normal-text text-lg field-bg w-4/5 rounded-md mb-8;
 }
 .error-label {
 	@apply w-3/4 text-red-600;
@@ -75,6 +78,25 @@ button {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
+}
+.img-bg {
+	background-size: cover;
+	background-position: center;
+}
+.square-150 {
+	width: 150px;
+	height: 150px;
+}
+.square-50 {
+	width: 50px;
+	height: 50px;
+}
+input {
+	outline: none;
+	outline-width: 0;
+}
+.suggestions-height {
+	max-height: calc(100vh - 14rem - 40px);
 }
 @media (min-width: 769px) {
 	.bear-image-bg {

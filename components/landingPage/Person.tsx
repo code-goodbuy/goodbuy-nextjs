@@ -13,17 +13,10 @@ export default function Person({ fullName, role, url, path }: PersonType) {
 	 */
 	return (
 		<div className="mx-10 lg:mx-4 xl:mx-10 flex flex-col items-center space-y-2 my-4">
-			<Image
-				className="rounded-full"
-				src={path}
-				alt="person"
-				layout="intrinsic"
-				width="100"
-				height="100"
-			/>
+			<Image className="rounded-full" src={path} alt="person" layout="intrinsic" width="100" height="100" />
 			<div className="flex flex-row text-xl colorful-text font-bold">
 				<h3 className="mr-2">{fullName}</h3>
-				<a href={url} target="_blank">
+				<a href={url} rel="noopener noreferrer" target="_blank">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 						<path
 							className="fill-current colorful-text"

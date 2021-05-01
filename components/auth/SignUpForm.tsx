@@ -13,14 +13,15 @@ import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
 
 export default function SignUpForm() {
-	const [data, setData] = useState({
+	const defaultData = {
 		email: "",
 		username: "",
 		password: "",
 		repeatedPassword: "",
-		hasAcceptedTerms: false,
+		acceptedTerms: false,
 		hasRequiredAge: false
-	});
+	};
+	const [data, setData] = useState(defaultData);
 
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
@@ -32,7 +33,7 @@ export default function SignUpForm() {
 			isValidUsername(data.username) &&
 			isPasswordStrong(data.password) &&
 			areSamePasswords(data.repeatedPassword, data.password) &&
-			data.hasAcceptedTerms &&
+			data.acceptedTerms &&
 			data.hasRequiredAge
 		) {
 			setIsValidForm(true);
@@ -42,30 +43,23 @@ export default function SignUpForm() {
 	}, [data]);
 
 	const clearForm = () => {
-		setData({
-			email: "",
-			username: "",
-			password: "",
-			repeatedPassword: "",
-			hasAcceptedTerms: false,
-			hasRequiredAge: false
-		});
+		setData(defaultData);
 	};
 
 	const handleSignUp = async () => {
 		setIsSendingData(true);
-		const userData = {
-			email: data.email,
-			username: data.password,
-			password: data.repeatedPassword,
-			acceptedTerms: data.hasAcceptedTerms,
-			hasRequiredAge: data.hasRequiredAge,
-			tokenVersion: 0
-		};
+
 		let specificHandler = () => {
 			setServerResponse("Check your email and then log in");
 		};
-		handleAuth({ url: "/api/register", userData, specificHandler, setServerResponse, setIsSendingData, clearForm });
+		handleAuth({
+			url: "/api/register",
+			data,
+			specificHandler,
+			setServerResponse,
+			setIsSendingData,
+			clearForm
+		});
 	};
 
 	return (
@@ -103,10 +97,7 @@ export default function SignUpForm() {
 				type="password"
 				name="Repeated Password"
 			/>
-			<Checkbox
-				condition={data.hasAcceptedTerms}
-				updateCondition={dataUpdater("hasAcceptedTerms", data, setData)?.updater}
-			>
+			<Checkbox condition={data.acceptedTerms} updateCondition={dataUpdater("acceptedTerms", data, setData)?.updater}>
 				<span>
 					I read and accept the{" "}
 					<Link href="about:blank">
