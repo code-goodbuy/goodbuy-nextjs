@@ -7,8 +7,9 @@ import useRedirect from "../../lib/hooks/useRedirect";
 import Counter from "../../components/profile/Counter";
 import UpdateForm from "../../components/profile/UpdateForm";
 import { IncomingMessage } from "node:http";
+import { ProfileDataType } from "../../lib/types/ProfileTypes";
 
-function User({ username, data }: { username: string; data: any }) {
+function User({ username, data }: { username: string; data: ProfileDataType }) {
 	const { isLoggedIn, userInfo } = useContext(AuthContext);
 	const [isCurrentUser, setIsCurrentUser] = useState(false);
 	const [isUpdatingInfo, setIsUpdatingInfo] = useState(false);
