@@ -1,4 +1,4 @@
-# GoodBuy
+# GoodBuy NextJS
 
 ![Vercel](http://therealsujitk-vercel-badge.vercel.app/?app=goodbuy)
 ![Lines of code](https://img.shields.io/tokei/lines/github/code-goodbuy/goodbuy-nextjs)
@@ -20,24 +20,24 @@ The development of the project is still in progress. Currently we are working on
 
 ## Installation 📦
 
-Prerequisites: ```nodejs v15.6.0``` or newer and ```npm 7.4.0``` or newer.
+Prerequisites: `nodejs v15.6.0` or newer and `npm 7.4.0` or newer.
 
 To install this project and run it locally, please follow the following steps:
 
-1. Open the terminal in the desired directory and run ```git clone https://github.com/code-goodbuy/goodbuy-nextjs.git```;
-2. Navigate to the repository (```cd goodbuy-nextjs```);
-3. Navigate to the branch you are interested in (```git checkout BRANCH_NAME```);
-4. Install the npm packages by running ```npm i ```;
-5. Either run the development server with ```npm run dev``` or build and run the app for better performances by running ```npm run build && npm run start```;
+1. Open the terminal in the desired directory and run `git clone https://github.com/code-goodbuy/goodbuy-nextjs.git`;
+2. Navigate to the repository (`cd goodbuy-nextjs`);
+3. Navigate to the branch you are interested in (`git checkout BRANCH_NAME`);
+4. Install the npm packages by running `npm i `;
+5. Either run the development server with `npm run dev` or build and run the app for better performances by running `npm run build && npm run start`;
 6. Visit http://localhost:3000.
 
 ## Testing 🧪
 
 This app uses Jest, Testing-Library, and Cypress for Unit, Integration, and End-to-End tests.
 
-You can run the Unit and Integration tests by simply running ```npm run test```.
+You can run the Unit and Integration tests by simply running `npm run test`.
 
-If you want to run the End-to-End tests, make sure you build and start the app, then, in another terminal window run either ```npm run cy:run``` (to run Cypress without its GUI) or ```npm run cy:open``` (to run Cypress with its GUI).
+If you want to run the End-to-End tests, make sure you build and start the app, then, in another terminal window run either `npm run cy:run` (to run Cypress without its GUI) or `npm run cy:open` (to run Cypress with its GUI).
 
 ## Project Structure 🏗
 
@@ -51,7 +51,7 @@ Here is a description of the content of each folder in the directory:
 │   ├── auth                # Tests for authentication components and logic.
 │   ├── landingPage         # Tests for landing page components.
 │   ├── profile             # Tests for profile page components and logic.
-│   └── utility             # Tests for the barcode scanner scanner component.    
+│   └── utility             # Tests for the barcode scanner scanner component.
 ├── components              # Components.
 |   ├── auth                # Authentication components and functions.
 │   ├── common              # Components shared across the web app.
@@ -63,7 +63,7 @@ Here is a description of the content of each folder in the directory:
 │   ├── e2e                 # End-to-End tests.
 │   ├── fixtures            # Cypress configuration for mocked data.
 |   ├── plugins             # Cypress configuration for plugins.
-│   └── support             # Custom Cypress methods and configuration.   
+│   └── support             # Custom Cypress methods and configuration.
 ├── lib                     # App logic and types.
 │   ├── apiFunctions        # Logic for the proxy routes.
 │   ├── contexts            # React contexts used by the app.
@@ -82,30 +82,32 @@ Here is a description of the content of each folder in the directory:
 ## Current Features 🔥
 
 The features currently available in this app include:
-* Secure authentication with HTTP-only Cookies;
-* Email Confirmation;
-* Dark mode;
-* Responsive design in each page;
-* HTTP proxy for requests forwarding & handling;
-* Barcode Scanner (not yet implemented);
-* Unit, Integration, and End-to-End tests;
-* Deployed on Vercel;
-* Performance optimization and possibility to install the app as a PWA;
-* Possibility to edit profile data.
+
+- Secure authentication with HTTP-only Cookies;
+- Email Confirmation;
+- Dark mode;
+- Responsive design in each page;
+- HTTP proxy for requests forwarding & handling;
+- Barcode Scanner (not yet implemented);
+- Unit, Integration, and End-to-End tests;
+- Deployed on Vercel;
+- Performance optimization and possibility to install the app as a PWA;
+- Possibility to edit profile data.
 
 ## Upcoming Features 🔮
 
 The features that will be implemented soon in the future include:
-* Feed caching;
-* Barcode Scanner Implementation;
-* Followers and Likes;
-* History of Scanned Products;
-* Homepage feed (with real data);
-* Improved user search;
-* Suggested (real) users;
-* Legal Details (Terms and Conditions, EULA notice, impressum).
 
-## Reflection 💭 
+- Feed caching;
+- Barcode Scanner Implementation;
+- Followers and Likes;
+- History of Scanned Products;
+- Homepage feed (with real data);
+- Improved user search;
+- Suggested (real) users;
+- Legal Details (Terms and Conditions, EULA notice, impressum).
+
+## Reflection 💭
 
 The goal for this project was to build an MVP for GoodBuy, an app that would store information about the environmental footprint of products and let its users access those information by scanning a product.<br/>
 While building what we have so far of the web application, I had the chance to learn some modern technology used in the field such as TailwindCSS, TypeScript, and React with its framework Nextjs.<br/>
