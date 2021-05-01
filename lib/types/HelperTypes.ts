@@ -42,9 +42,18 @@ export interface ResetFormType {
 	clearForm: () => void;
 }
 
+export interface AuthDataType {
+	email: string;
+	username?: string;
+	password: string;
+	repeatedPassword?: string;
+	acceptedTerms?: boolean;
+	hasRequiredAge?: boolean;
+}
+
 export interface handleAuthType {
 	url: string;
-	data: any;
+	data: AuthDataType;
 	specificHandler: any;
 	setServerResponse: Dispatch<SetStateAction<string>>;
 	setIsSendingData: Dispatch<SetStateAction<boolean>>;
