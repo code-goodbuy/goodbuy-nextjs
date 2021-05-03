@@ -9,7 +9,12 @@ import {
 import mock from "mock-http";
 import { NextApiRequest } from "next";
 
-describe("Test the functions that make the proxy work", () => {
+function expectCallWithoutRejection(toCall: any, reject: any) {
+	expect(toCall).toHaveBeenCalled();
+	expect(reject).not.toHaveBeenCalled();
+}
+
+describe("Test the functions that make the proxy routes work", () => {
 	let req: NextApiRequest,
 		res: any,
 		rej: any,
@@ -70,8 +75,7 @@ describe("Test the functions that make the proxy work", () => {
 		// @ts-ignore; proxy type is not exactly the same
 		forwardRequest({ res, res, proxy, handleRes: false, reject: rej });
 		// then
-		expect(proxy.web).toHaveBeenCalled();
-		expect(rej).not.toHaveBeenCalled();
+		expectCallWithoutRejection(proxy.web, rej);
 	});
 
 	it("should handle the login", () => {
@@ -81,8 +85,7 @@ describe("Test the functions that make the proxy work", () => {
 		// when
 		handleLogin({ req, res, proxyRes: res._internal, body: res._internal.body, resolve, reject: rej });
 		// then
-		expect(resolve).toHaveBeenCalled();
-		expect(rej).not.toHaveBeenCalled();
+		expectCallWithoutRejection(resolve, rej);
 	});
 
 	it("should handle the token refresh", () => {
@@ -91,7 +94,6 @@ describe("Test the functions that make the proxy work", () => {
 		// when
 		handleRefresh({ req, res, body: res._internal.body, resolve, reject: rej });
 		// then
-		expect(resolve).toHaveBeenCalled();
-		expect(rej).not.toHaveBeenCalled();
+		expectCallWithoutRejection(resolve, rej);
 	});
 });
