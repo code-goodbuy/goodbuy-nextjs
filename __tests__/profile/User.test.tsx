@@ -1,10 +1,10 @@
-import { render } from "@testing-library/react";
+import { Matcher, render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import User from "../../pages/user/[username]";
 
-function expectAllToBeVisible(elements: HTMLElement[]) {
+function expectAllToBeVisible(elements: string[], selector: (text: Matcher) => HTMLElement) {
 	for (let e of elements) {
-		expect(e).toBeVisible();
+		expect(selector(e)).toBeVisible();
 	}
 }
 
@@ -37,26 +37,17 @@ describe("Test profile page", () => {
 			<User
 				username="test"
 				data={{
-					followers: "50",
-					following: "70",
-					scannedProducts: "30",
-					userID: "mockUserId",
+					followers: 50,
+					following: 70,
+					scannedProducts: 30,
 					description: "I like using goodbuy",
 					imageURL: "/public/pics/face.png",
-					listOfScanned: [{ title: "Coca Cola", EAN: "5000112581508", country: "United Kingdom" }]
+					listOfScanned: [{ title: "Coca Cola", EAN: "5000112581508", country: "United Kingdom", likes: 6 }]
 				}}
 			></User>
 		);
 		// then
-		expectAllToBeVisible([
-			getByTestId("username"),
-			getByText("30"),
-			getByText("50"),
-			getByText("70"),
-			getByTestId("profile-pic"),
-			getByTestId("description"),
-			getByText("Follow"),
-			getByText("Coca Cola")
-		]);
+		expectAllToBeVisible(["username", "profile-pic", "description"], getByTestId);
+		expectAllToBeVisible(["30", "50", "70", "Follow", "Coca Cola"], getByText);
 	});
 });
