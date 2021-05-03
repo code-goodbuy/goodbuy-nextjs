@@ -3,6 +3,8 @@
 
 describe("Test Profile", () => {
 	const expected = {
+		email: "goodbuytester@cuvox.de",
+		password: "Password1!",
 		invalidURL: "http://image",
 		validUrl:
 			"https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
@@ -13,17 +15,7 @@ describe("Test Profile", () => {
 
 	it("Should edit the profile", () => {
 		// given
-		cy.request({
-			url: "http://localhost:3000/api/login",
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				email: "goodbuytester@cuvox.de",
-				password: "Password1!"
-			})
-		});
+		cy.fastLogin(expected.email, expected.password);
 		cy.visit("/user/testergbde");
 		// when
 		cy.findByText("Edit").click();
