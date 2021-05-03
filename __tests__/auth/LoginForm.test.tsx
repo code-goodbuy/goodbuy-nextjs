@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import LoginForm from "../../components/auth/LoginForm";
-import { expectFieldError, typeInField } from "./SignUpForm.test";
+import { expectFieldError, typeInField } from "../../lib/testUtils/testFunctions";
 
 describe("Test login form", () => {
 	let expected = {

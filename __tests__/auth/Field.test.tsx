@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import Field from "../../components/auth/Field";
-import { expectFieldError } from "./SignUpForm.test";
+import { expectFieldError } from "../../lib/testUtils/testFunctions";
 
 describe("Test input field component", () => {
 	let stateValue: string;

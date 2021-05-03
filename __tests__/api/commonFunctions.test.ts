@@ -8,11 +8,7 @@ import {
 } from "../../lib/apiFunctions/commonFunctions";
 import mock from "mock-http";
 import { NextApiRequest } from "next";
-
-function expectCallWithoutRejection(toCall: any, reject: any) {
-	expect(toCall).toHaveBeenCalled();
-	expect(reject).not.toHaveBeenCalled();
-}
+import { expectCallWithoutRejection } from "../../lib/testUtils/testFunctions";
 
 describe("Test the functions that make the proxy routes work", () => {
 	let req: NextApiRequest,

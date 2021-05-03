@@ -1,22 +1,7 @@
-import { render, act, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SignUpForm from "../../components/auth/SignUpForm";
-
-export async function typeInField(selector: string, newValue: string) {
-	// given
-	const field = screen.getByPlaceholderText(selector);
-	// when
-	await act(async () => {
-		fireEvent.change(field, { target: { value: newValue } });
-	});
-}
-
-export async function expectFieldError(selector: string, newValue: string) {
-	//given + when
-	await typeInField(selector, newValue);
-	// then
-	expect(screen.getByText("Invalid " + selector)).toBeVisible();
-}
+import { expectFieldError } from "../../lib/testUtils/testFunctions";
 
 describe("test sign up form", () => {
 	let expected = {

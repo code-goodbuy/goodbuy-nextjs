@@ -1,12 +1,7 @@
-import { Matcher, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import User from "../../pages/user/[username]";
-
-function expectAllToBeVisible(elements: string[], selector: (text: Matcher) => HTMLElement) {
-	for (let e of elements) {
-		expect(selector(e)).toBeVisible();
-	}
-}
+import { expectAllToBeVisible } from "../../lib/testUtils/testFunctions";
 
 const useRouter = jest.spyOn(require("next/router"), "useRouter");
 
