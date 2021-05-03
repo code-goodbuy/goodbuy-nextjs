@@ -68,6 +68,7 @@ Here is a description of the content of each folder in the directory:
 │   ├── apiFunctions        # Logic for the proxy routes.
 │   ├── contexts            # React contexts used by the app.
 |   ├── hooks               # Custom hooks.
+|   ├── testUtils           # Utilities for unit and integration tests.
 │   └── types               # TypeScript types.
 ├── pages                   # Pages accessible by the user and serverless functions.
 │   ├── api                 # Serverless functions, proxy routes to communicate with the backend.
