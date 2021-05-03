@@ -1,7 +1,7 @@
-import { render, act, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import LoginForm from "../../components/auth/LoginForm";
-import { expectError, typeInField } from "./SignUpForm.test";
+import { expectFieldError, typeInField } from "./SignUpForm.test";
 
 describe("Test login form", () => {
 	let expected = {
@@ -14,7 +14,7 @@ describe("Test login form", () => {
 		// given
 		render(<LoginForm />);
 		// when + then
-		await expectError("Email", expected.invalidEmail);
+		await expectFieldError("Email", expected.invalidEmail);
 		await typeInField("Password", expected.password);
 		// then
 		expect(screen.getByText("Log In")).toBeDisabled();

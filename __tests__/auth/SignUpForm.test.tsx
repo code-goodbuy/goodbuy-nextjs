@@ -11,7 +11,7 @@ export async function typeInField(selector: string, newValue: string) {
 	});
 }
 
-export async function expectError(selector: string, newValue: string) {
+export async function expectFieldError(selector: string, newValue: string) {
 	//given + when
 	await typeInField(selector, newValue);
 	// then
@@ -30,10 +30,10 @@ describe("test sign up form", () => {
 		// given
 		render(<SignUpForm />);
 		// when + then
-		await expectError("Email", expected.invalidEmail);
-		await expectError("Username", expected.invalidUsername);
-		await expectError("Password", expected.invalidPassword);
-		await expectError("Repeated Password", expected.invalidEmail);
+		await expectFieldError("Email", expected.invalidEmail);
+		await expectFieldError("Username", expected.invalidUsername);
+		await expectFieldError("Password", expected.invalidPassword);
+		await expectFieldError("Repeated Password", expected.invalidEmail);
 		// then
 		expect(screen.getByText("Sign Up")).toBeDisabled();
 	});
