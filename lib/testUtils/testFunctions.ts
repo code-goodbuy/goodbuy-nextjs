@@ -26,3 +26,9 @@ export function expectAllToBeVisible(elements: string[], selector: (text: Matche
 		expect(selector(e)).toBeVisible();
 	}
 }
+
+export function clickAll(elements: string[], selector: (text: Matcher) => HTMLElement) {
+	for (let e of elements) {
+		fireEvent.click(selector(e));
+	}
+}
