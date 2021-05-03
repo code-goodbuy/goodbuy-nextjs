@@ -1,45 +1,32 @@
-import { render, act, fireEvent } from "@testing-library/react";
+import { render, act, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import LoginForm from "../../components/auth/LoginForm";
+import { expectError, typeInField } from "./SignUpForm.test";
 
 describe("Test login form", () => {
-	let expected: { validEmail: string; invalidEmail: string; password: string };
+	let expected = {
+		invalidEmail: "name(at)domain.something",
+		validEmail: "name@doamin.something",
+		password: "somePassword0"
+	};
 
-	beforeEach(() => {
-		expected = {
-			invalidEmail: "name(at)domain.something",
-			validEmail: "name@doamin.something",
-			password: "somePassword0"
-		};
-	});
-
-	it("shouldn't have a clickable button", async () => {
+	it("should display errors and shouldn't have a clickable button", async () => {
 		// given
-		const { getByPlaceholderText, getByText } = render(<LoginForm />);
-		const emailField = getByPlaceholderText("Email");
-		const passwordField = getByPlaceholderText("Password");
-		const submit = getByText("Log In");
-		// when
-		await act(async () => {
-			fireEvent.change(emailField, { target: { value: expected.invalidEmail } });
-			fireEvent.change(passwordField, { target: { value: expected.password } });
-		});
+		render(<LoginForm />);
+		// when + then
+		await expectError("Email", expected.invalidEmail);
+		await typeInField("Password", expected.password);
 		// then
-		expect(submit).toBeDisabled();
+		expect(screen.getByText("Log In")).toBeDisabled();
 	});
 
 	it("should have a clickable button", async () => {
 		// given
-		const { getByPlaceholderText, getByText } = render(<LoginForm />);
-		const emailField = getByPlaceholderText("Email");
-		const passwordField = getByPlaceholderText("Password");
-		const submit = getByText("Log In");
-		//when
-		await act(async () => {
-			fireEvent.change(emailField, { target: { value: expected.validEmail } });
-			fireEvent.change(passwordField, { target: { value: expected.password } });
-		});
+		render(<LoginForm />);
+		// when
+		await typeInField("Email", expected.validEmail);
+		await typeInField("Password", expected.password);
 		// then
-		expect(submit).not.toBeDisabled();
+		expect(screen.getByText("Log In")).not.toBeDisabled();
 	});
 });
