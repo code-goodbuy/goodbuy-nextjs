@@ -8,5 +8,7 @@ declare namespace Cypress {
 		 */
 		findFieldsAndType(obj: { [string]: string }): Chainable<Element>;
 		clickAll(list: string[]): Chainable<Element>;
+		formLogin(email: string, password: string): Chainable<Element>;
+		fastLogin(email: string, password: string): Chainable<Element>;
 	}
 }

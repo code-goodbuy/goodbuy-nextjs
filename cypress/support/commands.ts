@@ -35,3 +35,23 @@ Cypress.Commands.add("clickAll", (list) => {
 		cy.findByLabelText(e).click();
 	}
 });
+
+Cypress.Commands.add("formLogin", (email: string, password: string) => {
+	cy.visit("/auth");
+	cy.findFieldsAndType({ "Email": email, "Password": password });
+	cy.findByText("Log In").click();
+});
+
+Cypress.Commands.add("fastLogin", (email: string, password: string) => {
+	cy.request({
+		url: "http://localhost:3000/api/login",
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			email: email,
+			password: password
+		})
+	});
+});
