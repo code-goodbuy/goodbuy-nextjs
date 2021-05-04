@@ -77,7 +77,7 @@ export interface PrepareForForwardingType {
 	token?: string;
 }
 
-export interface FieldDataType {
+export interface FormDataType {
 	email: string;
 	username?: string;
 	password: string;
