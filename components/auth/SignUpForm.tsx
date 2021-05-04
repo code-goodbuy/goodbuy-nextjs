@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-	isValidEmail,
-	isValidUsername,
-	isPasswordStrong,
-	handleAuth,
-	areSamePasswords,
-	dataUpdater
-} from "./helperFunctions";
+import { handleAuth, dataUpdater, CheckFields } from "./helperFunctions";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
@@ -23,23 +16,13 @@ export default function SignUpForm() {
 	};
 	const [data, setData] = useState(defaultData);
 
-	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
+	const checker = new CheckFields(data);
+
 	useEffect(() => {
-		if (
-			isValidEmail(data.email) &&
-			isValidUsername(data.username) &&
-			isPasswordStrong(data.password) &&
-			areSamePasswords(data.repeatedPassword, data.password) &&
-			data.acceptedTerms &&
-			data.hasRequiredAge
-		) {
-			setIsValidForm(true);
-		} else {
-			setIsValidForm(false);
-		}
+		checker.updateData(data);
 	}, [data]);
 
 	const clearForm = () => {
@@ -72,28 +55,28 @@ export default function SignUpForm() {
 			<Field
 				value={data.email}
 				setValue={dataUpdater("email", data, setData)?.updater}
-				isValidValue={isValidEmail(data.email)}
+				isValidValue={checker.isValidEmail()}
 				type="text"
 				name="Email"
 			/>
 			<Field
 				value={data.username}
 				setValue={dataUpdater("username", data, setData)?.updater}
-				isValidValue={isValidUsername(data.username)}
+				isValidValue={checker.isValidUsername()}
 				type="text"
 				name="Username"
 			/>
 			<Field
 				value={data.password}
 				setValue={dataUpdater("password", data, setData)?.updater}
-				isValidValue={isPasswordStrong(data.password)}
+				isValidValue={checker.isValidPassword()}
 				type="password"
 				name="Password"
 			/>
 			<Field
 				value={data.repeatedPassword}
 				setValue={dataUpdater("repeatedPassword", data, setData)?.updater}
-				isValidValue={areSamePasswords(data.repeatedPassword, data.password)}
+				isValidValue={checker.areSamePasswords()}
 				type="password"
 				name="Repeated Password"
 			/>
@@ -111,7 +94,7 @@ export default function SignUpForm() {
 			<Checkbox condition={data.hasRequiredAge} updateCondition={dataUpdater("hasRequiredAge", data, setData)?.updater}>
 				<span>I am 16 or older.</span>
 			</Checkbox>
-			<SubmitButton disabled={!isValidForm || isSendingData} updater={handleSignUp} text="Sign Up" />
+			<SubmitButton disabled={!checker.isValidSignUp() || isSendingData} updater={handleSignUp} text="Sign Up" />
 		</form>
 	);
 }
