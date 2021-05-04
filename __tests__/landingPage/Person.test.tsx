@@ -16,10 +16,11 @@ describe("Test Person Component", () => {
 	});
 
 	it("should display the correct person", async () => {
+		// given + when
 		const { getByText } = render(<Person {...expectedProps} />);
 		const name = getByText(expectedProps.fullName);
 		const role = getByText(expectedProps.role);
-
+		// then
 		expect(name).toBeVisible();
 		expect(role).toBeVisible();
 	});

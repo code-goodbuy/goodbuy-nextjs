@@ -1,5 +1,5 @@
 import Cookies from "cookies";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiResponse } from "next";
 import {
 	ForwardRequestType,
 	HandleEndType,
@@ -43,10 +43,10 @@ export function resolveIfValid({ token, response, resolve, message }: ResolveIfV
 }
 
 export function prepareForForwarding({ req, cookie = "", token = "" }: PrepareForForwardingType) {
-	req.url = req?.url?.replace(/^\/api/, "");
 	req.headers.cookie = cookie;
 	if (token !== "") {
 		req.headers["auth-token"] = token;
+		req.headers.Authorization = `Bearer ${token}`;
 	}
 }
 

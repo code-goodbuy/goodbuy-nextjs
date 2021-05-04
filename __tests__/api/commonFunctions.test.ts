@@ -41,41 +41,56 @@ describe("Test the functions that make the proxy work", () => {
 	});
 
 	it("should reject the request", () => {
+		// given + when
 		// @ts-ignore: res doens't match the exact type but has all the required properties
 		rejectIfCondition(res, rej, true);
+		// then
 		expect(rej).toHaveBeenCalled();
 	});
 
 	it("should not resolve the request", () => {
+		// given + when
 		resolveIfValid({ token: "invalidToken", response: res, resolve, message: "test" });
+		// then
 		expect(resolve).not.toHaveBeenCalled();
 	});
 
 	it("should modify the request", () => {
+		// given + when
 		prepareForForwarding({ req, cookie: "test-cookie", token: "test-token" });
+		// then
 		expect(req.headers.cookie).toEqual("test-cookie");
 		expect(req.headers["auth-token"]).toEqual("test-token");
 	});
 
 	it("should forward a request", () => {
+		// given
 		const proxy = { web: jest.fn() };
+		// when
 		// @ts-ignore; proxy type is not exactly the same
 		forwardRequest({ res, res, proxy, handleRes: false, reject: rej });
+		// then
 		expect(proxy.web).toHaveBeenCalled();
 		expect(rej).not.toHaveBeenCalled();
 	});
 
 	it("should handle the login", () => {
+		// given
 		res._internal.headers = { "set-cookie": `jid=${token}; other things;` };
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
+		// when
 		handleLogin({ req, res, proxyRes: res._internal, body: res._internal.body, resolve, reject: rej });
+		// then
 		expect(resolve).toHaveBeenCalled();
 		expect(rej).not.toHaveBeenCalled();
 	});
 
 	it("should handle the token refresh", () => {
+		// given
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
+		// when
 		handleRefresh({ req, res, body: res._internal.body, resolve, reject: rej });
+		// then
 		expect(resolve).toHaveBeenCalled();
 		expect(rej).not.toHaveBeenCalled();
 	});

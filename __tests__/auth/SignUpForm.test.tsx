@@ -1,6 +1,17 @@
-import { render, act, fireEvent, getByLabelText } from "@testing-library/react";
+import { render, act, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SignUpForm from "../../components/auth/SignUpForm";
+
+async function expectError(selector: string, newValue: string) {
+	// given
+	const field = screen.getByPlaceholderText(selector);
+	// when
+	await act(async () => {
+		fireEvent.change(field, { target: { value: newValue } });
+	});
+	// then
+	expect(screen.getByText("Invalid " + selector)).toBeVisible();
+}
 
 describe("test sign up form", () => {
 	let expected: {
@@ -20,36 +31,14 @@ describe("test sign up form", () => {
 	});
 
 	it("should display errors and shouldn't have a clickable submit button", async () => {
-		const { getByPlaceholderText, getByText, getByLabelText } = render(
-			<SignUpForm setAction={() => {}} msBeforeRedirecting={0} />
-		);
-
-		const emailField = getByPlaceholderText("Email");
-		const usernameField = getByPlaceholderText("Username");
-		const passwordField = getByPlaceholderText("Password");
-		const repeatPasswordField = getByPlaceholderText("Repeated Password");
-		const termsCheckbox = getByLabelText("I read and accept the Terms and Conditions.");
-		const ageCheckbox = getByLabelText("I am 16 or older.");
-		const submit = getByText("Sign Up");
-
-		await act(async () => {
-			fireEvent.change(emailField, { target: { value: expected.invalidEmail } });
-			fireEvent.change(usernameField, { target: { value: expected.invalidUsername } });
-			fireEvent.change(passwordField, { target: { value: expected.invalidPassword } });
-			fireEvent.change(repeatPasswordField, { target: { value: expected.validPassword } });
-			fireEvent.click(termsCheckbox);
-			fireEvent.click(ageCheckbox);
-		});
-
-		const emailError = getByText("Invalid Email");
-		const usernameError = getByText("Invalid Username");
-		const passwordError = getByText("Invalid Password");
-		const repeatedPasswordError = getByText("Invalid Repeated Password");
-
-		expect(emailError).toBeVisible();
-		expect(usernameError).toBeVisible();
-		expect(passwordError).toBeVisible();
-		expect(repeatedPasswordError).toBeVisible();
-		expect(submit).toBeDisabled();
+		// given
+		render(<SignUpForm />);
+		// when + then
+		await expectError("Email", expected.invalidEmail);
+		await expectError("Username", expected.invalidUsername);
+		await expectError("Password", expected.invalidPassword);
+		await expectError("Repeated Password", expected.invalidEmail);
+		// then
+		expect(screen.getByText("Sign Up")).toBeDisabled();
 	});
 });

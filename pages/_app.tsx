@@ -5,9 +5,6 @@ import UIContextProvider from "../lib/context/UIContext";
 import AuthContextProvider from "../lib/context/AuthContext";
 
 function GoodBuy({ Component, pageProps }: AppProps) {
-	/**
-	 * Renders The WebApp
-	 */
 	return (
 		<AuthContextProvider>
 			<UIContextProvider>

@@ -29,12 +29,12 @@ export default function Welcome() {
 
 	return (
 		<div className="flex flex-col bg-white dark:bg-black max-h-900">
-			<div className="flex flex-col h-90 max-h-700 justify-start md:justify-evenly lg:justify-between p-4 lg:px-10 items-center space-y-3 lg:flex-row lg:mt-4 2xl:pt-20">
+			<div className="flex flex-col h-auto lg:max-h-700 justify-start md:justify-evenly lg:justify-between p-4 lg:px-10 items-center space-y-3 lg:flex-row lg:mt-4 2xl:pt-20">
 				<div className="flex flex-col justify-start max-w-xl items-center lg:items-start lg:mr-5 lg:max-w-2xl 2xl:max-w-3xl">
-					<div className="bear-image-bg md:bg-blue-100 md:dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black min-h-1/2 md:min-h-0 rounded-b-2xl md:rounded-b-none w-screen lg:w-75 lg:h-48">
+					<div className="bear-image-bg md:bg-blue-100 md:dark:bg-red-200 lg:bg-gradient-to-r lg:from-blue-100 lg:via-blue-100 lg:to-white lg:dark:from-red-200 lg:dark:via-red-200 lg:dark:to-black min-h-1/2 md:min-h-0 rounded-b-2xl md:rounded-b-none w-screen lg:w-75 lg:h-48 lg:mt-40">
 						<div
 							data-testid="main-title"
-							className="bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60 md:bg-opacity-0 md:dark:bg-opacity-0 font-bold colorful-text mt-48 md:mt-10 md:pt-28 text-4xl md:text-5xl p-4 md:max-w-screen lg:max-w-xl lg:p-4 lg:mt-0 text-center lg:text-left h-36 md:h-auto 2xl:max-w-3xl"
+							className="bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60 md:bg-opacity-0 md:dark:bg-opacity-0 font-bold colorful-text mt-48 md:mt-10 text-4xl md:text-5xl p-4 md:max-w-screen lg:max-w-xl lg:p-4 lg:mt-0 text-center lg:text-left h-36 md:h-auto 2xl:max-w-3xl"
 						>
 							Stop climate change,
 							<br />

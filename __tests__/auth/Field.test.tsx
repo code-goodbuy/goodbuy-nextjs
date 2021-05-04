@@ -17,18 +17,16 @@ describe("Test input field component", () => {
 	});
 
 	it("Should display an error message", async () => {
+		// given
 		const { getByPlaceholderText, getByText } = render(
 			<Field value={stateValue} setValue={mockedUpdater} isValidValue={isValidValue} type="text" name="Property" />
 		);
-
 		const field = getByPlaceholderText("Property");
-
+		// when
 		await act(async () => {
 			fireEvent.change(field, { target: { value: "fail" } });
 		});
-
-		const error = getByText("Invalid Property");
-
-		expect(error).toBeVisible();
+		// then
+		expect(getByText("Invalid Property")).toBeVisible();
 	});
 });

@@ -2,33 +2,36 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import Meta from "../components/common/Meta";
 import { AuthContext } from "../lib/context/AuthContext";
+import useRedirect from "../lib/hooks/useRedirect";
 
 const Verify = ({ token }: { token: string }) => {
 	const { changeIsAuthenticating, isLoggedIn } = useContext(AuthContext);
 	const [message, setMessage] = useState("");
 	const router = useRouter();
-	if (isLoggedIn) {
-		router.push("/");
-	}
 
-	useEffect(() => {
-		changeIsAuthenticating && changeIsAuthenticating(true);
-		return () => {
-			changeIsAuthenticating && changeIsAuthenticating(false);
-		};
-	}, []);
+	useRedirect(isLoggedIn !== undefined && isLoggedIn, [isLoggedIn]);
 
 	const validate = async (token: string) => {
-		const res = await fetch(process.env.backendURL + "/confirm_email/" + token, { method: "POST" });
-		if (res.status === 200) {
-			setMessage("Success");
-			router.push("/auth");
-		} else {
+		try {
+			const res = await fetch(process.env.backendURL + "/api/confirm_email/" + token, { method: "POST" });
+			if (res.status === 200) {
+				setMessage("Success");
+				router.push("/auth");
+			} else {
+				setMessage("Error");
+			}
+		} catch {
 			setMessage("Error");
 		}
 	};
 
-	validate(token);
+	useEffect(() => {
+		changeIsAuthenticating && changeIsAuthenticating(true);
+		validate(token);
+		return () => {
+			changeIsAuthenticating && changeIsAuthenticating(false);
+		};
+	}, []);
 
 	return (
 		<>

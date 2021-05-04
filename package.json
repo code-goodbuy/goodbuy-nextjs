@@ -6,7 +6,9 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"test": "jest"
+		"test": "jest",
+		"cy:run": "cypress run",
+		"cy:open": "cypress open"
 	},
 	"dependencies": {
 		"@zxing/browser": "^0.0.8",
@@ -14,7 +16,8 @@
 		"cookies": "^0.8.0",
 		"http-proxy": "^1.18.1",
 		"jwt-decode": "^3.1.2",
-		"next": "10.0.6",
+		"next": "10.1.3",
+		"next-pwa": "^5.2.15",
 		"react": "17.0.1",
 		"react-dom": "17.0.1",
 		"react-text-transition": "^1.3.0"
@@ -22,6 +25,7 @@
 	"devDependencies": {
 		"@react-mock/fetch": "^0.3.0",
 		"@tailwindcss/forms": "^0.3.2",
+		"@testing-library/cypress": "^7.0.6",
 		"@testing-library/jest-dom": "^5.11.9",
 		"@testing-library/react": "^11.2.5",
 		"@types/cookies": "^0.7.6",
@@ -30,6 +34,7 @@
 		"@types/react": "^17.0.2",
 		"autoprefixer": "^10.2.4",
 		"babel-jest": "^26.6.3",
+		"cypress": "^7.1.0",
 		"jest": "^26.6.3",
 		"mock-http": "^1.1.0",
 		"msw": "^0.28.0",
