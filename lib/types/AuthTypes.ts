@@ -76,3 +76,12 @@ export interface PrepareForForwardingType {
 	cookie?: string;
 	token?: string;
 }
+
+export interface FieldDataType {
+	email: string;
+	username?: string;
+	password: string;
+	repeatedPassword?: string;
+	acceptedTerms?: boolean;
+	hasRequiredAge?: boolean;
+}
