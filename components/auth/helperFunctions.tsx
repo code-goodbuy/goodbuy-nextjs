@@ -1,19 +1,33 @@
 import { Dispatch, SetStateAction } from "react";
-import { FieldDataType } from "../../lib/types/AuthTypes";
-import { HandleResType, HandleErrType, ResetFormType, handleAuthType } from "../../lib/types/HelperTypes";
+import { FormDataType } from "../../lib/types/AuthTypes";
+import { FormFunctionsType } from "../../lib/types/HelperTypes";
 
 export const updateWithoutSpaces = (updater: ((val: string | boolean) => void) | undefined, value: string) => {
 	updater && updater(value.replace(/\s/g, ""));
 };
 
-export class CheckFields {
-	data: FieldDataType;
+export const dataUpdater = (field: string, data: any, setData: Dispatch<SetStateAction<any>>) => {
+	if (field in data) {
+		return {
+			updater: (val: string | boolean) => {
+				//@ts-ignore: manually check the type
+				if (typeof data[field] === typeof val) {
+					//@ts-ignore: manually check the type
+					setData((data) => ({ ...data, [field]: val }));
+				}
+			}
+		};
+	}
+};
 
-	constructor(data: FieldDataType) {
+export class CheckFields {
+	data: FormDataType;
+
+	constructor(data: FormDataType) {
 		this.data = data;
 	}
 
-	updateData(data: FieldDataType) {
+	updateData(data: FormDataType) {
 		this.data = data;
 	}
 
@@ -88,63 +102,57 @@ export class CheckFields {
 	}
 }
 
-export const sendAuthRequest = async (url: string, body: any) => {
-	const res = await fetch(url, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	});
-	return res;
-};
+export class Authenticator {
+	url: string;
+	body: FormDataType;
+	functions: FormFunctionsType;
+	res: Response | undefined;
 
-export const handleRes = ({ res, setServerResponse, specificHandler }: HandleResType) => {
-	if (res && res.status === 200) {
-		specificHandler(res);
-	} else {
-		setServerResponse("An Error Occured");
+	constructor(url: string, body: FormDataType, formFunctions: FormFunctionsType) {
+		this.url = url;
+		this.body = body;
+		this.functions = formFunctions;
+
+		this.res = undefined;
 	}
-};
 
-export const handleErr = ({ err, setServerResponse }: HandleErrType) => {
-	console.error(err);
-	setServerResponse("An Error Occured");
-};
-
-export const resetForm = ({ setIsSendingData, clearForm }: ResetFormType) => {
-	clearForm();
-	setIsSendingData(false);
-};
-
-export const handleAuth = async ({
-	url,
-	data,
-	specificHandler,
-	setServerResponse,
-	setIsSendingData,
-	clearForm
-}: handleAuthType) => {
-	try {
-		let res = await sendAuthRequest(url, data);
-		handleRes({ res, setServerResponse, specificHandler });
-	} catch (err) {
-		handleErr(err);
-	} finally {
-		resetForm({ setIsSendingData, clearForm });
+	async sendRequest() {
+		this.res = await fetch(this.url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(this.body)
+		});
 	}
-};
 
-export const dataUpdater = (field: string, data: any, setData: Dispatch<SetStateAction<any>>) => {
-	if (field in data) {
-		return {
-			updater: (val: string | boolean) => {
-				//@ts-ignore: manually check the type
-				if (typeof data[field] === typeof val) {
-					//@ts-ignore: manually check the type
-					setData((data) => ({ ...data, [field]: val }));
-				}
-			}
-		};
+	handleRes() {
+		if (this.res && this.res.status === 200) {
+			this.functions.responseHandler(this.res);
+		} else {
+			this.functions.setServerResponse("An Error Occured");
+		}
 	}
-};
+
+	handleError(err: string) {
+		console.error("The following error occurred", err);
+		this.functions.setServerResponse("An Error Occured");
+	}
+
+	resetForm() {
+		this.functions.clearForm();
+		this.functions.setIsSendingData(false);
+	}
+
+	async handleAuth() {
+		this.functions.setIsSendingData(true);
+		try {
+			await this.sendRequest();
+			this.handleRes();
+		} catch (err) {
+			this.handleError(err);
+		} finally {
+			this.resetForm();
+		}
+	}
+}

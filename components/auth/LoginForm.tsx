@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { handleAuth, dataUpdater, CheckFields } from "./helperFunctions";
+import { dataUpdater, CheckFields, Authenticator } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -24,15 +24,17 @@ export default function LoginForm() {
 		setData({ email: "", password: "" });
 	};
 
+	const responseHandler = async (res: Response | undefined) => {
+		let data = res && (await res.json());
+		updateUserInfo && updateUserInfo({ email: data.email });
+		toggleIsLoggedIn && toggleIsLoggedIn();
+		router.push("/");
+	};
+
 	const handleLogin = async () => {
-		setIsSendingData(true);
-		let specificHandler = async (res: Response) => {
-			let data = await res.json();
-			updateUserInfo && updateUserInfo({ email: data.email });
-			toggleIsLoggedIn && toggleIsLoggedIn();
-			router.push("/");
-		};
-		handleAuth({ url: "/api/login", data, specificHandler, setServerResponse, setIsSendingData, clearForm });
+		const formFunctions = { clearForm, setServerResponse, setIsSendingData, responseHandler };
+		const auth = new Authenticator("/api/login", data, formFunctions);
+		auth.handleAuth();
 	};
 
 	return (

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { handleAuth, dataUpdater, CheckFields } from "./helperFunctions";
+import { dataUpdater, CheckFields, Authenticator } from "./helperFunctions";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
@@ -29,20 +29,14 @@ export default function SignUpForm() {
 		setData(defaultData);
 	};
 
-	const handleSignUp = async () => {
-		setIsSendingData(true);
+	let responseHandler = () => {
+		setServerResponse("Check your email and then log in");
+	};
 
-		let specificHandler = () => {
-			setServerResponse("Check your email and then log in");
-		};
-		handleAuth({
-			url: "/api/register",
-			data,
-			specificHandler,
-			setServerResponse,
-			setIsSendingData,
-			clearForm
-		});
+	const handleSignUp = async () => {
+		const formFunctions = { clearForm, setServerResponse, setIsSendingData, responseHandler };
+		const auth = new Authenticator("/api/register", data, formFunctions);
+		auth.handleAuth();
 	};
 
 	return (
