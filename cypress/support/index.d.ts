@@ -6,9 +6,10 @@ declare namespace Cypress {
 		 * Custom command to select DOM element by data-cy attribute.
 		 * @example cy.dataCy('greeting')
 		 */
-		findFieldsAndType(obj: { [string]: string }): Chainable<Element>;
+		findFieldsAndType(obj: { [key: string]: string }): Chainable<Element>;
 		clickAll(list: string[]): Chainable<Element>;
 		formLogin(email: string, password: string): Chainable<Element>;
 		fastLogin(email: string, password: string): Chainable<Element>;
+		tryToSignUp(obj: { [key: string]: string }): Chainable<Element>;
 	}
 }

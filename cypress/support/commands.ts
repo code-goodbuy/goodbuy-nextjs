@@ -55,3 +55,9 @@ Cypress.Commands.add("fastLogin", (email: string, password: string) => {
 		})
 	});
 });
+
+Cypress.Commands.add("tryToSignUp", (obj: { [key: string]: string }) => {
+	cy.visit("/auth?action=sign-up");
+	cy.findFieldsAndType(obj);
+	cy.clickAll(["I read and accept the Terms and Conditions.", "I am 16 or older."]);
+});
