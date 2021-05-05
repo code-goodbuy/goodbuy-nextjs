@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface DBPost {
 	title: string;
 	EAN: string;
