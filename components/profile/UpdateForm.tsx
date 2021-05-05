@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { UpdaterType } from "../../lib/types/ProfileTypes";
-import { dataUpdater } from "../auth/helperFunctions";
+import { DataUpdater } from "../auth/helperFunctions";
 import Router from "next/router";
 import { sendChangeRequest, setIsValidURL, isDisabledForm } from "./helperFunctions";
 
@@ -11,6 +11,8 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 	const [data, setData] = useState({ imageURL: "", description: "", isValidURL: false });
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
+
+	const updater = new DataUpdater(data, setData);
 
 	useEffect(() => {
 		setIsValidURL(data.imageURL, setData, data);
@@ -42,16 +44,14 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 				{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
 				<Field
 					value={data.imageURL}
-					setValue={dataUpdater("imageURL", data, setData)?.updater}
+					setValue={updater.makeUpdater("imageURL")}
 					isValidValue={data.isValidURL && data.imageURL.length > 7}
-					type="text"
 					name="New Image URL"
 				/>
 				<Field
 					value={data.description}
-					setValue={dataUpdater("description", data, setData)?.updater}
+					setValue={updater.makeUpdater("description")}
 					isValidValue={data.description.length < 256}
-					type="text"
 					name="New Description"
 					allowedSpaces={true}
 				/>

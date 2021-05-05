@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { dataUpdater, FieldChecker, Authenticator } from "./helperFunctions";
+import { DataUpdater, FieldChecker, Authenticator } from "./helperFunctions";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
@@ -20,6 +20,7 @@ export default function SignUpForm() {
 	const [serverResponse, setServerResponse] = useState<string>("");
 
 	const checker = new FieldChecker(data);
+	const updater = new DataUpdater(data, setData);
 
 	useEffect(() => {
 		checker.updateData(data);
@@ -48,31 +49,31 @@ export default function SignUpForm() {
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
 			<Field
 				value={data.email}
-				setValue={dataUpdater("email", data, setData)?.updater}
+				setValue={updater.makeUpdater("email")}
 				isValidValue={checker.isValidEmail()}
 				name="Email"
 			/>
 			<Field
 				value={data.username}
-				setValue={dataUpdater("username", data, setData)?.updater}
+				setValue={updater.makeUpdater("username")}
 				isValidValue={checker.isValidUsername()}
 				name="Username"
 			/>
 			<Field
 				value={data.password}
-				setValue={dataUpdater("password", data, setData)?.updater}
+				setValue={updater.makeUpdater("password")}
 				isValidValue={checker.isValidPassword()}
 				type="password"
 				name="Password"
 			/>
 			<Field
 				value={data.repeatedPassword}
-				setValue={dataUpdater("repeatedPassword", data, setData)?.updater}
+				setValue={updater.makeUpdater("repeatedPassword")}
 				isValidValue={checker.areSamePasswords()}
 				type="password"
 				name="Repeated Password"
 			/>
-			<Checkbox condition={data.acceptedTerms} updateCondition={dataUpdater("acceptedTerms", data, setData)?.updater}>
+			<Checkbox condition={data.acceptedTerms} updateCondition={updater.makeUpdater("acceptedTerms")}>
 				<span>
 					I read and accept the{" "}
 					<Link href="about:blank">
@@ -83,7 +84,7 @@ export default function SignUpForm() {
 					.
 				</span>
 			</Checkbox>
-			<Checkbox condition={data.hasRequiredAge} updateCondition={dataUpdater("hasRequiredAge", data, setData)?.updater}>
+			<Checkbox condition={data.hasRequiredAge} updateCondition={updater.makeUpdater("hasRequiredAge")}>
 				<span>I am 16 or older.</span>
 			</Checkbox>
 			<SubmitButton disabled={!checker.isValidSignUp() || isSendingData} updater={handleSignUp} text="Sign Up" />

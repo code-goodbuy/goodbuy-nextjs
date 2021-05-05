@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { dataUpdater, FieldChecker, Authenticator } from "./helperFunctions";
+import { DataUpdater, FieldChecker, Authenticator } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -11,6 +11,7 @@ export default function LoginForm() {
 	const [serverResponse, setServerResponse] = useState<string>("");
 
 	const checker = new FieldChecker(data);
+	const updater = new DataUpdater(data, setData);
 
 	const { updateUserInfo, toggleIsLoggedIn } = useContext(AuthContext);
 
@@ -46,13 +47,13 @@ export default function LoginForm() {
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
 			<Field
 				value={data.email}
-				setValue={dataUpdater("email", data, setData)?.updater}
+				setValue={updater.makeUpdater("email")}
 				isValidValue={checker.isValidEmail()}
 				name="Email"
 			/>
 			<Field
 				value={data.password}
-				setValue={dataUpdater("password", data, setData)?.updater}
+				setValue={updater.makeUpdater("password")}
 				isValidValue={true}
 				type="password"
 				name="Password"

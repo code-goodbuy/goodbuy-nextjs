@@ -2,19 +2,27 @@ import { Dispatch, SetStateAction } from "react";
 import { FormDataType } from "../../lib/types/AuthTypes";
 import { FormFunctionsType } from "../../lib/types/HelperTypes";
 
-export const dataUpdater = (field: string, data: any, setData: Dispatch<SetStateAction<any>>) => {
-	if (field in data) {
-		return {
-			updater: (val: string | boolean) => {
-				//@ts-ignore: manually check the type
-				if (typeof data[field] === typeof val) {
-					//@ts-ignore: manually check the type
-					setData((data) => ({ ...data, [field]: val }));
-				}
-			}
-		};
+export class DataUpdater {
+	data: any;
+	setData: Dispatch<SetStateAction<any>>;
+
+	constructor(data: any, setData: Dispatch<SetStateAction<any>>) {
+		this.data = data;
+		this.setData = setData;
 	}
-};
+
+	makeUpdater(field: string) {
+		if (field in this.data) {
+			return (val: string | boolean) => {
+				//@ts-ignore: manually check the type
+				if (typeof this.data[field] === typeof val) {
+					//@ts-ignore: manually check the type
+					this.setData((prev) => ({ ...prev, [field]: val }));
+				}
+			};
+		}
+	}
+}
 
 export class FieldChecker {
 	data: FormDataType;
