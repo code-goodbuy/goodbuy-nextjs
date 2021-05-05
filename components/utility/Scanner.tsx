@@ -21,18 +21,16 @@ const ScanBarcode: React.FC = () => {
 					if (result) {
 						// @ts-ignore
 						const scanResult = JSON.parse(result);
-						alert("Barcode number: " + scanResult);
 						fetch(process.env.backendURL + "/api/product/" + scanResult)
 							.then((response) => response.json())
 							.then((data) => {
 								// product props: name, brand, barcode, corporation, state
-								alert(process.env.backendURL + "/api/product/" + scanResult);
 								const productName = data.product[0].name;
 								const productBrand = data.product[0].brand;
 								setProductInfo({ name: productName, brand: productBrand });
 							})
-							.catch((error) => {
-								alert("Error: failed to fetch the info from database");
+							.catch((_) => {
+								console.error("Error: failed to fetch the info from database");
 							});
 					}
 				}
