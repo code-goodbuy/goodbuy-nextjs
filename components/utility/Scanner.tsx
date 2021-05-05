@@ -21,23 +21,25 @@ const ScanBarcode: React.FC = () => {
 					if (result) {
 						// @ts-ignore
 						const scanResult = JSON.parse(result);
+						alert("Barcode number: " + scanResult);
 						fetch(process.env.backendURL + "/api/product/" + scanResult)
 							.then((response) => response.json())
 							.then((data) => {
 								// product props: name, brand, barcode, corporation, state
+								alert(process.env.backendURL + "/api/product/" + scanResult);
 								const productName = data.product[0].name;
 								const productBrand = data.product[0].brand;
 								setProductInfo({ name: productName, brand: productBrand });
 							})
-							.catch((_) => {
-								console.error("Error: failed to fetch the info from database");
+							.catch((error) => {
+								alert("Error: failed to fetch the info from database");
 							});
 					}
 				}
 			);
 			return controls;
 		} catch (error) {
-			console.error("Error: failed to initiate scan");
+			console.log("Error: failed to initiate scan");
 		}
 	};
 
@@ -52,7 +54,7 @@ const ScanBarcode: React.FC = () => {
 				setDevices(videoInputDevices);
 				setSelectedDeviceId(selectedDeviceId);
 			} catch (error) {
-				console.error("Error: need self signed TLS Certs for reading camera list");
+				console.log("Error: need self signed TLS Certs for reading camera list");
 			}
 		};
 		getDevices();
