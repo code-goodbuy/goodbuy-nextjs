@@ -1,6 +1,6 @@
 import Meta from "../../components/common/Meta";
 import Post from "../../components/common/Post";
-import { DBPost } from "../../lib/types/PostTypes";
+import { DBPost } from "../../lib/types/CommonTypes";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
