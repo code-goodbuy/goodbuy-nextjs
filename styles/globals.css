@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 html,
 body {
@@ -72,6 +72,15 @@ button {
 }
 .error-label {
 	@apply w-3/4 text-red-600;
+}
+.picture {
+	@apply bg-primary dark:bg-secondary transform rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 lg:max-w-7xl;
+}
+.normal-pic {
+	@apply md:max-w-md mt-10 lg:mt-0;
+}
+.large-pic {
+	@apply hidden md:block md:max-w-lg lg:mt-4 lg:mr-8 lg:max-w-2xl 2xl:max-w-3xl;
 }
 .bear-image-bg {
 	background-image: url("/pics/bear.jpg");
