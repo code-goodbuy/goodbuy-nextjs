@@ -6,7 +6,7 @@ const ScanBarcode: React.FC = () => {
 	const controlsRef = useRef<IScannerControls | null>(null);
 	const [selectedDeviceId, setSelectedDeviceId] = useState("");
 	const [devices, setDevices] = useState<Array<DeviceType>>([]);
-	const [productInfo, setProductInfo] = useState({ name: "", brand: "" });
+	const [productInfo, setProductInfo] = useState({ name: "", brand: "", corporation: "", ean: "" });
 
 	const getQRCodeReaderControls = async (selectedDeviceId: string) => {
 		try {
@@ -21,13 +21,19 @@ const ScanBarcode: React.FC = () => {
 					if (result) {
 						// @ts-ignore
 						const scanResult = JSON.parse(result);
-						fetch(process.env.backendURL + "/api/product/" + scanResult)
+						fetch("https://gb-be.de/api/product/" + scanResult)
 							.then((response) => response.json())
 							.then((data) => {
-								// product props: name, brand, barcode, corporation, state
 								const productName = data.product[0].name;
 								const productBrand = data.product[0].brand;
-								setProductInfo({ name: productName, brand: productBrand });
+								const productCorp = data.product[0].corporation;
+								const productEan = data.product[0].ean;
+								setProductInfo({
+									name: productName,
+									brand: productBrand,
+									corporation: productCorp,
+									ean: productEan
+								});
 							})
 							.catch((_) => {
 								console.error("Error: failed to fetch the info from database");
