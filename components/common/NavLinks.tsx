@@ -4,6 +4,7 @@ import ColorModeButton from "./ColorModeButton";
 import LogInButton from "./LogInButton";
 import LogOutButton from "./LogOutButton";
 import SectionLink from "./SectionLink";
+import ScannerPage from "../utility/ScannerPage";
 
 export default function NavLinks({ className }: { className: string }) {
 	const { isLoggedIn, isAuthenticating, userInfo } = useContext(AuthContext);
@@ -13,6 +14,7 @@ export default function NavLinks({ className }: { className: string }) {
 				<div className={className}>
 					<ColorModeButton />
 					<SectionLink id={"/user/" + userInfo?.username} text={"Profile"} />
+					<ScannerPage />
 					<LogOutButton />
 				</div>
 			);

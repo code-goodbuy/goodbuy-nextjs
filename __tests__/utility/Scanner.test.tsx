@@ -33,7 +33,7 @@ describe("Scanner Component", () => {
 		// when: act
 		fireEvent.click(screen.getByText("Scanner"));
 		// then: assert
-		expect(screen.getByText("Barcode")).toBeVisible();
+		expect(screen.getByText("Scan Product")).toBeVisible();
 	});
 
 	it("find start button and check the scanner element", () => {

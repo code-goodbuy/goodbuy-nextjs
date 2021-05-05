@@ -5,20 +5,19 @@ const ScannerPage: React.FC = () => {
 	const [showModal, setShowModal] = useState(false);
 	return (
 		<>
-			<a
-				type="button"
-				style={{ transition: "all .15s ease", cursor: "pointer" }}
+			<button
+				className="hover:text-primary dark:hover:text-secondary"
 				onClick={() => setShowModal(true)}
 				data-testid="scanner-title"
 			>
 				Scanner
-      </a>
+      </button>
 			{showModal ? (
 				<>
 					<div
 						className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
 					>
-						<div className="relative w-auto my-6 mx-auto max-w-3xl">
+						<div className="relative w-full my-6 mx-auto max-w-3xl">
 							{/*content*/}
 							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
 								{/*header*/}
@@ -27,7 +26,7 @@ const ScannerPage: React.FC = () => {
 										className="text-3xl font-semibold"
 										data-testid="scanner-title"
 									>
-										Barcode
+										Scan Product
                   </h3>
 									<button
 										className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -39,8 +38,8 @@ const ScannerPage: React.FC = () => {
 									<div>
 										<video
 											id="video"
-											width="600"
-											height="400"
+											width="1200"
+											height="800"
 											style={{ border: "1px solid gray" }}
 											data-testid="video-elm"
 										></video>
@@ -74,7 +73,7 @@ const ScannerPage: React.FC = () => {
 							</div>
 						</div>
 					</div>
-					<div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+					<div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
 				</>
 			) : null}
 		</>
