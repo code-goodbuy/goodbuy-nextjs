@@ -17,7 +17,7 @@ export interface FieldType {
 	value: string;
 	setValue: ((val: string | boolean) => void) | undefined;
 	isValidValue: boolean;
-	type: "text" | "password";
+	type?: "text" | "password";
 	name: string;
 	allowedSpaces?: boolean;
 }

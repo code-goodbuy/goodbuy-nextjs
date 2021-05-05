@@ -1,7 +1,14 @@
 import { FieldType } from "../../lib/types/AuthTypes";
 import { updateWithoutSpaces } from "./helperFunctions";
 
-export default function Field({ value, setValue, isValidValue, type, name, allowedSpaces = false }: FieldType) {
+export default function Field({
+	value,
+	setValue,
+	isValidValue,
+	type = "text",
+	name,
+	allowedSpaces = false
+}: FieldType) {
 	return (
 		<>
 			{!isValidValue && value !== "" && <label className="error-label">Invalid {name}</label>}

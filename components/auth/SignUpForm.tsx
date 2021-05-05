@@ -50,14 +50,12 @@ export default function SignUpForm() {
 				value={data.email}
 				setValue={dataUpdater("email", data, setData)?.updater}
 				isValidValue={checker.isValidEmail()}
-				type="text"
 				name="Email"
 			/>
 			<Field
 				value={data.username}
 				setValue={dataUpdater("username", data, setData)?.updater}
 				isValidValue={checker.isValidUsername()}
-				type="text"
 				name="Username"
 			/>
 			<Field

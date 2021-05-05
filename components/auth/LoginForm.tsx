@@ -48,7 +48,6 @@ export default function LoginForm() {
 				value={data.email}
 				setValue={dataUpdater("email", data, setData)?.updater}
 				isValidValue={checker.isValidEmail()}
-				type="text"
 				name="Email"
 			/>
 			<Field
