@@ -2,10 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import { FormDataType } from "../../lib/types/AuthTypes";
 import { FormFunctionsType } from "../../lib/types/HelperTypes";
 
-export const updateWithoutSpaces = (updater: ((val: string | boolean) => void) | undefined, value: string) => {
-	updater && updater(value.replace(/\s/g, ""));
-};
-
 export const dataUpdater = (field: string, data: any, setData: Dispatch<SetStateAction<any>>) => {
 	if (field in data) {
 		return {

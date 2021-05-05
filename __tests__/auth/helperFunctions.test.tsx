@@ -1,9 +1,7 @@
 import "@testing-library/jest-dom";
-import { updateWithoutSpaces, CheckFields } from "../../components/auth/helperFunctions";
+import { CheckFields } from "../../components/auth/helperFunctions";
 
 describe("test login helper functions", () => {
-	let stateValue: any;
-	let mockedUpdater = jest.fn().mockImplementation((s) => (stateValue = s));
 	let validData = {
 		email: "person@mail.co.uk",
 		password: "StrongPassw0rd!",
@@ -19,20 +17,6 @@ describe("test login helper functions", () => {
 
 	const check = new CheckFields(validData);
 	const check2 = new CheckFields(invalidData);
-
-	beforeEach(() => {
-		stateValue = null;
-		mockedUpdater.mockReset();
-		mockedUpdater = jest.fn().mockImplementation((s) => (stateValue = s));
-	});
-
-	it("should update the calue without whitespaces", () => {
-		//given + when
-		updateWithoutSpaces(mockedUpdater, "  string ");
-		//then
-		expect(mockedUpdater).toHaveBeenCalledTimes(1);
-		expect(stateValue).toEqual("string");
-	});
 
 	it("should check the email and return true", () => {
 		expect(check.isValidEmail()).toBe(true);
