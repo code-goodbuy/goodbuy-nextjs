@@ -4,9 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Welcome() {
-	/**
-	 * Responsive "Welcome" Section Of The Landing Page
-	 */
 	const products = [
 		"avocado",
 		"chocolate bar",
@@ -19,6 +16,7 @@ export default function Welcome() {
 		"almond"
 	];
 	const [index, setIndex] = useState<number>(0);
+
 	useEffect(() => {
 		/**
 		 * automatically update the title text
