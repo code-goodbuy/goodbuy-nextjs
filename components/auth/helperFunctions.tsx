@@ -16,7 +16,7 @@ export const dataUpdater = (field: string, data: any, setData: Dispatch<SetState
 	}
 };
 
-export class CheckFields {
+export class FieldChecker {
 	data: FormDataType;
 
 	constructor(data: FormDataType) {

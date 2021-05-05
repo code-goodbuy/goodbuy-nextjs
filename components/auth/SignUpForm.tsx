@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { dataUpdater, CheckFields, Authenticator } from "./helperFunctions";
+import { dataUpdater, FieldChecker, Authenticator } from "./helperFunctions";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
@@ -19,7 +19,7 @@ export default function SignUpForm() {
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
-	const checker = new CheckFields(data);
+	const checker = new FieldChecker(data);
 
 	useEffect(() => {
 		checker.updateData(data);

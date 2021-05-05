@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { CheckFields } from "../../components/auth/helperFunctions";
+import { FieldChecker } from "../../components/auth/helperFunctions";
 
 describe("test login helper functions", () => {
 	let validData = {
@@ -15,8 +15,8 @@ describe("test login helper functions", () => {
 		username: "user"
 	};
 
-	const check = new CheckFields(validData);
-	const check2 = new CheckFields(invalidData);
+	const check = new FieldChecker(validData);
+	const check2 = new FieldChecker(invalidData);
 
 	it("should check the email and return true", () => {
 		expect(check.isValidEmail()).toBe(true);

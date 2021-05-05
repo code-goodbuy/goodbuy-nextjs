@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { dataUpdater, CheckFields, Authenticator } from "./helperFunctions";
+import { dataUpdater, FieldChecker, Authenticator } from "./helperFunctions";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useRouter } from "next/router";
 import Field from "./Field";
@@ -10,7 +10,7 @@ export default function LoginForm() {
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
-	const checker = new CheckFields(data);
+	const checker = new FieldChecker(data);
 
 	const { updateUserInfo, toggleIsLoggedIn } = useContext(AuthContext);
 
