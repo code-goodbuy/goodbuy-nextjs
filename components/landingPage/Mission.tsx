@@ -1,9 +1,9 @@
-import Image from "next/image";
+import Picture from "../common/Picture";
 import InfoCard from "./InfoCard";
 
 export default function Mission() {
 	return (
-		<div className="normal-bg flex flex-col min-h-full h-auto lg:max-h-900" id="mission">
+		<div className="normal-bg flex flex-col h-auto lg:max-h-900" id="mission">
 			<h2 data-testid="mission-title" className="section-header">
 				Our Mission
 			</h2>
@@ -35,34 +35,15 @@ export default function Mission() {
 					/>
 				</div>
 				<div className="flex flex-col items-center lg:mt-10 lg:max-w-1/2">
-					<figure className="bg-primary dark:bg-secondary transform xl:-rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-md lg:max-w-auto lg:w-7xl mt-10 lg:mt-0">
-						<Image
-							className="rounded-3xl"
-							src="/pics/waste.jpg"
-							alt="Waste on tropical beach"
-							layout="intrinsic"
-							width="450"
-							height="300"
-						/>
-						<figcaption className="text-white">
-							<span>
-								Photo by{" "}
-								<a
-									className="underline"
-									href="https://unsplash.com/@dwoodhouse?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-								>
-									Dustan Woodhouse
-								</a>{" "}
-								on{" "}
-								<a
-									className="underline"
-									href="https://unsplash.com/s/photos/waste?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-								>
-									Unsplash
-								</a>
-							</span>
-						</figcaption>
-					</figure>
+					<Picture
+						source="/pics/waste.jpg"
+						alt="Waste on Tropical Beach"
+						isLarge={false}
+						author="Dustan Woodhouse"
+						authorLink="https://unsplash.com/@dwoodhouse"
+						rotation="left"
+					/>
+
 					<p className="normal-text text-xl mx-10 mt-5 lg:mt-12 max-w-xl">
 						Non-sustainable products contribute–among the others–to deforestation, CO2 emissions, and water waste. At
 						GoodBuy, we want to make sure you have the means to make an informed decision about the products you buy.
