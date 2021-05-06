@@ -3,9 +3,10 @@ import type httpProxy from "http-proxy";
 import { IncomingMessage } from "node:http";
 import Cookies from "cookies";
 import { JWTPayloadType, UserInfoType } from "./HelperTypes";
+import { VideoHTMLAttributes } from "react";
 
 export interface APIHelperConfig {
-	proxy: httpProxy;
+	proxy?: httpProxy;
 	req: NextApiRequest;
 	res: NextApiResponse;
 	resolve: () => void;
