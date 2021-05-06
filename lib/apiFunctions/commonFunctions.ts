@@ -68,7 +68,6 @@ export class APIHelper {
 
 	prepareForForwarding() {
 		this.config.req.headers.cookie = `jid=${this.tokens["refresh-token"]}`;
-		console.log(this.config.req.headers.cookie);
 		if (this.tokens["auth-token"] !== "" && this.tokens["auth-token"] !== undefined) {
 			this.config.req.headers["auth-token"] = this.tokens["auth-token"];
 			this.config.req.headers.Authorization = `Bearer ${this.tokens["auth-token"]}`;
