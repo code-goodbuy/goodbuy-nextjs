@@ -19,9 +19,10 @@ const ScanBarcode: React.FC = () => {
 				videoElem,
 				(result, error, controls) => {
 					if (result) {
+						const baseURL = "https://gb-be.de/api/product/"
 						// @ts-ignore
 						const scanResult = JSON.parse(result);
-						fetch("https://gb-be.de/api/product/" + scanResult)
+						fetch(baseURL + scanResult)
 							.then((response) => response.json())
 							.then((data) => {
 								const productName = data.product[0].name;
@@ -67,22 +68,33 @@ const ScanBarcode: React.FC = () => {
 	return (
 		<div>
 			<div id="sourceSelectPanel">
+				<div>
+					<select
+						id="sourceSelect"
+						value={selectedDeviceId}
+						onChange={(event) => setSelectedDeviceId(event.target.value)}
+						data-testid="camera-select"
+						style={{ width: "100%" }}
+					>
+						{devices.map(({ deviceId, label }) => (
+							<option key={deviceId} value={deviceId} >
+								{label}
+							</option>
+						))}
+					</select>
+				</div>
 				<br />
-				<label htmlFor="sourceSelect">Select the camera:</label>
-				<select
-					id="sourceSelect"
-					value={selectedDeviceId}
-					onChange={(event) => setSelectedDeviceId(event.target.value)}
-					data-testid="camera-select"
-				>
-					{devices.map(({ deviceId, label }) => (
-						<option key={deviceId} value={deviceId}>
-							{label}
-						</option>
-					))}
-				</select>
-				<br></br>
-				(if you change the selected camera, please click again the Start button)
+				<div>
+					(if you change the selected camera, please click again the Start button)
+				</div>
+				<br />
+				<div>
+					Result: {Object.entries(productInfo).length > 4 ?
+						<div>
+							{productInfo.name} | {productInfo.brand} | {productInfo.corporation} | {productInfo.ean}
+						</div>
+						: "Not found"}
+				</div>
 			</div>
 			<br />
 			<div className="space-x-3">
@@ -107,18 +119,6 @@ const ScanBarcode: React.FC = () => {
 				>
 					Stop
 				</button>
-			</div>
-			<br />
-			<div className="space-x-3">
-				Barcode: {productInfo.ean}
-				<br />
-				Name: {productInfo.name}
-				<br />
-				Brand: {productInfo.brand}
-				<br />
-				Corporation: {productInfo.corporation}
-				<br />
-
 			</div>
 		</div>
 	);
