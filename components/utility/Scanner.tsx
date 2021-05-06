@@ -110,9 +110,15 @@ const ScanBarcode: React.FC = () => {
 			</div>
 			<br />
 			<div className="space-x-3">
+				Barcode: {productInfo.ean}
+				<br />
 				Name: {productInfo.name}
 				<br />
 				Brand: {productInfo.brand}
+				<br />
+				Corporation: {productInfo.corporation}
+				<br />
+
 			</div>
 		</div>
 	);
