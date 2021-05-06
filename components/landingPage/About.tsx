@@ -15,7 +15,9 @@ export default function About() {
 
 	return (
 		<div className="flex flex-col normal-bg h-full" id="about">
-			<h2 className="section-header">About Goodbuy</h2>
+			<h2 className="section-header" data-testid="about-title">
+				About Goodbuy
+			</h2>
 			<div className="flex flex-col justify-around lg:flex-row items-center pb-10 pt-10">
 				<div className="flex flex-wrap justify-center mx-4 mt-10 md:max-w-3/4 lg:max-w-1/2">
 					{data.map((person) => (
