@@ -1,4 +1,3 @@
-import Cookies from "cookies";
 import mock from "mock-http";
 import { IncomingMessage, ServerResponse } from "node:http";
 import { CookieHelper, getTokenFromResponse, getTokenFromResponseCookie } from "../../lib/apiFunctions/responseHelpers";
