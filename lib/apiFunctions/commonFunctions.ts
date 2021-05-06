@@ -8,7 +8,7 @@ import {
 	setAuthCookiesType,
 	PrepareForForwardingType
 } from "../types/AuthTypes";
-import { decodeJWT, isExpiredJWT } from "./jwtHelpers";
+import { JWTHelper } from "./jwtHelpers";
 import {
 	getTokenFromCookie,
 	getTokenFromResponse,
@@ -36,7 +36,7 @@ export function resolveReq(res: NextApiResponse, resolve: () => void, message: {
 }
 
 export function resolveIfValid({ token, response, resolve, message }: ResolveIfValidType) {
-	const isTokenValid = token && !isExpiredJWT(token);
+	const isTokenValid = token && !new JWTHelper(token).isExpired();
 	if (isTokenValid) {
 		return resolveReq(response, resolve, { "message": message });
 	}
@@ -72,7 +72,8 @@ export function handleLogin({ req, res, proxyRes, body, resolve, reject }: Handl
 	rejectIfCondition(res, reject, jwt === null || refreshToken === undefined);
 	const cookie = initCookies(req, res);
 	jwt && refreshToken && setAuthCookies({ cookie, jwt, refreshToken });
-	jwt && resolveReq(res, resolve, { ...decodeJWT(jwt) });
+	const decoded = jwt && new JWTHelper(jwt).decode();
+	jwt && resolveReq(res, resolve, { ...decoded });
 }
 
 export function handleRefresh({ req, res, body, resolve, reject }: HandleEndType) {
@@ -80,7 +81,8 @@ export function handleRefresh({ req, res, body, resolve, reject }: HandleEndType
 	rejectIfCondition(res, reject, jwt === null);
 	const cookie = initCookies(req, res);
 	jwt && setTokenCookie(cookie, "auth-token", jwt);
-	jwt && resolveReq(res, resolve, { ...decodeJWT(jwt) });
+	const decoded = jwt && new JWTHelper(jwt).decode();
+	jwt && resolveReq(res, resolve, { ...decoded });
 }
 
 export function handleResponse({ proxy, resolve, reject, handler }: HandleResponseType) {
