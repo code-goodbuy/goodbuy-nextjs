@@ -16,6 +16,24 @@ export function getTokenFromCookie(cookie: Cookies, name: "auth-token" | "refres
 	return cookie.get(name);
 }
 
+export class CookieHelper {
+	cookie: Cookies;
+	constructor(req: IncomingMessage, res: ServerResponse) {
+		this.cookie = new Cookies(req, res);
+	}
+
+	setToken(name: "auth-token" | "refresh-token", token: string) {
+		this.cookie.set(name, token, {
+			httpOnly: true,
+			sameSite: "lax"
+		});
+	}
+
+	getToken(name: "auth-token" | "refresh-token") {
+		return this.cookie.get(name);
+	}
+}
+
 export function getTokenFromResponse(apiResponseBody: string): null | string {
 	try {
 		const body = JSON.parse(apiResponseBody);
