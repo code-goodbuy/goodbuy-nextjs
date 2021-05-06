@@ -1,11 +1,11 @@
-import { decodeJWT, isValidJWT } from "../../lib/apiFunctions/jwtHelpers";
+import { JWTHelper } from "../../lib/apiFunctions/jwtHelpers";
 
 describe("test API logic", () => {
 	it("should return an object from a valid token", () => {
 		// given + when
-		const res = decodeJWT(
+		const res = new JWTHelper(
 			"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiaWF0IjoxNjE2NzUwOTA3LCJleHAiOjQwMDAwMDAwMDAsImp0aSI6IjZlMDA3MTJmLTIxOTYtNGJjYS1iMzhmLTQ4MTFkOGI5MTAxOSJ9.hHvO7GQk4cqU1fL8-Ec6u7IFfpmBxMfNGsLKUqLeS64"
-		);
+		).decode();
 		// then
 		expect(res).toStrictEqual({
 			"email": "test@test.test",
@@ -17,7 +17,7 @@ describe("test API logic", () => {
 
 	it("should return false from an invalid token", () => {
 		// given + when
-		const res = isValidJWT("notAJwtToken");
+		const res = new JWTHelper("notAJwtToken").isValid();
 		//then
 		expect(res).toBe(false);
 	});
@@ -27,7 +27,7 @@ describe("test API logic", () => {
 		let res = "";
 		//when
 		try {
-			decodeJWT("not a token");
+			new JWTHelper("not a token").decode();
 		} catch (e) {
 			res = e.toString();
 		}
