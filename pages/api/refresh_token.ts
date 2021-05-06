@@ -10,7 +10,6 @@ export const config = apiConfig;
 export default function refresh_token(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 	return new Promise((resolve, reject): void => {
 		const route = new APIHelper({ proxy, req, res, resolve, reject });
-		route.prepareForForwarding();
 		route.forwardRequest(true);
 		route.handleResponse("refresh");
 	});

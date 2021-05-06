@@ -56,6 +56,7 @@ export class APIHelper {
 	}
 
 	forwardRequest(handleRes: boolean) {
+		this.prepareForForwarding();
 		const config = {
 			target: process.env.backendURL ? process.env.backendURL : "https:gb-be.de",
 			autoRewrite: false,
