@@ -49,6 +49,7 @@ Here is a description of the content of each folder in the directory:
 ├── __tests__               # Unit and Integration tests using Jest and Testing Library.
 │   ├── api                 # Tests for proxy routes and functions.
 │   ├── auth                # Tests for authentication components and logic.
+│   ├── home                # Tests for home page components.
 │   ├── landingPage         # Tests for landing page components.
 │   ├── profile             # Tests for profile page components and logic.
 │   └── utility             # Tests for the barcode scanner scanner component.
