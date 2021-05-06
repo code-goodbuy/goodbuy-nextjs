@@ -4,6 +4,25 @@ import { IncomingMessage } from "node:http";
 import Cookies from "cookies";
 import { JWTPayloadType, UserInfoType } from "./HelperTypes";
 
+export interface APIHelperConfig {
+	proxy: httpProxy;
+	req: NextApiRequest;
+	res: NextApiResponse;
+	resolve: () => void;
+	reject: () => void;
+}
+
+export interface TokensType {
+	"auth-token"?: string;
+	"refresh-token"?: string;
+}
+
+export interface CookieHelperType {
+	setToken: (name: "auth-token" | "refresh-token", token: string) => void;
+	getToken: (name: "auth-token" | "refresh-token") => string | undefined;
+	getCommonTokens: () => TokensType;
+}
+
 export interface AuthContextType {
 	isAuthenticating?: boolean;
 	changeIsAuthenticating?: (newValue: boolean) => void;
