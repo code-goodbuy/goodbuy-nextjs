@@ -4,7 +4,7 @@ import { APIHelper } from "../../lib/apiFunctions/commonFunctions";
 
 export const config = apiConfig;
 
-export default function route(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default function check(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 	return new Promise((resolve, reject): void => {
 		const route = new APIHelper({ req, res, resolve, reject });
 		route.resolveIfValid("auth-token", { "message": "logged" });
