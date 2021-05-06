@@ -38,9 +38,11 @@ const ScannerPage: React.FC = () => {
 									<div>
 										<video
 											id="video"
-											width="1200"
-											height="800"
-											style={{ border: "1px solid gray" }}
+											width="800"
+											height="600"
+											style={{
+												border: "1px solid gray",
+											}}
 											data-testid="video-elm"
 										></video>
 										<ScanBarcode />
@@ -73,7 +75,7 @@ const ScannerPage: React.FC = () => {
 							</div>
 						</div>
 					</div>
-					<div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
+					{/* <div className="opacity-50 fixed inset-0 z-40 bg-black"></div> */}
 				</>
 			) : null}
 		</>
