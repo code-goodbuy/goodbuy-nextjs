@@ -1,11 +1,4 @@
-import {
-	rejectIfCondition,
-	resolveIfValid,
-	prepareForForwarding,
-	forwardRequest,
-	handleLogin,
-	handleRefresh
-} from "../../lib/apiFunctions/commonFunctions";
+import { APIHelper } from "../../lib/apiFunctions/commonFunctions";
 import mock from "mock-http";
 import { NextApiRequest } from "next";
 import { expectCallWithoutRejection } from "../../lib/testUtils/testFunctions";
@@ -17,6 +10,9 @@ describe("Test the functions that make the proxy routes work", () => {
 		resolve: any,
 		token =
 			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5OTk5OTk5OTksImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.JyrM7CQymsHChoqFcj_-VCJwn0mDQtN9r8jnEJ_TySw";
+
+	let proxy = { web: jest.fn() };
+	let API: APIHelper;
 
 	let mockGetCookie = jest.fn((name) => name);
 	let mockSetCookie = jest.fn();
@@ -39,37 +35,39 @@ describe("Test the functions that make the proxy routes work", () => {
 		res.status = jest.fn(() => ({ "json": jest.fn() }));
 		rej = jest.fn();
 		resolve = jest.fn();
+
+		proxy = { web: jest.fn() };
+
+		//@ts-ignore: proxy type is not correct but it isn't a problem
+		API = new APIHelper({ proxy, req, res, resolve, reject: rej });
+		API.tokens = { "auth-token": "invalidToken", "refresh-token": "test" };
 	});
 
 	it("should reject the request", () => {
 		// given + when
-		// @ts-ignore: res doens't match the exact type but has all the required properties
-		rejectIfCondition(res, rej, true);
+		API.rejectIfCondition(true);
 		// then
 		expect(rej).toHaveBeenCalled();
 	});
 
 	it("should not resolve the request", () => {
 		// given + when
-		resolveIfValid({ token: "invalidToken", response: res, resolve, message: "test" });
+		API.resolveIfValid("auth-token", { message: "valid" });
 		// then
 		expect(resolve).not.toHaveBeenCalled();
 	});
 
 	it("should modify the request", () => {
 		// given + when
-		prepareForForwarding({ req, cookie: "test-cookie", token: "test-token" });
+		API.prepareForForwarding();
 		// then
-		expect(req.headers.cookie).toEqual("test-cookie");
-		expect(req.headers["auth-token"]).toEqual("test-token");
+		expect(req.headers.cookie).toEqual("jid=test");
+		expect(req.headers["auth-token"]).toEqual("invalidToken");
 	});
 
 	it("should forward a request", () => {
-		// given
-		const proxy = { web: jest.fn() };
 		// when
-		// @ts-ignore; proxy type is not exactly the same
-		forwardRequest({ res, res, proxy, handleRes: false, reject: rej });
+		API.forwardRequest(false);
 		// then
 		expectCallWithoutRejection(proxy.web, rej);
 	});
@@ -79,7 +77,7 @@ describe("Test the functions that make the proxy routes work", () => {
 		res._internal.headers = { "set-cookie": `jid=${token}; other things;` };
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
 		// when
-		handleLogin({ req, res, proxyRes: res._internal, body: res._internal.body, resolve, reject: rej });
+		API.handleLogin(res._internal.body, res._internal);
 		// then
 		expectCallWithoutRejection(resolve, rej);
 	});
@@ -88,7 +86,7 @@ describe("Test the functions that make the proxy routes work", () => {
 		// given
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
 		// when
-		handleRefresh({ req, res, body: res._internal.body, resolve, reject: rej });
+		API.handleRefresh(res._internal.body);
 		// then
 		expectCallWithoutRejection(resolve, rej);
 	});
