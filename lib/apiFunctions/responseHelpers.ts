@@ -34,7 +34,7 @@ export class CookieHelper {
 	}
 
 	getCommonTokens() {
-		return { authToken: this.getToken("auth-token"), refreshToken: this.getToken("refresh-token") };
+		return { "auth-token": this.getToken("auth-token"), "refresh-token": this.getToken("refresh-token") };
 	}
 }
 
