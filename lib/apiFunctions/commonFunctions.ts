@@ -1,26 +1,7 @@
-import Cookies from "cookies";
-import type { NextApiResponse } from "next";
 import { IncomingMessage } from "node:http";
-import {
-	ForwardRequestType,
-	HandleEndType,
-	HandleResponseType,
-	ResolveIfValidType,
-	setAuthCookiesType,
-	PrepareForForwardingType,
-	APIHelperConfig,
-	TokensType,
-	CookieHelperType
-} from "../types/AuthTypes";
+import { APIHelperConfig, TokensType, CookieHelperType } from "../types/AuthTypes";
 import { JWTHelper } from "./jwtHelpers";
-import {
-	getTokenFromCookie,
-	getTokenFromResponse,
-	getTokenFromResponseCookie,
-	initCookies,
-	setTokenCookie,
-	CookieHelper
-} from "./responseHelpers";
+import { getTokenFromResponse, getTokenFromResponseCookie, CookieHelper } from "./responseHelpers";
 
 export class APIHelper {
 	config: APIHelperConfig;

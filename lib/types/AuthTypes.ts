@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type httpProxy from "http-proxy";
-import { IncomingMessage } from "node:http";
-import Cookies from "cookies";
 import { JWTPayloadType, UserInfoType } from "./HelperTypes";
-import { VideoHTMLAttributes } from "react";
 
 export interface APIHelperConfig {
 	proxy?: httpProxy;
@@ -52,49 +49,6 @@ export interface SubmitType {
 	updater: () => void;
 	disabled: boolean;
 	text: string;
-}
-
-export interface ResolveIfValidType {
-	token: string | undefined;
-	response: NextApiResponse;
-	resolve: () => void;
-	message: string;
-}
-
-export interface ForwardRequestType {
-	req: NextApiRequest;
-	res: NextApiResponse;
-	proxy: httpProxy;
-	handleRes: boolean;
-	reject: () => void;
-}
-
-export interface HandleEndType {
-	req: IncomingMessage;
-	res: NextApiResponse;
-	proxyRes?: IncomingMessage;
-	body: string;
-	resolve: () => void;
-	reject: () => void;
-}
-
-export interface HandleResponseType {
-	proxy: httpProxy;
-	resolve: () => void;
-	reject: () => void;
-	handler: ({}: HandleEndType) => void;
-}
-
-export interface setAuthCookiesType {
-	cookie: Cookies;
-	jwt: string;
-	refreshToken: string;
-}
-
-export interface PrepareForForwardingType {
-	req: NextApiRequest;
-	cookie?: string;
-	token?: string;
 }
 
 export interface FormDataType {

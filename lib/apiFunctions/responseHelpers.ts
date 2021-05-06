@@ -1,21 +1,6 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import Cookies from "cookies";
 
-export function initCookies(req: IncomingMessage, res: ServerResponse) {
-	return new Cookies(req, res);
-}
-
-export function setTokenCookie(cookie: Cookies, name: "auth-token" | "refresh-token", token: string) {
-	cookie.set(name, token, {
-		httpOnly: true,
-		sameSite: "lax"
-	});
-}
-
-export function getTokenFromCookie(cookie: Cookies, name: "auth-token" | "refresh-token") {
-	return cookie.get(name);
-}
-
 export class CookieHelper {
 	cookie: Cookies;
 	constructor(req: IncomingMessage, res: ServerResponse) {
