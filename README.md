@@ -1,6 +1,7 @@
 # GoodBuy NextJS
 
 ![Vercel](http://therealsujitk-vercel-badge.vercel.app/?app=goodbuy)
+![GitHub](https://img.shields.io/github/license/code-goodbuy/goodbuy-nextjs)
 ![Lines of code](https://img.shields.io/tokei/lines/github/code-goodbuy/goodbuy-nextjs)
 ![GitHub repo size](https://img.shields.io/github/repo-size/code-goodbuy/goodbuy-nextjs)
 ![GitHub top language](https://img.shields.io/github/languages/top/code-goodbuy/goodbuy-nextjs)
