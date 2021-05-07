@@ -13,7 +13,7 @@ describe("Test Profile", () => {
 		validDescription: "This is a description"
 	};
 
-	it("Should edit the profile", () => {
+	it("Should ahow errors while editing the profile", () => {
 		// given
 		cy.fastLogin(expected.email, expected.password);
 		cy.visit("/user/testergbde");
