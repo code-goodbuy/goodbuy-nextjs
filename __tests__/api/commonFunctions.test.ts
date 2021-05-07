@@ -1,4 +1,4 @@
-import { APIHelper } from "../../lib/apiFunctions/commonFunctions";
+import { LoginHelper, RefreshHelper } from "../../lib/apiFunctions/commonFunctions";
 import mock from "mock-http";
 import { NextApiRequest } from "next";
 import { expectCallWithoutRejection } from "../../lib/testUtils/testFunctions";
@@ -12,7 +12,7 @@ describe("Test the functions that make the proxy routes work", () => {
 			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5OTk5OTk5OTksImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.JyrM7CQymsHChoqFcj_-VCJwn0mDQtN9r8jnEJ_TySw";
 
 	let proxy = { web: jest.fn() };
-	let API: APIHelper;
+	let API: LoginHelper;
 
 	let mockGetCookie = jest.fn((name) => name);
 	let mockSetCookie = jest.fn();
@@ -39,7 +39,7 @@ describe("Test the functions that make the proxy routes work", () => {
 		proxy = { web: jest.fn() };
 
 		//@ts-ignore: proxy type is not correct but it isn't a problem
-		API = new APIHelper({ proxy, req, res, resolve, reject: rej });
+		API = new LoginHelper({ proxy, req, res, resolve, reject: rej });
 		API.tokens = { "auth-token": "invalidToken", "refresh-token": "test" };
 	});
 
@@ -77,16 +77,19 @@ describe("Test the functions that make the proxy routes work", () => {
 		res._internal.headers = { "set-cookie": `jid=${token}; other things;` };
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
 		// when
-		API.handleLogin(res._internal.body, res._internal);
+		API.handler(res._internal.body, res._internal);
 		// then
 		expectCallWithoutRejection(resolve, rej);
 	});
 
 	it("should handle the token refresh", () => {
 		// given
+		//@ts-ignore: proxy type is not correct but it isn't a problem
+		API = new RefreshHelper({ proxy, req, res, resolve, reject: rej });
+		API.tokens = { "auth-token": "invalidToken", "refresh-token": "test" };
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
 		// when
-		API.handleRefresh(res._internal.body);
+		API.handler(res._internal.body, res._internal);
 		// then
 		expectCallWithoutRejection(resolve, rej);
 	});
