@@ -19,6 +19,7 @@ export interface CookieHelperType {
 	setToken: (name: "auth-token" | "refresh-token", token: string) => void;
 	getToken: (name: "auth-token" | "refresh-token") => string | undefined;
 	getCommonTokens: () => TokensType;
+	setCommonTokens: (authToken: string, refreshToken: string) => void;
 }
 
 export interface AuthContextType {
