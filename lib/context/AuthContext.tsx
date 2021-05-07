@@ -6,6 +6,10 @@ import { AuthContextType } from "../types/AuthTypes";
 export const AuthContext = createContext<AuthContextType>({});
 
 const AuthContextProvider = ({ children }: ReactChildrenType) => {
+	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+	const [userInfo, setUserInfo] = useState<UserInfoType | undefined>();
+
 	const getUserInfo = () => {
 		const infoFromStorage = window.localStorage.getItem("userInfo");
 		if (infoFromStorage) {
@@ -14,17 +18,9 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 		return undefined;
 	};
 
-	const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-	const [userInfo, setUserInfo] = useState<UserInfoType | undefined>();
-
 	useEffect(() => {
 		setUserInfo(getUserInfo());
-		try {
-			manageAuth();
-		} catch {
-			setIsLoggedIn(false);
-		}
+		manageAuth();
 	}, []);
 
 	useEffect(() => {
