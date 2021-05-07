@@ -63,23 +63,26 @@ export class APIHelper {
 			})
 		);
 	}
+}
 
-	handleResponse(handler: "login" | "refresh") {
-		return (
-			this.config.proxy &&
-			this.config.proxy.once("proxyRes", (proxyRes, req, res) => {
-				let body = "";
-				proxyRes.on("data", (chunk: string) => {
-					body += chunk;
-				});
-				proxyRes.on("end", () => {
-					handler === "refresh" ? this.handleRefresh(body) : this.handleLogin(body, proxyRes);
-				});
-			})
-		);
+export class LoginHelper extends APIHelper {
+	constructor(config: APIHelperConfig) {
+		super(config);
 	}
 
-	handleLogin(body: string, proxyRes: IncomingMessage) {
+	handleResponse() {
+		return this.config.proxy?.once("proxyRes", (proxyRes, req, res) => {
+			let body = "";
+			proxyRes.on("data", (chunk: string) => {
+				body += chunk;
+			});
+			proxyRes.on("end", () => {
+				this.handler(body, proxyRes);
+			});
+		});
+	}
+
+	handler(body: string, proxyRes: IncomingMessage) {
 		const refreshToken = getTokenFromResponseCookie(proxyRes);
 		const newToken = getTokenFromResponse(body);
 		if (newToken && refreshToken) {
@@ -89,8 +92,14 @@ export class APIHelper {
 			this.rejectIfCondition(newToken === null || refreshToken === undefined);
 		}
 	}
+}
 
-	handleRefresh(body: string) {
+export class RefreshHelper extends LoginHelper {
+	constructor(config: APIHelperConfig) {
+		super(config);
+	}
+
+	handler(body: string) {
 		const newToken = getTokenFromResponse(body);
 		if (newToken) {
 			this.cookie.setToken("auth-token", newToken);
