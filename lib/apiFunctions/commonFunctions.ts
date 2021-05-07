@@ -56,12 +56,9 @@ export class APIHelper {
 			autoRewrite: false,
 			selfHandleResponse: handleRes
 		};
-		return (
-			this.config.proxy &&
-			this.config.proxy.web(this.config.req, this.config.res, config, () => {
-				this.config.reject();
-			})
-		);
+		return this.config.proxy?.web(this.config.req, this.config.res, config, () => {
+			this.config.reject();
+		});
 	}
 }
 
@@ -86,7 +83,7 @@ export class LoginHelper extends APIHelper {
 		const refreshToken = getTokenFromResponseCookie(proxyRes);
 		const newToken = getTokenFromResponse(body);
 		if (newToken && refreshToken) {
-			newToken && refreshToken && this.cookie.setCommonTokens(newToken, refreshToken);
+			this.cookie.setCommonTokens(newToken, refreshToken);
 			this.resolveWithJWT(newToken);
 		} else {
 			this.rejectIfCondition(newToken === null || refreshToken === undefined);
