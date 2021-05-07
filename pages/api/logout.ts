@@ -11,7 +11,7 @@ export default function logout(req: NextApiRequest, res: NextApiResponse): Promi
 	return new Promise((resolve, reject): void => {
 		const route = new APIHelper({ proxy, req, res, resolve, reject });
 		route.forwardRequest(false);
-		route.setAuthCookies("", "");
+		route.cookie.setCommonTokens("", "");
 		route.resolveWith({ "message": "logged out" });
 	});
 }
