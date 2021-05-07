@@ -18,6 +18,11 @@ export class CookieHelper {
 		return this.cookie.get(name);
 	}
 
+	setCommonTokens(authToken: string, refreshToken: string) {
+		this.setToken("auth-token", authToken);
+		this.setToken("refresh-token", refreshToken);
+	}
+
 	getCommonTokens() {
 		return { "auth-token": this.getToken("auth-token"), "refresh-token": this.getToken("refresh-token") };
 	}

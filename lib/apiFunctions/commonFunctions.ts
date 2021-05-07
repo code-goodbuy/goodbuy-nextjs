@@ -16,12 +16,6 @@ export class APIHelper {
 		this.JWT = JWTHelper;
 	}
 
-	setAuthCookies(authToken: string, refreshToken: string) {
-		this.cookie.setToken("auth-token", authToken);
-		this.cookie.setToken("refresh-token", refreshToken);
-		this.tokens = { "auth-token": authToken, "refresh-token": refreshToken };
-	}
-
 	rejectIfCondition(condition: boolean) {
 		if (condition) {
 			this.config.res.status(409).json({ message: "Error" });
@@ -89,7 +83,7 @@ export class APIHelper {
 		const refreshToken = getTokenFromResponseCookie(proxyRes);
 		const newToken = getTokenFromResponse(body);
 		if (newToken && refreshToken) {
-			newToken && refreshToken && this.setAuthCookies(newToken, refreshToken);
+			newToken && refreshToken && this.cookie.setCommonTokens(newToken, refreshToken);
 			this.resolveWithJWT(newToken);
 		} else {
 			this.rejectIfCondition(newToken === null || refreshToken === undefined);
