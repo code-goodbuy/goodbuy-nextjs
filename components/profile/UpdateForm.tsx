@@ -3,7 +3,6 @@ import { UpdaterType } from "../../lib/types/ProfileTypes";
 import { DataUpdater } from "../auth/helperFunctions";
 import Router from "next/router";
 import { sendChangeRequest, setIsValidURL, isDisabledForm } from "./helperFunctions";
-
 import Field from "../auth/Field";
 import SubmitButton from "../auth/SubmitButton";
 
@@ -22,7 +21,7 @@ export default function UpdateForm({ stateUpdater, currentInfo }: UpdaterType) {
 		setIsSendingData(true);
 		const { message } = await sendChangeRequest(currentInfo, data);
 		if (message === "Error") {
-			setServerResponse("Error");
+			setServerResponse("Error: Please Refresh The Page And Try Again");
 		} else {
 			setServerResponse("");
 			Router.reload();
