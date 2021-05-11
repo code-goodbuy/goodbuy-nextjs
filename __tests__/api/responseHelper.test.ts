@@ -1,13 +1,6 @@
-import Cookies from "cookies";
 import mock from "mock-http";
 import { IncomingMessage, ServerResponse } from "node:http";
-import {
-	setTokenCookie,
-	getTokenFromCookie,
-	getTokenFromResponse,
-	initCookies,
-	getTokenFromResponseCookie
-} from "../../lib/apiFunctions/responseHelpers";
+import { CookieHelper, getTokenFromResponse, getTokenFromResponseCookie } from "../../lib/apiFunctions/responseHelpers";
 
 let mockGetCookie = jest.fn();
 let mockSetCookie = jest.fn();
@@ -20,7 +13,7 @@ jest.mock("cookies", () => {
 });
 
 describe("Test cookies helper functions", () => {
-	let req: IncomingMessage, res: ServerResponse, token: string, cookie: Cookies;
+	let req: IncomingMessage, res: ServerResponse, token: string, cookie: CookieHelper;
 
 	beforeEach(() => {
 		req = new mock.Request({
@@ -31,19 +24,19 @@ describe("Test cookies helper functions", () => {
 		res = new mock.Response({});
 		token =
 			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjkwODk5MzkwMjIsImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.5vHpQeDVhDFBApJ0cfGODfpt91Wv-7My2hJrxdRulNs";
-		cookie = initCookies(req, res);
+		cookie = new CookieHelper(req, res);
 	});
 
 	it("should set a new cookie", () => {
 		// given + when
-		setTokenCookie(cookie, "auth-token", token);
+		cookie.setToken("auth-token", token);
 		// then
 		expect(mockSetCookie).toHaveBeenCalledWith("auth-token", token, { "httpOnly": true, "sameSite": "lax" });
 	});
 
 	it("shohuld get a cookie", () => {
 		// given + when
-		getTokenFromCookie(cookie, "auth-token");
+		cookie.getToken("auth-token");
 		// then
 		expect(mockGetCookie).toHaveBeenCalled();
 	});

@@ -1,19 +1,31 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import Cookies from "cookies";
 
-export function initCookies(req: IncomingMessage, res: ServerResponse) {
-	return new Cookies(req, res);
-}
+export class CookieHelper {
+	cookie: Cookies;
+	constructor(req: IncomingMessage, res: ServerResponse) {
+		this.cookie = new Cookies(req, res);
+	}
 
-export function setTokenCookie(cookie: Cookies, name: "auth-token" | "refresh-token", token: string) {
-	cookie.set(name, token, {
-		httpOnly: true,
-		sameSite: "lax"
-	});
-}
+	setToken(name: "auth-token" | "refresh-token", token: string) {
+		this.cookie.set(name, token, {
+			httpOnly: true,
+			sameSite: "lax"
+		});
+	}
 
-export function getTokenFromCookie(cookie: Cookies, name: "auth-token" | "refresh-token") {
-	return cookie.get(name);
+	getToken(name: "auth-token" | "refresh-token") {
+		return this.cookie.get(name);
+	}
+
+	setCommonTokens(authToken: string, refreshToken: string) {
+		this.setToken("auth-token", authToken);
+		this.setToken("refresh-token", refreshToken);
+	}
+
+	getCommonTokens() {
+		return { "auth-token": this.getToken("auth-token"), "refresh-token": this.getToken("refresh-token") };
+	}
 }
 
 export function getTokenFromResponse(apiResponseBody: string): null | string {

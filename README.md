@@ -1,6 +1,7 @@
 # GoodBuy NextJS
 
 ![Vercel](http://therealsujitk-vercel-badge.vercel.app/?app=goodbuy)
+![GitHub](https://img.shields.io/github/license/code-goodbuy/goodbuy-nextjs)
 ![Lines of code](https://img.shields.io/tokei/lines/github/code-goodbuy/goodbuy-nextjs)
 ![GitHub repo size](https://img.shields.io/github/repo-size/code-goodbuy/goodbuy-nextjs)
 ![GitHub top language](https://img.shields.io/github/languages/top/code-goodbuy/goodbuy-nextjs)
@@ -49,6 +50,7 @@ Here is a description of the content of each folder in the directory:
 ├── __tests__               # Unit and Integration tests using Jest and Testing Library.
 │   ├── api                 # Tests for proxy routes and functions.
 │   ├── auth                # Tests for authentication components and logic.
+│   ├── home                # Tests for home page components.
 │   ├── landingPage         # Tests for landing page components.
 │   ├── profile             # Tests for profile page components and logic.
 │   └── utility             # Tests for the barcode scanner scanner component.
@@ -68,6 +70,7 @@ Here is a description of the content of each folder in the directory:
 │   ├── apiFunctions        # Logic for the proxy routes.
 │   ├── contexts            # React contexts used by the app.
 |   ├── hooks               # Custom hooks.
+|   ├── testUtils           # Utilities for unit and integration tests.
 │   └── types               # TypeScript types.
 ├── pages                   # Pages accessible by the user and serverless functions.
 │   ├── api                 # Serverless functions, proxy routes to communicate with the backend.

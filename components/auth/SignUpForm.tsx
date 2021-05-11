@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-	isValidEmail,
-	isValidUsername,
-	isPasswordStrong,
-	handleAuth,
-	areSamePasswords,
-	dataUpdater
-} from "./helperFunctions";
+import { DataUpdater, FieldChecker, Authenticator } from "./helperFunctions";
 import Field from "./Field";
 import Checkbox from "./Checkbox";
 import SubmitButton from "./SubmitButton";
@@ -23,43 +16,28 @@ export default function SignUpForm() {
 	};
 	const [data, setData] = useState(defaultData);
 
-	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [isSendingData, setIsSendingData] = useState<boolean>(false);
 	const [serverResponse, setServerResponse] = useState<string>("");
 
+	const checker = new FieldChecker(data);
+	const updater = new DataUpdater(data, setData);
+
 	useEffect(() => {
-		if (
-			isValidEmail(data.email) &&
-			isValidUsername(data.username) &&
-			isPasswordStrong(data.password) &&
-			areSamePasswords(data.repeatedPassword, data.password) &&
-			data.acceptedTerms &&
-			data.hasRequiredAge
-		) {
-			setIsValidForm(true);
-		} else {
-			setIsValidForm(false);
-		}
+		checker.updateData(data);
 	}, [data]);
 
 	const clearForm = () => {
 		setData(defaultData);
 	};
 
-	const handleSignUp = async () => {
-		setIsSendingData(true);
+	let responseHandler = () => {
+		setServerResponse("Check your email and then log in");
+	};
 
-		let specificHandler = () => {
-			setServerResponse("Check your email and then log in");
-		};
-		handleAuth({
-			url: "/api/register",
-			data,
-			specificHandler,
-			setServerResponse,
-			setIsSendingData,
-			clearForm
-		});
+	const handleSignUp = async () => {
+		const formFunctions = { clearForm, setServerResponse, setIsSendingData, responseHandler };
+		const auth = new Authenticator("/api/register", data, formFunctions);
+		auth.handleAuth();
 	};
 
 	return (
@@ -71,33 +49,31 @@ export default function SignUpForm() {
 			{serverResponse !== "" && <div className="pb-10 text-2xl colorful-text">{serverResponse}</div>}
 			<Field
 				value={data.email}
-				setValue={dataUpdater("email", data, setData)?.updater}
-				isValidValue={isValidEmail(data.email)}
-				type="text"
+				setValue={updater.makeUpdater("email")}
+				isValidValue={checker.isValidEmail()}
 				name="Email"
 			/>
 			<Field
 				value={data.username}
-				setValue={dataUpdater("username", data, setData)?.updater}
-				isValidValue={isValidUsername(data.username)}
-				type="text"
+				setValue={updater.makeUpdater("username")}
+				isValidValue={checker.isValidUsername()}
 				name="Username"
 			/>
 			<Field
 				value={data.password}
-				setValue={dataUpdater("password", data, setData)?.updater}
-				isValidValue={isPasswordStrong(data.password)}
+				setValue={updater.makeUpdater("password")}
+				isValidValue={checker.isValidPassword()}
 				type="password"
 				name="Password"
 			/>
 			<Field
 				value={data.repeatedPassword}
-				setValue={dataUpdater("repeatedPassword", data, setData)?.updater}
-				isValidValue={areSamePasswords(data.repeatedPassword, data.password)}
+				setValue={updater.makeUpdater("repeatedPassword")}
+				isValidValue={checker.areSamePasswords()}
 				type="password"
 				name="Repeated Password"
 			/>
-			<Checkbox condition={data.acceptedTerms} updateCondition={dataUpdater("acceptedTerms", data, setData)?.updater}>
+			<Checkbox condition={data.acceptedTerms} updateCondition={updater.makeUpdater("acceptedTerms")}>
 				<span>
 					I read and accept the{" "}
 					<Link href="about:blank">
@@ -108,10 +84,10 @@ export default function SignUpForm() {
 					.
 				</span>
 			</Checkbox>
-			<Checkbox condition={data.hasRequiredAge} updateCondition={dataUpdater("hasRequiredAge", data, setData)?.updater}>
+			<Checkbox condition={data.hasRequiredAge} updateCondition={updater.makeUpdater("hasRequiredAge")}>
 				<span>I am 16 or older.</span>
 			</Checkbox>
-			<SubmitButton disabled={!isValidForm || isSendingData} updater={handleSignUp} text="Sign Up" />
+			<SubmitButton disabled={!checker.isValidSignUp() || isSendingData} updater={handleSignUp} text="Sign Up" />
 		</form>
 	);
 }

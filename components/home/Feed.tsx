@@ -1,6 +1,6 @@
 import Post from "../common/Post";
 import { useEffect, useState } from "react";
-import { PostType } from "../../lib/types/PostTypes";
+import { PostType } from "../../lib/types/CommonTypes";
 
 export default function Feed() {
 	const [posts, setPosts] = useState<PostType[] | undefined>(undefined);
