@@ -52,7 +52,7 @@ const AuthContextProvider = ({ children }: ReactChildrenType) => {
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({ "email": userInfo && userInfo.email })
+			body: JSON.stringify({ "_id": userInfo && userInfo._id })
 		});
 		if (res.status !== 200) {
 			throw Error("Server Error");

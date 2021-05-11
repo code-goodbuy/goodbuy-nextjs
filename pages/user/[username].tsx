@@ -33,7 +33,7 @@ function User({ username, data }: { username: string; data: ProfileDataType }) {
 	return (
 		<>
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
-			{isUpdatingInfo && userInfo?.email !== undefined && (
+			{isUpdatingInfo && userInfo?._id !== undefined && (
 				<UpdateForm stateUpdater={setIsUpdatingInfo} currentInfo={userInfo} />
 			)}
 			<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:items-start lg:flex-row lg:justify-evenly pt-20">

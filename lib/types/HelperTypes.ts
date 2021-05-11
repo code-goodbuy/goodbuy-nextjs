@@ -16,7 +16,7 @@ export interface JWTPayloadType {
 	exp?: number;
 	iat?: number;
 	jti?: string;
-	email?: string;
+	_id?: string;
 }
 
 export interface UserInfoType extends JWTPayloadType {

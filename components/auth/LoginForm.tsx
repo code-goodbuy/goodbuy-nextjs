@@ -27,7 +27,7 @@ export default function LoginForm() {
 
 	const responseHandler = async (res: Response | undefined) => {
 		let data = res && (await res.json());
-		updateUserInfo && updateUserInfo({ email: data.email });
+		updateUserInfo && updateUserInfo({ _id: data._id });
 		toggleIsLoggedIn && toggleIsLoggedIn();
 		router.push("/");
 	};
