@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import TextTransition, { presets } from "react-text-transition";
-import Image from "next/image";
 import Link from "next/link";
+import Picture from "../common/Picture";
 
 export default function Welcome() {
-	/**
-	 * Responsive "Welcome" Section Of The Landing Page
-	 */
 	const products = [
 		"avocado",
 		"chocolate bar",
@@ -19,6 +16,7 @@ export default function Welcome() {
 		"almond"
 	];
 	const [index, setIndex] = useState<number>(0);
+
 	useEffect(() => {
 		/**
 		 * automatically update the title text
@@ -49,17 +47,11 @@ export default function Welcome() {
 						</div>
 						<p className="colorful-text md:hidden mt-10 text-center bg-blue-100 dark:bg-red-200 bg-opacity-60 dark:bg-opacity-60">
 							Photo by{" "}
-							<a
-								className="underline"
-								href="https://unsplash.com/@hansjurgen007?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-							>
+							<a className="underline" href="https://unsplash.com/@hansjurgen007">
 								Hans-Jurgen Mager
 							</a>{" "}
 							on{" "}
-							<a
-								className="underline"
-								href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-							>
+							<a className="underline" href="https://unsplash.com/s/photos/polar%20bear">
 								Unsplash
 							</a>
 						</p>
@@ -75,34 +67,13 @@ export default function Welcome() {
 					</Link>
 				</div>
 				<div>
-					<figure className="hidden md:block bg-primary dark:bg-secondary transform xl:rotate-12 rounded-3xl p-1 lg:p-2 text-center mx-10 md:mx-0 md:max-w-lg lg:w-7xl lg:mt-4 lg:mr-8 lg:max-w-2xl 2xl:max-w-3xl">
-						<Image
-							className="rounded-3xl"
-							src="/pics/bear.jpg"
-							alt="Polar Bear"
-							layout="intrinsic"
-							width="600"
-							height="400"
-						/>
-						<figcaption className="text-white">
-							<span>
-								Photo by{" "}
-								<a
-									className="underline"
-									href="https://unsplash.com/@hansjurgen007?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-								>
-									Hans-Jurgen Mager
-								</a>{" "}
-								on{" "}
-								<a
-									className="underline"
-									href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-								>
-									Unsplash
-								</a>
-							</span>
-						</figcaption>
-					</figure>
+					<Picture
+						source="/pics/bear.jpg"
+						alt="Polar Bear"
+						isLarge={true}
+						author="Hans-Jurgen Mager"
+						authorLink="https://unsplash.com/@hansjurgen007"
+					/>
 				</div>
 			</div>
 			<a href="#mission" className="self-center">

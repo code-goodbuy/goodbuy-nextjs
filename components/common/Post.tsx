@@ -1,4 +1,4 @@
-import { PostType } from "../../lib/types/PostTypes";
+import { PostType } from "../../lib/types/CommonTypes";
 import Link from "next/link";
 import { ProfilePic } from "./Misc";
 

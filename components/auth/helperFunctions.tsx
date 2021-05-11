@@ -1,111 +1,165 @@
 import { Dispatch, SetStateAction } from "react";
-import { HandleResType, HandleErrType, ResetFormType, handleAuthType } from "../../lib/types/HelperTypes";
+import { FormDataType } from "../../lib/types/AuthTypes";
+import { FormFunctionsType } from "../../lib/types/HelperTypes";
+import { UpdateType } from "../../lib/types/ProfileTypes";
 
-export const updateWithoutSpaces = (updater: ((val: string | boolean) => void) | undefined, value: string) => {
-	updater && updater(value.replace(/\s/g, ""));
-};
+export class DataUpdater {
+	data: FormDataType | UpdateType;
+	setData: Dispatch<SetStateAction<FormDataType | UpdateType>>;
 
-export const isValidEmail = (email: string) => {
-	if (email !== "") {
-		const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		if (re.test(email.toLowerCase()) && email.length > 5 && email.length < 41) {
-			return true;
+	//TODO find a way to remove the any without breaking SignUpForm.tsx
+	constructor(data: FormDataType | UpdateType, setData: Dispatch<SetStateAction<any>>) {
+		this.data = data;
+		this.setData = setData;
+	}
+
+	makeUpdater(field: string) {
+		if (field in this.data) {
+			return (val: string | boolean) => {
+				//@ts-ignore: manually check the type
+				if (typeof this.data[field] === typeof val) {
+					//@ts-ignore: manually check the type
+					this.setData((prev) => ({ ...prev, [field]: val }));
+				}
+			};
 		}
 	}
-	return false;
-};
+}
 
-export const isValidUsername = (username: string): boolean => {
-	if (username !== "") {
-		if (username.length > 4 && username.length < 23 && username.match(/((^[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) {
-			return true;
-		}
+export class FieldChecker {
+	data: FormDataType;
+
+	constructor(data: FormDataType) {
+		this.data = data;
 	}
-	return false;
-};
 
-export const isPasswordStrong = (password: string): boolean => {
-	if (password !== "") {
+	updateData(data: FormDataType) {
+		this.data = data;
+	}
+
+	isValidEmail() {
+		if (this.data.email !== "") {
+			const re =
+				/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			if (re.test(this.data.email.toLowerCase()) && this.data.email.length > 5 && this.data.email.length < 41) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	isValidUsername() {
+		if (this.data.username && this.data.username !== "") {
+			if (
+				this.data.username.length > 4 &&
+				this.data.username.length < 23 &&
+				this.data.username.match(/((^[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)
+			) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	isValidPassword() {
+		if (this.data.password && this.data.password !== "") {
+			const p = this.data.password;
+			if (
+				p.length > 7 &&
+				p.length < 51 &&
+				p.match(/[a-z]+/) &&
+				p.match(/[A-Z]+/) &&
+				p.match(/[0-9]+/) &&
+				p.match(/[-_+=()!?@#\$%\^&\*{[}\].,<>'":;/|`~]+$/i)
+			) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	areSamePasswords() {
+		if (this.data.repeatedPassword && this.data.repeatedPassword !== "") {
+			if (this.data.repeatedPassword === this.data.password) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	isValidSignUp() {
 		if (
-			password.length > 7 &&
-			password.length < 51 &&
-			password.match(/[a-z]+/) &&
-			password.match(/[A-Z]+/) &&
-			password.match(/[0-9]+/) &&
-			password.match(/[-_+=()!?@#\$%\^&\*{[}\].,<>'":;/|\\`~]+/)
+			this.isValidEmail() &&
+			this.isValidUsername() &&
+			this.isValidPassword() &&
+			this.areSamePasswords() &&
+			this.data.acceptedTerms &&
+			this.data.hasRequiredAge
 		) {
 			return true;
 		}
+		return false;
 	}
-	return false;
-};
 
-export const areSamePasswords = (repeatedPassword: string, password: string): boolean => {
-	if (repeatedPassword !== "") {
-		if (repeatedPassword === password) {
+	isValidLogin() {
+		if (this.isValidEmail() && this.data.password !== "") {
 			return true;
 		}
+		return false;
 	}
-	return false;
-};
+}
 
-export const sendAuthRequest = async (url: string, body: any) => {
-	const res = await fetch(url, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	});
-	return res;
-};
+export class Authenticator {
+	url: string;
+	body: FormDataType;
+	functions: FormFunctionsType;
+	res: Response | undefined;
 
-export const handleRes = ({ res, setServerResponse, specificHandler }: HandleResType) => {
-	if (res && res.status === 200) {
-		specificHandler(res);
-	} else {
-		setServerResponse("An Error Occured");
+	constructor(url: string, body: FormDataType, formFunctions: FormFunctionsType) {
+		this.url = url;
+		this.body = body;
+		this.functions = formFunctions;
+
+		this.res = undefined;
 	}
-};
 
-export const handleErr = ({ err, setServerResponse }: HandleErrType) => {
-	console.error(err);
-	setServerResponse("An Error Occured");
-};
-
-export const resetForm = ({ setIsSendingData, clearForm }: ResetFormType) => {
-	clearForm();
-	setIsSendingData(false);
-};
-
-export const handleAuth = async ({
-	url,
-	data,
-	specificHandler,
-	setServerResponse,
-	setIsSendingData,
-	clearForm
-}: handleAuthType) => {
-	try {
-		let res = await sendAuthRequest(url, data);
-		handleRes({ res, setServerResponse, specificHandler });
-	} catch (err) {
-		handleErr(err);
-	} finally {
-		resetForm({ setIsSendingData, clearForm });
+	async sendRequest() {
+		this.res = await fetch(this.url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(this.body)
+		});
 	}
-};
 
-export const dataUpdater = (field: string, data: any, setData: Dispatch<SetStateAction<any>>) => {
-	if (field in data) {
-		return {
-			updater: (val: string | boolean) => {
-				//@ts-ignore: manually check the type
-				if (typeof data[field] === typeof val) {
-					//@ts-ignore: manually check the type
-					setData((data) => ({ ...data, [field]: val }));
-				}
-			}
-		};
+	handleRes() {
+		if (this.res && this.res.status === 200) {
+			this.functions.responseHandler(this.res);
+		} else {
+			this.functions.setServerResponse("An Error Occured");
+		}
 	}
-};
+
+	handleError(err: string) {
+		console.error("The following error occurred", err);
+		this.functions.setServerResponse("An Error Occured");
+	}
+
+	resetForm() {
+		this.functions.clearForm();
+		this.functions.setIsSendingData(false);
+	}
+
+	async handleAuth() {
+		this.functions.setIsSendingData(true);
+		try {
+			await this.sendRequest();
+			this.handleRes();
+		} catch (err) {
+			this.handleError(err);
+		} finally {
+			this.resetForm();
+		}
+	}
+}

@@ -1,6 +1,6 @@
 import Meta from "../../components/common/Meta";
 import Post from "../../components/common/Post";
-import { DBPost } from "../../lib/types/PostTypes";
+import { DBPost } from "../../lib/types/CommonTypes";
 import { AuthContext } from "../../lib/context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import useRedirect from "../../lib/hooks/useRedirect";
@@ -33,7 +33,7 @@ function User({ username, data }: { username: string; data: ProfileDataType }) {
 	return (
 		<>
 			<Meta title={`${username}'s Profile | Goodbuy`}></Meta>
-			{isUpdatingInfo && userInfo?.email !== undefined && (
+			{isUpdatingInfo && userInfo?._id !== undefined && (
 				<UpdateForm stateUpdater={setIsUpdatingInfo} currentInfo={userInfo} />
 			)}
 			<div className="min-h-screen normal-bg normal-text pb-10 flex flex-col items-center lg:items-start lg:flex-row lg:justify-evenly pt-20">

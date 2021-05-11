@@ -5,9 +5,6 @@ import NavLinks from "./NavLinks";
 import Link from "next/link";
 
 export default function Header() {
-	/**
-	 * Responsive Header Component
-	 */
 	const { showMenu, toggleShowMenu, colorMode } = useContext(UIContext);
 
 	return (
@@ -26,11 +23,7 @@ export default function Header() {
 						<h2 className="ml-3 text-3xl lg:text-4xl colorful-text font-bold">GoodBuy</h2>
 					</div>
 				</Link>
-				<button
-					onClick={toggleShowMenu}
-					className="md:hidden colorful-button px-5"
-					data-testid="menu"
-				>
+				<button onClick={toggleShowMenu} className="md:hidden colorful-button px-5" data-testid="menu">
 					Menu
 				</button>
 

@@ -18,7 +18,7 @@ export const sendChangeRequest = async (currentInfo: UserInfoType, data: UserInf
 		method: "PUT",
 		headers: { "content-type": "application/json" },
 		body: JSON.stringify({
-			email: currentInfo.email,
+			_id: currentInfo._id,
 			imageURL: data.imageURL !== "" ? data.imageURL : currentInfo.imageURL,
 			description: data.description !== "" ? data.description : currentInfo.description
 		})

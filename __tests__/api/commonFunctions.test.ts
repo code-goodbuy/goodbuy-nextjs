@@ -1,21 +1,18 @@
-import {
-	rejectIfCondition,
-	resolveIfValid,
-	prepareForForwarding,
-	forwardRequest,
-	handleLogin,
-	handleRefresh
-} from "../../lib/apiFunctions/commonFunctions";
+import { LoginHelper, RefreshHelper } from "../../lib/apiFunctions/commonFunctions";
 import mock from "mock-http";
 import { NextApiRequest } from "next";
+import { expectCallWithoutRejection } from "../../lib/testUtils/testFunctions";
 
-describe("Test the functions that make the proxy work", () => {
+describe("Test the functions that make the proxy routes work", () => {
 	let req: NextApiRequest,
 		res: any,
 		rej: any,
 		resolve: any,
 		token =
 			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5OTk5OTk5OTksImVtYWlsIjoidGVzdEB0ZXN0LmNvIiwiaWF0IjoxNTE2MjM5MDIyfQ.JyrM7CQymsHChoqFcj_-VCJwn0mDQtN9r8jnEJ_TySw";
+
+	let proxy = { web: jest.fn() };
+	let API: LoginHelper;
 
 	let mockGetCookie = jest.fn((name) => name);
 	let mockSetCookie = jest.fn();
@@ -38,40 +35,41 @@ describe("Test the functions that make the proxy work", () => {
 		res.status = jest.fn(() => ({ "json": jest.fn() }));
 		rej = jest.fn();
 		resolve = jest.fn();
+
+		proxy = { web: jest.fn() };
+
+		//@ts-ignore: proxy type is not correct but it isn't a problem
+		API = new LoginHelper({ proxy, req, res, resolve, reject: rej });
+		API.tokens = { "auth-token": "invalidToken", "refresh-token": "test" };
 	});
 
 	it("should reject the request", () => {
 		// given + when
-		// @ts-ignore: res doens't match the exact type but has all the required properties
-		rejectIfCondition(res, rej, true);
+		API.rejectIfCondition(true);
 		// then
 		expect(rej).toHaveBeenCalled();
 	});
 
 	it("should not resolve the request", () => {
 		// given + when
-		resolveIfValid({ token: "invalidToken", response: res, resolve, message: "test" });
+		API.resolveIfValid("auth-token", { message: "valid" });
 		// then
 		expect(resolve).not.toHaveBeenCalled();
 	});
 
 	it("should modify the request", () => {
 		// given + when
-		prepareForForwarding({ req, cookie: "test-cookie", token: "test-token" });
+		API.prepareForForwarding();
 		// then
-		expect(req.headers.cookie).toEqual("test-cookie");
-		expect(req.headers["auth-token"]).toEqual("test-token");
+		expect(req.headers.cookie).toEqual("jid=test");
+		expect(req.headers["auth-token"]).toEqual("invalidToken");
 	});
 
 	it("should forward a request", () => {
-		// given
-		const proxy = { web: jest.fn() };
 		// when
-		// @ts-ignore; proxy type is not exactly the same
-		forwardRequest({ res, res, proxy, handleRes: false, reject: rej });
+		API.forwardRequest(false);
 		// then
-		expect(proxy.web).toHaveBeenCalled();
-		expect(rej).not.toHaveBeenCalled();
+		expectCallWithoutRejection(proxy.web, rej);
 	});
 
 	it("should handle the login", () => {
@@ -79,19 +77,20 @@ describe("Test the functions that make the proxy work", () => {
 		res._internal.headers = { "set-cookie": `jid=${token}; other things;` };
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
 		// when
-		handleLogin({ req, res, proxyRes: res._internal, body: res._internal.body, resolve, reject: rej });
+		API.handler(res._internal.body, res._internal);
 		// then
-		expect(resolve).toHaveBeenCalled();
-		expect(rej).not.toHaveBeenCalled();
+		expectCallWithoutRejection(resolve, rej);
 	});
 
 	it("should handle the token refresh", () => {
 		// given
+		//@ts-ignore: proxy type is not correct but it isn't a problem
+		API = new RefreshHelper({ proxy, req, res, resolve, reject: rej });
+		API.tokens = { "auth-token": "invalidToken", "refresh-token": "test" };
 		res._internal.body = `{"jwtAccessToken":"${token}"}`;
 		// when
-		handleRefresh({ req, res, body: res._internal.body, resolve, reject: rej });
+		API.handler(res._internal.body, res._internal);
 		// then
-		expect(resolve).toHaveBeenCalled();
-		expect(rej).not.toHaveBeenCalled();
+		expectCallWithoutRejection(resolve, rej);
 	});
 });

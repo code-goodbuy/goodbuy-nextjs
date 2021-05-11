@@ -22,3 +22,9 @@ export interface ProfileDataType {
 	description: string;
 	listOfScanned: ScannedElement[];
 }
+
+export interface UpdateType {
+	imageURL: string;
+	description: string;
+	isValidURL: boolean;
+}

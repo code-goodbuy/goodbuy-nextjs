@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
-import { render, act, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Field from "../../components/auth/Field";
+import { expectFieldError } from "../../lib/testUtils/testFunctions";
 
 describe("Test input field component", () => {
 	let stateValue: string;
@@ -18,15 +19,10 @@ describe("Test input field component", () => {
 
 	it("Should display an error message", async () => {
 		// given
-		const { getByPlaceholderText, getByText } = render(
+		render(
 			<Field value={stateValue} setValue={mockedUpdater} isValidValue={isValidValue} type="text" name="Property" />
 		);
-		const field = getByPlaceholderText("Property");
-		// when
-		await act(async () => {
-			fireEvent.change(field, { target: { value: "fail" } });
-		});
-		// then
-		expect(getByText("Invalid Property")).toBeVisible();
+		// when + then
+		await expectFieldError("Property", "fail");
 	});
 });

@@ -6,50 +6,39 @@ const ScanBarcode: React.FC = () => {
 	const controlsRef = useRef<IScannerControls | null>(null);
 	const [selectedDeviceId, setSelectedDeviceId] = useState("");
 	const [devices, setDevices] = useState<Array<DeviceType>>([]);
-	const [productInfo, setProductInfo] = useState({name: "", brand: ""});
+	const [productInfo, setProductInfo] = useState({ name: "", brand: "" });
 
 	const getQRCodeReaderControls = async (selectedDeviceId: string) => {
-
 		try {
 			const codeReader = new BrowserMultiFormatOneDReader();
 			const previewElem = document.querySelector("video");
 			const videoElem = previewElem as HTMLVideoElement;
 
-			const BASE_URL =
-				"https://gb-be.de/";
-
-			const controls =
-				await codeReader.decodeFromVideoDevice(
-					selectedDeviceId,
-					videoElem,
-					(result, error, controls) => {
-						// console.log("---- result: ", result);
-						// console.log("---- error: ", error);
-						// console.log("---- controls: ", controls);
-
-
-						if (result) {
-							// @ts-ignore
-							const scanResult = JSON.parse(result);
-							alert("Barcode number: " + scanResult);
-							fetch(BASE_URL + "product/" + scanResult)
-								.then((response) => response.json())
-								.then((data) => {
-									// product props: name, brand, barcode, corporation, state
-									alert(BASE_URL + "product/" + scanResult)
-									const productName = data.product[0].name;
-									const productBrand = data.product[0].brand;
-									setProductInfo({name: productName, brand: productBrand})
-								})
-								.catch((error) => {
-									alert("Error: failed to fetch the info from database")
-								});
-						}
+			const controls = await codeReader.decodeFromVideoDevice(
+				selectedDeviceId,
+				videoElem,
+				(result, error, controls) => {
+					if (result) {
+						// @ts-ignore
+						const scanResult = JSON.parse(result);
+						fetch(process.env.backendURL + "/api/product/" + scanResult)
+							.then((response) => response.json())
+							.then((data) => {
+								// product props: name, brand, barcode, corporation, state
+								const productName = data.product[0].name;
+								const productBrand = data.product[0].brand;
+								setProductInfo({ name: productName, brand: productBrand });
+							})
+							.catch((_) => {
+								console.error("Error: failed to fetch the info from database");
+							});
 					}
-				)
+				}
+			);
 			return controls;
+		} catch (error) {
+			console.log("Error: failed to initiate scan");
 		}
-		catch (error) { console.log("Error: failed to initiate scan") }
 	};
 
 	useEffect(() => {
@@ -62,9 +51,10 @@ const ScanBarcode: React.FC = () => {
 
 				setDevices(videoInputDevices);
 				setSelectedDeviceId(selectedDeviceId);
+			} catch (error) {
+				console.log("Error: need self signed TLS Certs for reading camera list");
 			}
-			catch (error) { console.log("Error: need self signed TLS Certs for reading camera list") };
-		}
+		};
 		getDevices();
 	}, []);
 
@@ -86,8 +76,8 @@ const ScanBarcode: React.FC = () => {
 					))}
 				</select>
 				<br></br>
-        (if you change the selected camera, please click again the Start button)
-      </div>
+				(if you change the selected camera, please click again the Start button)
+			</div>
 			<br />
 			<div className="space-x-3">
 				<button
@@ -95,15 +85,14 @@ const ScanBarcode: React.FC = () => {
 					onClick={async () => {
 						try {
 							// @ts-ignore
-							controlsRef.current = await getQRCodeReaderControls(
-								selectedDeviceId
-							)
+							controlsRef.current = await getQRCodeReaderControls(selectedDeviceId);
+						} catch (err) {
+							console.log("Error: cannot read the list of camera");
 						}
-						catch (err) { console.log("Error: cannot read the list of camera") }
 					}}
 				>
 					Start
-        </button>{" "}
+				</button>{" "}
 				<button
 					className="colorful-button"
 					onClick={() => {
@@ -111,7 +100,7 @@ const ScanBarcode: React.FC = () => {
 					}}
 				>
 					Stop
-        </button>
+				</button>
 			</div>
 			<br />
 			<div className="space-x-3">
@@ -122,6 +111,5 @@ const ScanBarcode: React.FC = () => {
 		</div>
 	);
 };
-
 
 export default ScanBarcode;
