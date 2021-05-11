@@ -1,6 +1,6 @@
 import { screen, fireEvent, act, Matcher } from "@testing-library/react";
 
-export function expectCallWithoutRejection(toCall: any, reject: any) {
+export function expectCallWithoutRejection(toCall: () => void, reject: any) {
 	expect(toCall).toHaveBeenCalled();
 	expect(reject).not.toHaveBeenCalled();
 }
