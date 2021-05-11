@@ -13,7 +13,7 @@ jest.mock("cookies", () => {
 });
 
 describe("Test cookies helper functions", () => {
-	let req: IncomingMessage, res: ServerResponse, token: string, cookie: any;
+	let req: IncomingMessage, res: ServerResponse, token: string, cookie: CookieHelper;
 
 	beforeEach(() => {
 		req = new mock.Request({
