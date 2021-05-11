@@ -30,5 +30,5 @@ export interface FormFunctionsType {
 	setServerResponse: Dispatch<SetStateAction<string>>;
 	setIsSendingData: Dispatch<SetStateAction<boolean>>;
 	clearForm: () => void;
-	responseHandler: (res?: Response) => any;
+	responseHandler: (res?: Response) => void | Promise<void>;
 }
