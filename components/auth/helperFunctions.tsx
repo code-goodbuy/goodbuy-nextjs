@@ -3,10 +3,11 @@ import { FormDataType } from "../../lib/types/AuthTypes";
 import { FormFunctionsType } from "../../lib/types/HelperTypes";
 
 export class DataUpdater {
-	data: any;
-	setData: Dispatch<SetStateAction<any>>;
+	data: FormDataType;
+	setData: Dispatch<SetStateAction<FormDataType>>;
 
-	constructor(data: any, setData: Dispatch<SetStateAction<any>>) {
+	//TODO find a way to remove the any without breaking SignUpForm.tsx
+	constructor(data: FormDataType, setData: Dispatch<SetStateAction<any>>) {
 		this.data = data;
 		this.setData = setData;
 	}
@@ -37,7 +38,8 @@ export class FieldChecker {
 
 	isValidEmail() {
 		if (this.data.email !== "") {
-			const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			const re =
+				/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			if (re.test(this.data.email.toLowerCase()) && this.data.email.length > 5 && this.data.email.length < 41) {
 				return true;
 			}
