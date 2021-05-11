@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction } from "react";
 import { FormDataType } from "../../lib/types/AuthTypes";
 import { FormFunctionsType } from "../../lib/types/HelperTypes";
+import { UpdateType } from "../../lib/types/ProfileTypes";
 
 export class DataUpdater {
-	data: FormDataType;
-	setData: Dispatch<SetStateAction<FormDataType>>;
+	data: FormDataType | UpdateType;
+	setData: Dispatch<SetStateAction<FormDataType | UpdateType>>;
 
 	//TODO find a way to remove the any without breaking SignUpForm.tsx
-	constructor(data: FormDataType, setData: Dispatch<SetStateAction<any>>) {
+	constructor(data: FormDataType | UpdateType, setData: Dispatch<SetStateAction<any>>) {
 		this.data = data;
 		this.setData = setData;
 	}
